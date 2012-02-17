@@ -1,7 +1,24 @@
 Installation
-	git clone https://jimmy_frog@bitbucket.org/jimmy_frog/vim.git
+	git clone https://jimmy_frog@bitbucket.org/jimmy_frog/vim.git .vim
 
 Symlinks
 	ln -s ~/.vim/vimrc ~/.vimrc
 	ln -s ~/.vim/gvimrc ~/.gvimrc
 
+push
+  [ config one off: git remote add origin https://jimmy_frog@bitbucket.org/jimmy_from/vim.git ]
+
+  git push -u origin master 
+  git push 
+  git pull
+ 
+submodules
+  git submodule add https://github.com/tsaleh/vim-matchit.git bundle/matchit
+  git submodule init
+  git submodule update
+
+plugins:
+  nerdtree
+  nerdcommenter
+  matchit
+  snipmate
