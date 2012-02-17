@@ -1,0 +1,7 @@
+Installation
+	git clone https://jimmy_frog@bitbucket.org/jimmy_frog/vim.git
+
+Symlinks
+	ln -s ~/.vim/vimrc ~/.vimrc
+	ln -s ~/.vim/gvimrc ~/.gvimrc
+
