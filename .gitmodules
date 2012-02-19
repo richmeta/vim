@@ -25,3 +25,12 @@
 [submodule "bundle/tabular"]
 	path = bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
+[submodule "bundle/conqueterm"]
+	path = bundle/conqueterm
+	url = https://github.com/rosenfeld/conque-term.git
+[submodule "bundle/snippets"]
+	path = bundle/snippets
+	url = https://github.com/honza/snipmate-snippets.git
+[submodule "bundle/changecolor"]
+	path = bundle/changecolor
+	url = https://github.com/vim-scripts/changeColorScheme.vim.git

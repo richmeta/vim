@@ -1,0 +1,19 @@
+# dbms_output.put_line 
+snippet print
+	dbms_output.put_line('${1:message}');
+# block
+snippet beginex
+	begin
+		${2}
+	exception
+		when others then
+			dbms_output.put_line('${1:Operation} failed : ' || SQLERRM);
+	end;
+
+#
+snippet begin begin/end
+	begin
+		${1}
+	end;
+
+#
