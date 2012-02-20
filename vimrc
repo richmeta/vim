@@ -57,7 +57,6 @@ set nowrap
 set novisualbell
 set noerrorbells
 set expandtab
-colorscheme torte
 set shiftwidth=2
 set ignorecase
 set smartcase
@@ -65,6 +64,9 @@ set nohls
 set autochdir
 set autowrite
 set modelines=0
+
+" todo: call random if plugin is loaded
+colorscheme torte
 
 if has("autocmd")
   filetype plugin indent on
@@ -79,15 +81,12 @@ nnoremap <C-P> :prev<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
-" space scroll in normal mode
-noremap <S-space> <C-b>
-noremap <space> <C-f>
-
 "open window on current word
 nnoremap \w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
 nnoremap \W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 
 " todo - test if xmllint exists
+" todo - test if file is empty
 autocmd FileType xml exe ":silent %!xmllint --format --recover - "
 autocmd FileType xsd exe ":silent %!xmllint --format --recover - "
 autocmd FileType cpp set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
@@ -95,6 +94,9 @@ autocmd FileType cs set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
 autocmd FileType sql set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
 autocmd FileType plsql set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab autoindent smarttab
+autocmd FileType xhtml let b:loaded_delimitMate = 1
+autocmd FileType xml let b:loaded_delimitMate = 1
+
 unmap <C-y>
 nmap <C-up> <C-y>
 imap <C-up> <C-o><C-y>

@@ -19,9 +19,6 @@
 [submodule "bundle/delimitmate"]
 	path = bundle/delimitmate
 	url = https://github.com/Raimondi/delimitMate.git
-[submodule "bundle/autotagclose"]
-	path = bundle/autotagclose
-	url = https://github.com/vim-scripts/HTML-AutoCloseTag.git
 [submodule "bundle/tabular"]
 	path = bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
