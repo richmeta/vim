@@ -1,9 +1,14 @@
 Installation
-	git clone https://jimmy_frog@bitbucket.org/jimmy_frog/vim.git .vim
+	(linux) git clone https://jimmy_frog@bitbucket.org/jimmy_frog/vim.git .vim
+	(windows) git clone https://jimmy_frog@bitbucket.org/jimmy_frog/vim.git vimfiles
 
-Symlinks
+Symlinks (linux)
 	ln -s ~/.vim/vimrc ~/.vimrc
 	ln -s ~/.vim/gvimrc ~/.gvimrc
+
+Symlinks (windows)
+  C:\Program Files\Vim>fsutil hardlink create _vimrc vimfiles\vimrc
+  C:\Program Files\Vim>fsutil hardlink create _gvimrc vimfiles\gvimrc
 
 push
   [ config one off: git remote add origin https://jimmy_frog@bitbucket.org/jimmy_from/vim.git ]
@@ -18,7 +23,15 @@ submodules
   git submodule update
 
 plugins:
-  nerdtree
-  nerdcommenter
+  changecolor
+  conqueterm
+  delimitmate
   matchit
+  nerdcommenter
+  nerdtree
   snipmate
+  snippets
+  tabular
+  tlib
+  vimaddonmw
+  xmledit
