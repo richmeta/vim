@@ -79,10 +79,6 @@ nnoremap <C-P> :prev<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
-" space scroll in normal mode
-noremap <S-space> <C-b>
-noremap <space> <C-f>
-
 "open window on current word
 nnoremap \w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
 nnoremap \W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
@@ -139,9 +135,9 @@ MapToggle <F12> paste
 set pastetoggle=<F12>
 
 " colorscheme switching
-map <Leader>c<Right> :call NextColorScheme()<CR>
-map <Leader>c<Left>  :call PreviousColorScheme()<CR>
-map <Leader>c<Up>    :call RandomColorScheme()<CR>
-map <Leader>c<Del>   :call RemoveCurrentColorScheme()<CR>
+map <Leader>c<Right> :call NextColorScheme()<CR> :colorscheme<CR>
+map <Leader>c<Left>  :call PreviousColorScheme()<CR> :colorscheme<CR>
+map <Leader>c<Up>    :call RandomColorScheme()<CR> :colorscheme<CR>
+map <Leader>c<Del>   :call RemoveCurrentColorScheme()<CR> :colorscheme<CR>
 
 syntax enable
