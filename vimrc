@@ -146,4 +146,12 @@ map <Leader>c<Left>  :call PreviousColorScheme()<CR> :colorscheme<CR>
 map <Leader>c<Up>    :call RandomColorScheme()<CR> :colorscheme<CR>
 map <Leader>c<Del>   :call RemoveCurrentColorScheme()<CR> :colorscheme<CR>
 
+" perl support 
+let g:perl_compiler_force_warnings = 0    " -w not -W
+autocmd BufNewFile,BufRead *.pl compiler! perl
+
+" perltidy
+nmap <Leader>pt :%!perltidy<CR>
+vmap <Leader>pt :!perltidy<CR>
+
 syntax enable

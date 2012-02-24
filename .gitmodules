@@ -1,36 +1,51 @@
-[submodule "bundle/nerdtree"]
-	path = bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "bundle/matchit"]
-	path = bundle/matchit
-	url = https://github.com/edsono/vim-matchit.git
-[submodule "bundle/nerdcommenter"]
-	path = bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "bundle/snipmate"]
-	path = bundle/snipmate
-	url = https://github.com/garbas/vim-snipmate.git
-[submodule "bundle/tlib"]
-	path = bundle/tlib
-	url = https://github.com/vim-scripts/tlib.git
-[submodule "bundle/vimaddonmw"]
-	path = bundle/vimaddonmw
-	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "bundle/delimitmate"]
-	path = bundle/delimitmate
-	url = https://github.com/Raimondi/delimitMate.git
-[submodule "bundle/tabular"]
-	path = bundle/tabular
-	url = https://github.com/godlygeek/tabular.git
-[submodule "bundle/conqueterm"]
-	path = bundle/conqueterm
-	url = https://github.com/rosenfeld/conque-term.git
-[submodule "bundle/snippets"]
-	path = bundle/snippets
-	url = https://github.com/honza/snipmate-snippets.git
-[submodule "bundle/changecolor"]
-	path = bundle/changecolor
-	url = https://github.com/vim-scripts/changeColorScheme.vim.git
-[submodule "bundle/xmledit"]
-	path = bundle/xmledit
-	url = https://github.com/sukima/xmledit
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bundle/matchit"]
+	path = bundle/matchit
+	url = https://github.com/edsono/vim-matchit.git
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/snipmate"]
+	path = bundle/snipmate
+	url = https://github.com/garbas/vim-snipmate.git
+[submodule "bundle/tlib"]
+	path = bundle/tlib
+	url = https://github.com/vim-scripts/tlib.git
+[submodule "bundle/vimaddonmw"]
+	path = bundle/vimaddonmw
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "bundle/delimitmate"]
+	path = bundle/delimitmate
+	url = https://github.com/Raimondi/delimitMate.git
+[submodule "bundle/tabular"]
+	path = bundle/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule "bundle/conqueterm"]
+	path = bundle/conqueterm
+	url = https://github.com/rosenfeld/conque-term.git
+[submodule "bundle/snippets"]
+	path = bundle/snippets
+	url = https://github.com/honza/snipmate-snippets.git
+[submodule "bundle/changecolor"]
+	path = bundle/changecolor
+	url = https://github.com/vim-scripts/changeColorScheme.vim.git
+[submodule "bundle/xmledit"]
+	path = bundle/xmledit
+	url = https://github.com/sukima/xmledit
+[submodule "bundle/vim-perl"]
+	path = bundle/vim-perl
+	url = https://github.com/petdance/vim-perl.git
+[submodule "bundle/perlhelp"]
+	path = bundle/perlhelp
+	url = https://github.com/LStinson/perlhelp-vim.git
+[submodule "bundle/mark"]
+	path = bundle/mark
+	url = https://github.com/vim-scripts/Mark.git
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = https://github.com/majutsushi/tagbar.git
+[submodule "bundle/bufexplorer"]
+	path = bundle/bufexplorer
+	url = https://github.com/onehouse/vim-bufexplorer.git
