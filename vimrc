@@ -10,46 +10,13 @@ set nocompatible
 call pathogen#infect()
 call pathogen#helptags()
 
-set backspace=indent,eol,start
-set background=dark
-set history=1000
-set ruler
-set incsearch
-set autoindent
-set report=0
-set whichwrap=b,s,h,l,<,>,~,[,]
-set nostartofline
-"set sidescrolloff=10
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
 
-" Put these in an autocmd group, so that we can delete them easily.
-augroup vimrcEx
-au!
-
-" For all text files set 'textwidth' to 78 characters.
-autocmd FileType text setlocal textwidth=78
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-" Also don't do it when the mark is in the first line, that is the default
-" position when opening a file.
-autocmd BufReadPost *
-\ if line("'\"") > 1 && line("'\"") <= line("$") |
-\   exe "normal! g`\"" |
-\ endif
-
-augroup END
 " enable ctrl-c, ctrl-v, ctrl-a
 source $VIMRUNTIME/mswin.vim
 " enable selectmode and mouse behaviour
 behave mswin
 set hidden
-
 set nobackup
 set tabstop=2
 set softtabstop=2
@@ -64,12 +31,48 @@ set nohls
 set autochdir
 set autowrite
 set modelines=0
+set backspace=indent,eol,start
+set background=dark
+set history=10000
+set ruler
+set incsearch
+set autoindent
+set smarttab
+set report=0
+set whichwrap=b,s,h,l,<,>,~,[,]
+set nostartofline
+set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+set winminheight=0
+set gdefault
+set shiftround
+set showcmd
+
+"set sidescrolloff=10
 
 " todo: call random if plugin is loaded
 colorscheme torte
 
 if has("autocmd")
   filetype plugin indent on
+  
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
+  augroup END
 endif
 
 set grepprg=ack
@@ -89,19 +92,25 @@ nnoremap \W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 " todo - test if file is empty
 autocmd FileType xml exe ":silent %!xmllint --format --recover - "
 autocmd FileType xsd exe ":silent %!xmllint --format --recover - "
-autocmd FileType cpp set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
-autocmd FileType cs set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
-autocmd FileType sql set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
-autocmd FileType plsql set tabstop=2 shiftwidth=2 expandtab autoindent smarttab
-autocmd FileType python set tabstop=4 shiftwidth=4 expandtab autoindent smarttab
-autocmd FileType xhtml let b:loaded_delimitMate = 1
-autocmd FileType xml let b:loaded_delimitMate = 1
+autocmd FileType python set tabstop=4 shiftwidth=4
+
+" prevent delimitmate from loading
+autocmd FileType xhtml,xml let b:loaded_delimitMate = 1
 
 unmap <C-y>
 nmap <C-up> <C-y>
 imap <C-up> <C-o><C-y>
 nmap <C-down> <C-e>
 imap <C-down> <C-o><C-e>
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+map Q <Nop>
+map K <Nop>
+map K <Nop>
+
 " copypath
 " \xx = copy fullpath
 "" \xs = copy filename
