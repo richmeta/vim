@@ -90,8 +90,7 @@ nnoremap \W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 
 " todo - test if xmllint exists
 " todo - test if file is empty
-autocmd FileType xml exe ":silent %!xmllint --format --recover - "
-autocmd FileType xsd exe ":silent %!xmllint --format --recover - "
+autocmd FileType xml,xsd exe ":silent %!xmllint --format --recover - "
 autocmd FileType python set tabstop=4 shiftwidth=4
 
 " prevent delimitmate from loading
@@ -136,6 +135,7 @@ function MapToggle(key, opt)
 endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
+map <F5> :DelimitMateSwitch<CR>
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
 
 " Display-altering option toggles
