@@ -43,3 +43,6 @@
 [submodule "bundle/bufexplorer"]
 	path = bundle/bufexplorer
 	url = https://github.com/onehouse/vim-bufexplorer.git
+[submodule "bundle/cmdlinecomplete"]
+	path = bundle/cmdlinecomplete
+	url = https://github.com/vim-scripts/CmdlineComplete.git
