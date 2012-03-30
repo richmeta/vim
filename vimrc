@@ -4,7 +4,11 @@
 "
 
 " 'vim -u NONE' skips loading plugins.
-
+"
+" TODO;
+"  imap \p = put at end of line
+"  imap \P = put at beginning of line
+"
 set nocompatible
 
 call pathogen#infect()
@@ -43,7 +47,6 @@ set whichwrap=b,s,h,l,<,>,~,[,]
 set nostartofline
 set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 set winminheight=0
-set gdefault
 set shiftround
 set showcmd
 
@@ -93,9 +96,6 @@ nnoremap \W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 autocmd FileType xml,xsd exe ":silent %!xmllint --format --recover - "
 autocmd FileType python set tabstop=4 shiftwidth=4
 
-" prevent delimitmate from loading
-autocmd FileType xhtml,xml let b:loaded_delimitMate = 1
-
 unmap <C-y>
 nmap <C-up> <C-y>
 imap <C-up> <C-o><C-y>
@@ -135,7 +135,6 @@ function MapToggle(key, opt)
 endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
-map <F5> :DelimitMateSwitch<CR>
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
 
 " Display-altering option toggles

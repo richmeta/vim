@@ -25,7 +25,6 @@ submodules
 plugins:
   changecolor
   conqueterm
-  delimitmate
   matchit
   nerdcommenter
   nerdtree
@@ -34,4 +33,4 @@ plugins:
   tabular
   tlib
   vimaddonmw
-  xmledit
+  cmdlinecomplete

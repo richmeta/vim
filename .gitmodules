@@ -16,9 +16,6 @@
 [submodule "bundle/vimaddonmw"]
 	path = bundle/vimaddonmw
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "bundle/delimitmate"]
-	path = bundle/delimitmate
-	url = https://github.com/Raimondi/delimitMate.git
 [submodule "bundle/tabular"]
 	path = bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
@@ -31,9 +28,6 @@
 [submodule "bundle/changecolor"]
 	path = bundle/changecolor
 	url = https://github.com/vim-scripts/changeColorScheme.vim.git
-[submodule "bundle/xmledit"]
-	path = bundle/xmledit
-	url = https://github.com/sukima/xmledit
 [submodule "bundle/vim-perl"]
 	path = bundle/vim-perl
 	url = https://github.com/petdance/vim-perl.git
@@ -49,3 +43,6 @@
 [submodule "bundle/bufexplorer"]
 	path = bundle/bufexplorer
 	url = https://github.com/onehouse/vim-bufexplorer.git
+[submodule "bundle/cmdlinecomplete"]
+	path = bundle/cmdlinecomplete
+	url = https://github.com/vim-scripts/CmdlineComplete.git
