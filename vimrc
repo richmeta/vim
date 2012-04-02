@@ -5,9 +5,6 @@
 
 " 'vim -u NONE' skips loading plugins.
 "
-" TODO;
-"  imap \p = put at end of line
-"  imap \P = put at beginning of line
 "
 set nocompatible
 
@@ -128,7 +125,7 @@ elseif has('win32')
 	command! -bar -nargs=0 WR silent! exec "write !attrib -r %" | silent! edit!
 endif
 " Map key to toggle opt
-function MapToggle(key, opt)
+function! MapToggle(key, opt)
   let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
   exec 'nnoremap '.a:key.' '.cmd
   exec 'inoremap '.a:key." \<C-O>".cmd
@@ -162,4 +159,28 @@ autocmd BufNewFile,BufRead *.pl compiler! perl
 nmap <Leader>pt :%!perltidy<CR>
 vmap <Leader>pt :!perltidy<CR>
 
+
+" [reg]\p | [reg]\P to put at BOL or EOL
+function! XOL_put(eol)
+  if a:eol
+    let location = "$"
+    let p = "p"
+  else
+    let location = "0"
+    let p = "P"
+  endif
+  let cmd = 'normal ' . location . v:count1 . '"' . v:register . p
+  execute cmd
+endfunction
+
+"nnoremap <silent> <leader>p :call Xol_put(1)
+"nnoremap <silent> <leader>P :call Xol_put(0)
+
+nnoremap <silent> <leader>p :call XOL_put(1)<CR>
+nnoremap <silent> <leader>P :call XOL_put(0)<CR>
+
+
 syntax enable
+
+
+
