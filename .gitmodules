@@ -49,3 +49,6 @@
 [submodule "bundle/surround"]
 	path = bundle/surround
 	url = https://github.com/tpope/vim-surround
+[submodule "bundle/repeat"]
+	path = bundle/repeat
+	url = https://github.com/tpope/vim-repeat.git
