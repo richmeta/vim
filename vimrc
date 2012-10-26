@@ -42,12 +42,14 @@ set smarttab
 set report=0
 set whichwrap=b,s,h,l,<,>,~,[,]
 set nostartofline
+set sidescroll=5
+set sidescrolloff=10
 set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 set winminheight=0
 set shiftround
 set showcmd
 
-"set sidescrolloff=10
+
 
 " todo: call random if plugin is loaded
 colorscheme torte
@@ -105,17 +107,16 @@ inoremap <C-U> <C-G>u<C-U>
 
 map Q <Nop>
 map K <Nop>
-map K <Nop>
 
 " copypath
 " \xx = copy fullpath
 "" \xs = copy filename
 if has('win32')
-  nmap <Leader>xx :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
-  nmap <Leader>xs :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap <Leader>xx :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
+  nmap <Leader>xs :let @+=substitute(expand("%"), "/", "\\", "g")<CR>
 elseif has('unix')
-  nmap <Leader>xx :let @*=expand("%:p")<CR>
-  nmap <Leader>xs :let @*=expand("%")<CR>
+  nmap <Leader>xx :let @+=expand("%:p")<CR>
+  nmap <Leader>xs :let @+=expand("%")<CR>
 endif
 " sudo write 
 if has('unix')
@@ -161,6 +162,7 @@ vmap <Leader>pt :!perltidy<CR>
 
 
 " [reg]\p | [reg]\P to put at BOL or EOL
+" ( where [reg] includes dquote  eg "w\p )
 function! XOL_put(eol)
   if a:eol
     let location = "$"
@@ -182,5 +184,5 @@ nnoremap <silent> <leader>P :call XOL_put(0)<CR>
 
 syntax enable
 
-
-
+" TODO:
+" add toggle for wrapscan
