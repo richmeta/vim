@@ -175,9 +175,6 @@ function! XOL_put(eol)
   execute cmd
 endfunction
 
-"nnoremap <silent> <leader>p :call Xol_put(1)
-"nnoremap <silent> <leader>P :call Xol_put(0)
-
 nnoremap <silent> <leader>p :call XOL_put(1)<CR>
 nnoremap <silent> <leader>P :call XOL_put(0)<CR>
 

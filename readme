@@ -35,3 +35,4 @@ plugins:
   tlib
   vimaddonmw
   cmdlinecomplete
+  matchtagalways

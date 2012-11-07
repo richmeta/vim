@@ -52,3 +52,6 @@
 [submodule "bundle/repeat"]
 	path = bundle/repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule "bundle/matchtagalways"]
+	path = bundle/matchtagalways
+	url = https://github.com/Valloric/MatchTagAlways
