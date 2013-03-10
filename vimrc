@@ -48,6 +48,8 @@ set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 set winminheight=0
 set shiftround
 set showcmd
+set grepprg=ack
+set matchpairs+=<:>
 
 
 
@@ -77,24 +79,50 @@ if has("autocmd")
   augroup END
 endif
 
-set grepprg=ack
+" LEADER MAPPINGS
+" ---------------
+"
+" \p = ctrlp
+" \t = new tab
 noremap <Leader>t :tabnew<CR>
-map Y y$
-set matchpairs+=<:>
-nnoremap <C-N> :next<CR>
-nnoremap <C-P> :prev<CR>
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
 
-"open window on current word
-nnoremap \w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
-nnoremap \W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
+" \pt = perltidy
+nmap <Leader>pt :%!perltidy<CR>
+vmap <Leader>pt :!perltidy<CR>
 
+" \w 
+" open window on current word
+nnoremap <Leader>w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
+nnoremap <Leader>W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
+
+" \xf = re-format xml 
 " todo - test if xmllint exists
-" todo - test if file is empty
-autocmd FileType xml,xsd exe ":silent %!xmllint --format --recover - "
-autocmd FileType python set tabstop=4 shiftwidth=4
+map <Leader>xf :silent %!xmllint --format --recover - <CR>
 
+" \ds = time stamp
+" \dd = date only
+" \dt = time only
+nnoremap <Leader>ds "=strftime("%d/%m/%Y %H:%M")<CR>P
+inoremap <C-D>s <C-R>=strftime("%d/%m/%Y %H:%M")<CR>
+nnoremap <Leader>dd "=strftime("%d/%m/%Y")<CR>P
+inoremap <C-D>d <C-R>=strftime("%d/%m/%Y")<CR>
+nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
+inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
+
+" \cY = copy to clipboard to end of line ( i.e. without CR)
+nnoremap <Leader>cY "+y$
+
+" \u = CtrlPMRU 
+map <Leader>u :CtrlPMRU<CR>
+
+
+" OTHER MAPPINGS
+" --------------
+"
+" Y = yank to EOL
+map Y y$
+
+" Ctrl-E/Ctrl-Y scroll up/down
 unmap <C-y>
 nmap <C-up> <C-y>
 imap <C-up> <C-o><C-y>
@@ -105,19 +133,32 @@ imap <C-down> <C-o><C-e>
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
+" Next/Previous file
+nnoremap <C-N> :next<CR>
+nnoremap <C-P> :prev<CR>
+
+" Next/Previous buffer
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+
+" disable Q (command hist)
 map Q <Nop>
-map K <Nop>
+
+" python sw=4
+autocmd FileType python set tabstop=4 shiftwidth=4
 
 " copypath
-" \xx = copy fullpath
-"" \xs = copy filename
+" \cf = fullpath, 
+" \cv = copy filename
+" todo \cd = copy file's dir
 if has('win32')
-  nmap <Leader>xx :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
-  nmap <Leader>xs :let @+=substitute(expand("%"), "/", "\\", "g")<CR>
+  nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
+  nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<CR>
 elseif has('unix')
-  nmap <Leader>xx :let @+=expand("%:p")<CR>
-  nmap <Leader>xs :let @+=expand("%")<CR>
+  nmap <Leader>cf :let @+=expand("%:p")<CR>
+  nmap <Leader>cv :let @+=expand("%")<CR>
 endif
+
 " sudo write 
 if has('unix')
 	command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
@@ -125,6 +166,7 @@ if has('unix')
 elseif has('win32')
 	command! -bar -nargs=0 WR silent! exec "write !attrib -r %" | silent! edit!
 endif
+
 " Map key to toggle opt
 function! MapToggle(key, opt)
   let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
@@ -146,20 +188,17 @@ MapToggle <F11> ignorecase
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
-" colorscheme switching
-map <Leader>c<Right> :call NextColorScheme()<CR> :colorscheme<CR>
-map <Leader>c<Left>  :call PreviousColorScheme()<CR> :colorscheme<CR>
-map <Leader>c<Up>    :call RandomColorScheme()<CR> :colorscheme<CR>
-map <Leader>c<Del>   :call RemoveCurrentColorScheme()<CR> :colorscheme<CR>
-
 " perl support (TODO: not working)
-let g:perl_compiler_force_warnings = 0    " -w not -W
 autocmd BufNewFile,BufRead *.pl compiler! perl
 
-" perltidy
-nmap <Leader>pt :%!perltidy<CR>
-vmap <Leader>pt :!perltidy<CR>
+" PLUGIN SETTINGS 
+" ---------------
+"
+let g:perl_compiler_force_warnings = 0    " -w not -W
 
+" ctrlp = \p
+" ( ctrlpmru = \u )
+let g:ctrlp_map = '<Leader>p'
 
 " [reg]\p | [reg]\P to put at BOL or EOL
 " ( where [reg] includes dquote  eg "w\p )
@@ -177,7 +216,6 @@ endfunction
 
 nnoremap <silent> <leader>p :call XOL_put(1)<CR>
 nnoremap <silent> <leader>P :call XOL_put(0)<CR>
-
 
 syntax enable
 

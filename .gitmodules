@@ -34,10 +34,6 @@
 	path = bundle/snippets
 	url = https://github.com/honza/snipmate-snippets.git
   ignore = dirty
-[submodule "bundle/changecolor"]
-	path = bundle/changecolor
-	url = https://github.com/vim-scripts/changeColorScheme.vim.git
-  ignore = dirty
 [submodule "bundle/vim-perl"]
 	path = bundle/vim-perl
 	url = https://github.com/petdance/vim-perl.git
@@ -70,7 +66,9 @@
 	path = bundle/repeat
 	url = https://github.com/tpope/vim-repeat.git
   ignore = dirty
-[submodule "bundle/matchtagalways"]
-	path = bundle/matchtagalways
-	url = https://github.com/Valloric/MatchTagAlways
-  ignore = dirty
+[submodule "bundle/ctrlp"]
+	path = bundle/ctrlp
+	url = https://github.com/kien/ctrlp.vim
+[submodule "bundle/fugitive"]
+	path = bundle/fugitive
+	url = https://github.com/tpope/vim-fugitive

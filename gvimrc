@@ -1,5 +1,5 @@
 if !has("unix")
-  set guifont=Droid_Sans_Mono:h9:cANSI
+  set guifont=Droid_Sans_Mono:h8:cANSI
 else
   set guifont=Droid\ Sans\ Mono
 endif
