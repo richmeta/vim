@@ -188,8 +188,10 @@ MapToggle <F11> ignorecase
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
-" perl support (TODO: not working)
-autocmd BufNewFile,BufRead *.pl compiler! perl
+" perl support 
+" disable incremental searching 
+" TODO: this is global, better to only disable 'i' for perl
+set complete=.,w,b,u,t
 
 " PLUGIN SETTINGS 
 " ---------------
