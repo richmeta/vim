@@ -52,7 +52,7 @@
   ignore = dirty
 [submodule "bundle/bufexplorer"]
 	path = bundle/bufexplorer
-	url = https://github.com/onehouse/vim-bufexplorer.git
+	url = https://github.com/corntrace/bufexplorer.git
   ignore = dirty
 [submodule "bundle/cmdlinecomplete"]
 	path = bundle/cmdlinecomplete
@@ -72,3 +72,6 @@
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive
+[submodule "bundle/vim-buffing-wheel"]
+	path = bundle/vim-buffing-wheel
+	url = https://github.com/ngn/vim-buffing-wheel.git

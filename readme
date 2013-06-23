@@ -19,9 +19,10 @@ push
  
 submodules
   git submodule add https://github.com/tsaleh/vim-matchit.git bundle/matchit
-  git submodule init
-  git submodule update
-  git submodule foreach git pull origin master ( # fetch all submodules )
+  git submodule update --init
+
+  # fetch all submodules 
+  git submodule foreach git pull origin master 
 
 plugins:
   changecolor
