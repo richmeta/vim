@@ -138,8 +138,8 @@ nnoremap <C-N> :next<CR>
 nnoremap <C-P> :prev<CR>
 
 " Next/Previous buffer
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+"nnoremap <Tab> :bnext<CR>
+"nnoremap <S-Tab> :bprevious<CR>
 
 " disable Q (command hist)
 map Q <Nop>

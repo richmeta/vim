@@ -75,3 +75,6 @@
 [submodule "bundle/vim-buffing-wheel"]
 	path = bundle/vim-buffing-wheel
 	url = https://github.com/ngn/vim-buffing-wheel.git
+[submodule "bundle/vim-unimpaired"]
+	path = bundle/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
