@@ -137,13 +137,6 @@ inoremap <C-U> <C-G>u<C-U>
 nnoremap <C-N> :next<CR>
 nnoremap <C-P> :prev<CR>
 
-" Next/Previous buffer
-"nnoremap <Tab> :bnext<CR>
-"nnoremap <S-Tab> :bprevious<CR>
-
-" disable Q (command hist)
-map Q <Nop>
-
 " python sw=4
 autocmd FileType python set tabstop=4 shiftwidth=4
 
@@ -201,6 +194,17 @@ let g:perl_compiler_force_warnings = 0    " -w not -W
 " ctrlp = \p
 " ( ctrlpmru = \u )
 let g:ctrlp_map = '<Leader>p'
+
+" buffing wheel - custom mappings because of X
+" Q is remapped from std command
+let g:BuffingWheelSkipMappings = 1
+noremap <silent> L :BuffingWheelNext<CR>
+noremap <silent> H :BuffingWheelPrevious<CR>
+noremap <silent> Q :BuffingWheelDelete<CR>
+
+" PRIVATE FUNCTIONS 
+" -----------------
+"
 
 " [reg]\p | [reg]\P to put at BOL or EOL
 " ( where [reg] includes dquote  eg "w\p )
