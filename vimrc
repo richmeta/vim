@@ -97,7 +97,9 @@ nnoremap <Leader>W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR
 
 " \xf = re-format xml 
 " todo - test if xmllint exists
-map <Leader>xf :silent %!xmllint --format --recover - <CR>
+if executable('xmllint')
+  map <Leader>xf :silent %!xmllint --format --recover - <CR>
+endif
 
 " \ds = time stamp
 " \dd = date only
@@ -109,7 +111,7 @@ inoremap <C-D>d <C-R>=strftime("%d/%m/%Y")<CR>
 nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
 inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 
-" \cY = copy to clipboard to end of line ( i.e. without CR)
+" \cY = copy to end of line ( i.e. without CR)
 nnoremap <Leader>cY "+y$
 
 " \u = CtrlPMRU 
@@ -145,9 +147,11 @@ autocmd FileType python set tabstop=4 shiftwidth=4
 " \cv = copy filename
 " todo \cd = copy file's dir
 if has('win32')
+  nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<CR>
   nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
   nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<CR>
 elseif has('unix')
+  nmap <Leader>cd :let @+=expand("%:p:h")<CR>
   nmap <Leader>cf :let @+=expand("%:p")<CR>
   nmap <Leader>cv :let @+=expand("%")<CR>
 endif
