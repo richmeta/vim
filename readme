@@ -24,16 +24,3 @@ submodules
   # fetch all submodules 
   git submodule foreach git pull origin master 
 
-plugins:
-  changecolor
-  conqueterm
-  matchit
-  nerdcommenter
-  nerdtree
-  snipmate
-  snippets
-  tabular
-  tlib
-  vimaddonmw
-  cmdlinecomplete
-  matchtagalways
