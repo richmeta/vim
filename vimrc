@@ -236,5 +236,7 @@ nnoremap <silent> <leader>P :call XOL_put(0)<CR>
 
 syntax enable
 
-" TODO:
-" add toggle for wrapscan
+if filereadable("myextras.vim")
+  :source myextras.vim
+endif
+
