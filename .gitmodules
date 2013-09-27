@@ -22,10 +22,6 @@
 	path = bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
   ignore = dirty
-[submodule "bundle/conqueterm"]
-	path = bundle/conqueterm
-	url = https://github.com/rosenfeld/conque-term.git
-  ignore = dirty
 [submodule "bundle/perlhelp"]
 	path = bundle/perlhelp
 	url = https://github.com/LStinson/perlhelp-vim.git
@@ -60,9 +56,6 @@
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive
-[submodule "bundle/vim-buffing-wheel"]
-	path = bundle/vim-buffing-wheel
-	url = https://github.com/ngn/vim-buffing-wheel.git
 [submodule "bundle/vim-unimpaired"]
 	path = bundle/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
