@@ -50,7 +50,7 @@ set shiftround
 set showcmd
 set grepprg=ack
 set matchpairs+=<:>
-set iskeyword+=-,.,\\,/
+set iskeyword+=-
 
 
 
@@ -124,6 +124,8 @@ map <Leader>u :CtrlPMRU<CR>
 "
 " Y = yank to EOL
 map Y y$
+nmap gw f<space>
+nmap gb F<space>
 
 " Ctrl-E/Ctrl-Y scroll up/down
 unmap <C-y>
@@ -188,6 +190,7 @@ command -nargs=+ MapToggle call MapToggle(<f-args>)
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
 
 " Display-altering option toggles
+MapToggle <F2> spell
 MapToggle <F5> wrapscan
 MapToggle <F7> hlsearch
 MapToggle <F8> wrap
