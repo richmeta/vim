@@ -102,6 +102,9 @@ if executable('xmllint')
   map <Leader>xf :silent %!xmllint --format --recover - <CR>
 endif
 
+" \jf = format json
+map <Leader>jf :silent %!python -mjson.tool<CR>
+
 " \ds = time stamp
 " \dd = date only
 " \dt = time only
@@ -112,12 +115,22 @@ inoremap <C-D>d <C-R>=strftime("%d/%m/%Y")<CR>
 nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
 inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 
-" \cY = copy to end of line ( i.e. without CR)
+" \yy = copy to end of line ( i.e. without CR)
 nnoremap <Leader>cY "+y$
 
 " \u = CtrlPMRU 
-map <Leader>u :CtrlPMRU<CR>
+nnoremap <Leader>u :CtrlPMRU<CR>
 
+" \qf = Quick fix open
+" \qc = Quick fix close
+noremap <Leader>qf :copen<CR>
+noremap <Leader>qc :cclose<CR>
+
+" \dw = remove trailing whitespace
+nnoremap <Leader>dw :%s/\s\+$//g<CR>
+
+" \sr = insert rule using -
+nnoremap <Leader>sr o<Esc>80a-<Esc>
 
 " OTHER MAPPINGS
 " --------------
@@ -215,6 +228,9 @@ let g:perl_compiler_force_warnings = 0    " -w not -W
 " ctrlp = \p
 " ( ctrlpmru = \u )
 let g:ctrlp_map = '<Leader>p'
+
+" space around nerd commenter blocks
+let NERDSpaceDelims=1
 
 " PRIVATE FUNCTIONS 
 " -----------------
