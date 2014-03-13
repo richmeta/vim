@@ -54,8 +54,8 @@ set iskeyword+=-
 
 
 
-" todo: call random if plugin is loaded
-colorscheme torte
+" colorscheme torte
+colorscheme lucius
 
 if has("autocmd")
   filetype plugin indent on
@@ -65,7 +65,7 @@ if has("autocmd")
   au!
 
   " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  " autocmd FileType text setlocal textwidth=78
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -88,8 +88,10 @@ endif
 noremap <Leader>t :tabnew<CR>
 
 " \pt = perltidy
-nmap <Leader>pt :%!perltidy<CR>
-vmap <Leader>pt :!perltidy<CR>
+if executable('perltidy')
+  nmap <Leader>pt :%!perltidy<CR>
+  vmap <Leader>pt :!perltidy<CR>
+endif
 
 " \w 
 " open window on current word
@@ -97,13 +99,19 @@ nnoremap <Leader>w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
 nnoremap <Leader>W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 
 " \xf = re-format xml 
-" todo - test if xmllint exists
+" TODO: need better xml cleaner
 if executable('xmllint')
-  map <Leader>xf :silent %!xmllint --format --recover - <CR>
+  map <Leader>xf :silent xmllint --format --recover - <CR>
+  vmap <Leader>xf :!xmllint --format --recover - <CR>
+elseif executable('xmlpp.py')
+  map <Leader>xf :silent %!xmlpp.py - <CR>
+  vmap <Leader>xf :!xmlpp.py - <CR>
 endif
 
 " \jf = format json
-map <Leader>jf :silent %!python -mjson.tool<CR>
+if executable('python')
+  map <Leader>jf :silent %!python -mjson.tool<CR>
+endif
 
 " \ds = time stamp
 " \dd = date only
@@ -129,8 +137,9 @@ noremap <Leader>qc :cclose<CR>
 " \dw = remove trailing whitespace
 nnoremap <Leader>dw :%s/\s\+$//g<CR>
 
-" \sr = insert rule using -
-nnoremap <Leader>sr o<Esc>80a-<Esc>
+" \- \=  insert ruler using -
+nnoremap <Leader>- o<Esc>80a-<Esc>
+nnoremap <Leader>= o<Esc>80a=<Esc>
 
 " OTHER MAPPINGS
 " --------------
