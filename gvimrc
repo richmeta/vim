@@ -3,5 +3,5 @@ if !has("unix")
 else
   set guifont=Droid\ Sans\ Mono
 endif
-set columns=1250
-set lines=37
+set columns=120
+set lines=30

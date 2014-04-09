@@ -53,9 +53,14 @@ set matchpairs+=<:>
 set iskeyword+=-
 
 
-
-" colorscheme torte
-colorscheme lucius
+" TODO: not sure what term is under linux 
+if &term == "win32" 
+  " console vim, |lucius| doesn't support console
+  colorscheme torte
+else
+  " gvim
+  colorscheme lucius
+endif
 
 if has("autocmd")
   filetype plugin indent on
@@ -99,13 +104,10 @@ nnoremap <Leader>w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
 nnoremap <Leader>W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 
 " \xf = re-format xml 
-" TODO: need better xml cleaner
-if executable('xmllint')
-  map <Leader>xf :silent xmllint --format --recover - <CR>
-  vmap <Leader>xf :!xmllint --format --recover - <CR>
-elseif executable('xmlpp.py')
-  map <Leader>xf :silent %!xmlpp.py - <CR>
-  vmap <Leader>xf :!xmlpp.py - <CR>
+if executable('xml_pp')
+  " xml_pp = xml pretty print from XML::Twig
+  map <Leader>xf :silent %!xml_pp -- <CR>
+  vmap <Leader>xf :!xml_pp -- <CR>
 endif
 
 " \jf = format json
