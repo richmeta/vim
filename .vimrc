@@ -88,6 +88,7 @@ endif
 " LEADER MAPPINGS
 " ---------------
 "
+" \p = ctrlp
 " \t = new tab
 noremap <Leader>t :tabnew<CR>
 
@@ -134,8 +135,8 @@ inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 " \yy = copy to end of line to clipboard ( i.e. without CR)
 nnoremap <Leader>cY "+y$
 
-" " \u = CtrlPMRU 
-" nnoremap <Leader>u :CtrlPMRU<CR>
+" \u = CtrlPMRU 
+nnoremap <Leader>u :CtrlPMRU<CR>
 
 " \qf = Quick fix open
 " \qc = Quick fix close
