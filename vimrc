@@ -227,6 +227,7 @@ endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
+map <F3> :TagbarToggle<CR>
 
 " Display-altering option toggles
 MapToggle <F2> spell
