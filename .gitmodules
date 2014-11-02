@@ -55,9 +55,3 @@
 [submodule "bundle/vim-unimpaired"]
 	path = bundle/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "bundle/ultisnips"]
-	path = bundle/ultisnips
-	url = https://github.com/SirVer/ultisnips.git
-[submodule "ultisnips"]
-	path = ultisnips
-	url = https://github.com/aalvarado/ultisnips-snippets
