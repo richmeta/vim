@@ -1,26 +1,26 @@
-[submodule "bundle/nerdtree"]
-	path = bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bundle/nerdtree"]
+	path = bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
   ignore = dirty
-[submodule "bundle/matchit"]
-	path = bundle/matchit
-	url = https://github.com/edsono/vim-matchit.git
+[submodule "bundle/matchit"]
+	path = bundle/matchit
+	url = https://github.com/edsono/vim-matchit.git
   ignore = dirty
-[submodule "bundle/nerdcommenter"]
-	path = bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/nerdcommenter"]
+	path = bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
   ignore = dirty
-[submodule "bundle/tlib"]
-	path = bundle/tlib
-	url = https://github.com/vim-scripts/tlib.git
+[submodule "bundle/tlib"]
+	path = bundle/tlib
+	url = https://github.com/vim-scripts/tlib.git
   ignore = dirty
-[submodule "bundle/vimaddonmw"]
-	path = bundle/vimaddonmw
-	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "bundle/vimaddonmw"]
+	path = bundle/vimaddonmw
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
   ignore = dirty
-[submodule "bundle/tabular"]
-	path = bundle/tabular
-	url = https://github.com/godlygeek/tabular.git
+[submodule "bundle/tabular"]
+	path = bundle/tabular
+	url = https://github.com/godlygeek/tabular.git
   ignore = dirty
 [submodule "bundle/perlhelp"]
 	path = bundle/perlhelp

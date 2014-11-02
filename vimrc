@@ -7,11 +7,29 @@
 "
 "
 set nocompatible
+filetype off
+set runtimepath+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-call pathogen#infect()
-call pathogen#helptags()
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
-
+Plugin 'scrooloose/nerdtree'
+Plugin 'edsono/vim-matchit'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'vim-scripts/tlib'
+"Plugin MarcWeber/vim-addon-mw-utils
+Plugin 'godlygeek/tabular'
+Plugin 'LStinson/perlhelp-vim'
+Plugin 'vim-scripts/Mark'
+Plugin 'majutsushi/tagbar'
+Plugin 'vim-scripts/CmdlineComplete'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'SirVer/ultisnips'
 
 " enable ctrl-c, ctrl-v, ctrl-a
 source $VIMRUNTIME/mswin.vim
