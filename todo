@@ -1,0 +1,61 @@
+
+tasks:
+--------------------------------------------------------------------------------
+add to search in commands:
+  command! -nargs=1 Ngrep vimgrep "<args>" $COMMANDS_DIR/**/*
+  nnoreamp <leader>[ :Ngrep
+
+compile perl
+add toggle for nu OR relative nu
+Non greedy quantifiers
+using cdpath
+cindenting
+folding 
+turn off swpfile if inside Dropbox folder
+
+mechanism for auto loading of tags 
+	if tags in current ( project ) directory load tags 
+  if .autoctag in directory regen ctags
+
+function to change font size
+
+useful:
+--------------------------------------------------------------------------------
+open header =>   :e %:r.h
+
+plugins:
+--------------------------------------------------------------------------------
+  
+octave
+Switch 
+VimShell
+
+python-mode
+ack (vim plugin) or EasyGrep
+renumber: http://www.vim.org/scripts/script.php?script_id=189 OR VisIncr: https://github.com/vim-scripts/VisIncr
+textobj-word-column: https://github.com/coderifous/textobj-word-column.vim
+
+
+
+--------------------------------------------------------------------------------
+enable/disable autoread/autowrite modes: 
+eg:
+	
+
+" autoread and autowrite
+augroup save
+  au!
+  au FocusLost * wall
+augroup END
+set nohidden
+set nobackup
+set noswapfile
+set nowritebackup
+set autoread
+set autowrite
+set autowriteall
+
+" see help persistent-undo
+set undodir=~/.vim/undo
+set undofile
+
