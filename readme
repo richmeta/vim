@@ -146,3 +146,10 @@ nnoremap <silent> <leader>P :call XOL_put(0)<CR>
 
 com! -nargs=0 -range Yank :let @+=YankNu(<line1>,<line2>)
 
+
+insert unicode character:
+By decimal value: ^Vnnn (with 000 <= nnn <= 255)
+By hex value: ^VXnn or ^Vxnn (with 00 <= nn <= FF)
+By hex value for BMP Unicode codepoints: ^Vunnnn (with 0000 <= nnnn <= FFFF)
+By hex value for any Unicode codepoint: ^VUnnnnnnnn (with 00000000 <= nnnnnnnn <= 7FFFFFFF) 
+

@@ -18,7 +18,6 @@ Bundle 'vim-scripts/tlib'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'godlygeek/tabular'
 Bundle 'LStinson/perlhelp-vim'
-Bundle 'vim-scripts/Mark'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/CmdlineComplete'
 Bundle 'tpope/vim-surround'
@@ -28,6 +27,12 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
+Bundle 'bling/vim-airline'
+Bundle 'scrooloose/syntastic'
+Bundle 'paradigm/vim-multicursor'
+
+
+
 
 " enable ctrl-c, ctrl-v, ctrl-a
 source $VIMRUNTIME/mswin.vim
@@ -99,6 +104,13 @@ if has("autocmd")
   \ endif
 
   augroup END
+
+  augroup Shebang
+    autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl>\"|$
+    autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl -w\<nl>\"|$
+    autocmd BufNewFile *.html 0put =\"<!DOCTYPE html>\"|$
+  augroup END
+
 endif
 
 " LEADER MAPPINGS
@@ -154,6 +166,15 @@ nnoremap <Leader>cY "+y$
 nnoremap <Leader>u :CtrlPMRU<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
 
+" \Mp = Manually place Multicursor
+" \Mm = start Multicursor manual mode
+" \Mv = Visual Multicursor mode
+" \Mr = search Multicursor search regex
+nnoremap <Leader>mp :call MultiCursorPlaceCursor()<CR>
+nnoremap <Leader>mm :call MultiCursorManual()<CR>
+xnoremap <Leader>mv :call MultiCursorVisual()<CR>
+nnoremap <Leader>mr :call MultiCursorSearch('')<CR>
+
 " \qf = Quick fix open
 " \qc = Quick fix close
 noremap <Leader>qf :copen<CR>
@@ -171,9 +192,6 @@ nnoremap <Leader>v :vnew<CR>
 
 " \h - open new horizontal split
 nnoremap <Leader>h :new<CR>
-
-" " \b - open last buffer
-" nnorema <Leader>b :b#<CR>
 
 " OTHER MAPPINGS
 " --------------
@@ -279,6 +297,37 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn))$',
   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
 \}
+
+" airline
+let g:airline#extensions#syntastic#enabled = 1
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_warning_symbol = "⸮"
+let g:syntastic_error_symbol = "»"
+
+" NOTE: needs flake8
+" ignore errors/warnings:
+"  E302 expected 2 blank lines, found 1
+"  E501 line too long
+"  E303 too many blank lines 
+"  W291 trailing whitespace
+"  E251 unexpected spaces around keyword / parameter equals 
+"  E201,E202 whitespace after/before '(' ')'
+"  W391 blank line at end of file 
+let g:syntastic_python_checkers=["flake8"]
+let g:syntastic_python_flake8_args='--ignore=E302,E501,E303,W291,E251,E201,E202'
+
+" multicursor
+let g:multicursor_quit = "q"
+
 
 " space around nerd commenter blocks
 let NERDSpaceDelims=1
