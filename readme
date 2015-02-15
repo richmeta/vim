@@ -24,3 +24,125 @@ submodules
   # fetch all submodules 
   git submodule foreach git pull origin master 
 
+
+Howtos
+------
+# skips loading plugins.
+vim -u NONE 
+
+# search for a block of text
+CalcCheckSum
+Applicability
+Checksum
+Name
+Type
+EndCalcCheckSum
+
+CalcCheckSum 
+....
+
+/^calcchecksum\n\(.*\n\)\{-1,}endcalcchecksum
+
+(needs :set maxmempattern=10000)
+
+
+# handy key mappings
+[{  jump to beginning of code block
+]}  end
+
+gd  jump to declaration of local variable
+gD  jump to declaration of global variable
+
+[i  display defintion of variable
+[I  dsplay all lines having that variable with line numbers
+[d  display definition of macro
+
+Ctrl-O  go back to older cursor locations
+Ctrl-I  go forward 
+
+Ctrl-A / Ctrl-X  Increase/Decrease number at line
+(use nunmap <C-X>   to use in windows)
+
+# multiline searching
+/^\nF\d\_.\{-}\_^\n\zs.*/+
+
+It means "Find a block of lines that start with F and a digit, then scan forward to the next blank line and select the line after that." This is how it works:
+^\n 	Matches the start of a line, followed by a newline - i.e a blank line
+F\d 	The next line starts with an F followed by a digit
+\_.\{-} 	'\_.' is like '.', but also matches newline. '\{-}' matches the minimum number of the preceeding '\_.'. (If I were to use '*' instead of '\{-}', it would match to near the end-of file.)
+\_^\n 	Matches a blank line. '\_^' is like '^', but '^' only works at the start of a regular expression.
+\zs 	When the match is finished, set the start of match to this point. I use this because I don't want the preceding text to be highlighted.
+.* 	Matches the whole line.
+
+The '+' after the regular expression tells Vim to put the cursor on the line after the selection. This gets the cursor out of the way so that I can see the selection easily.
+
+# change to the current files directory
+:cd %:p:h
+
+# Will set the file type of all the files under ~/Download/unpack/graphics whose extension is ".pdb" to perl.
+autocmd BufNewFile,BufRead ~/Download/unpack/graphics/*.pdb set filetype=perl
+
+# reverse a file 
+:g/^/m0
+
+# regenerate helptags
+:helptags C:\Program\ Files\Vim\vim71\doc\
+
+# build in vars
+% = current filename
+%:p = full path to filename
+%:p:h = directory of filename 
+%:r = filename without extension
+%:p:s?doc?XXX? = full path, with substitute (need 3x ? )
+
+
+:exe "!echo %" to see
+
+-- g command search  and delete the found line and next 3 lines after (so deletes 4 lines)
+:g/OBJECT_GRANT failed/ .,+3d
+
+-- g command search and delete only the 5th line after the search
+:g/search/ .+5d 
+
+-- g command search and delete from that line upto regex
+:g/search/ .,/^regex$/ d
+
+-- g command chaining using pipe
+:g/search/  s/search/replace/g | s/search2/replace2/g 
+
+
+scripting
+============
+
+copy lines with numbering
+--------------------------
+fu! YankNu(first, last)
+        let start=a:first
+        let l=[]
+        while start <= a:last
+                let l = add(l,printf("%".len(a:last) . "d %s",start , " " . getline(start)))
+                let start+=1
+        endwhile
+        return join(l,"\n") . "\n"
+endfu
+
+" [reg]\p | [reg]\P to put at BOL or EOL
+" ( where [reg] includes dquote  eg "w\p )
+function! XOL_put(eol)
+  if a:eol
+    let location = "$"
+    let p = "p"
+  else
+    let location = "0"
+    let p = "P"
+  endif
+  let cmd = 'normal ' . location . v:count1 . '"' . v:register . p
+  execute cmd
+endfunction
+
+nnoremap <silent> <leader>p :call XOL_put(1)<CR>
+nnoremap <silent> <leader>P :call XOL_put(0)<CR>
+
+
+com! -nargs=0 -range Yank :let @+=YankNu(<line1>,<line2>)
+

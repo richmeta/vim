@@ -3,33 +3,31 @@
 " 
 "
 
-" 'vim -u NONE' skips loading plugins.
-"
-"
 set nocompatible
 filetype off
 set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call vundle#rc()
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Bundle 'gmarik/Vundle.vim'
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'edsono/vim-matchit'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'vim-scripts/tlib'
-"Plugin MarcWeber/vim-addon-mw-utils
-Plugin 'godlygeek/tabular'
-Plugin 'LStinson/perlhelp-vim'
-Plugin 'vim-scripts/Mark'
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-scripts/CmdlineComplete'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'SirVer/ultisnips'
+Bundle 'scrooloose/nerdtree'
+Bundle 'edsono/vim-matchit'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'vim-scripts/tlib'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'godlygeek/tabular'
+Bundle 'LStinson/perlhelp-vim'
+Bundle 'vim-scripts/Mark'
+Bundle 'majutsushi/tagbar'
+Bundle 'vim-scripts/CmdlineComplete'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 
 " enable ctrl-c, ctrl-v, ctrl-a
 source $VIMRUNTIME/mswin.vim
@@ -69,9 +67,9 @@ set showcmd
 set grepprg=ack
 set matchpairs+=<:>
 set iskeyword+=-
+set wildignore=*.sw*,*.pyc
 
 
-" TODO: not sure what term is under linux 
 if &term == "win32" 
   " console vim, |lucius| doesn't support console
   colorscheme torte
@@ -152,8 +150,9 @@ inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 " \yy = copy to end of line to clipboard ( i.e. without CR)
 nnoremap <Leader>cY "+y$
 
-" \u = CtrlPMRU 
+" \u = CtrlP MRU, \b = CtrlP Buffer
 nnoremap <Leader>u :CtrlPMRU<CR>
+nnoremap <Leader>b :CtrlPBuffer<CR>
 
 " \qf = Quick fix open
 " \qc = Quick fix close
@@ -173,8 +172,8 @@ nnoremap <Leader>v :vnew<CR>
 " \h - open new horizontal split
 nnoremap <Leader>h :new<CR>
 
-" \b - open last buffer
-nnorema <Leader>b :b#<CR>
+" " \b - open last buffer
+" nnorema <Leader>b :b#<CR>
 
 " OTHER MAPPINGS
 " --------------
@@ -202,8 +201,8 @@ nnoremap <C-P> :prev<CR>
 " Buffer switching 
 nmap L ]b
 nmap H [b
-nmap <silent> Q :bd<CR>
-nmap <silent> <A-q> :bd!<CR>
+nmap <silent> Q :bp<CR>:bd #<CR>
+nmap <silent> <A-q> :bp<CR>:bd! #<CR>
 
 " Window switching
 nmap <silent> <c-k> :wincmd k<CR>
@@ -242,7 +241,7 @@ function! MapToggle(key, opt)
   exec 'nnoremap '.a:key.' '.cmd
   exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
-command -nargs=+ MapToggle call MapToggle(<f-args>)
+command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
 map <F3> :TagbarToggle<CR>
@@ -253,6 +252,8 @@ MapToggle <F5> wrapscan
 MapToggle <F7> hlsearch
 MapToggle <F8> wrap
 MapToggle <F9> list
+MapToggle <S-F8> number
+MapToggle <S-F9> relativenumber
 
 " Behavior-altering option toggles
 MapToggle <F10> scrollbind
@@ -261,18 +262,23 @@ MapToggle <F12> paste
 set pastetoggle=<F12>
 
 " perl support 
-" disable incremental searching 
-" TODO: this is global, better to only disable 'i' for perl
-set complete=.,w,b,u,t
+if has('win32') && executable('perl')
+  " set complete=.,w,b,u,t
+  " disable incremental searching (only a problem on windows)
+  set complete-=i
+endif
 
 " PLUGIN SETTINGS 
 " ---------------
-"
-let g:perl_compiler_force_warnings = 0    " -w not -W
 
 " ctrlp = \p
 " ( ctrlpmru = \u )
 let g:ctrlp_map = '<Leader>p'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn))$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
 
 " space around nerd commenter blocks
 let NERDSpaceDelims=1
@@ -283,3 +289,4 @@ if filereadable("myextras.vim")
   :source myextras.vim
 endif
 
+set dictionary=~/.vim/dict/dict.txt
