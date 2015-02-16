@@ -30,6 +30,7 @@ Bundle 'honza/vim-snippets'
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 Bundle 'paradigm/vim-multicursor'
+Bundle 'AndrewRadev/switch.vim'
 
 
 
@@ -328,9 +329,11 @@ let g:syntastic_python_flake8_args='--ignore=E302,E501,E303,W291,E251,E201,E202'
 " multicursor
 let g:multicursor_quit = "q"
 
-
-" space around nerd commenter blocks
+" NERDComment space around nerd commenter blocks
 let NERDSpaceDelims=1
+
+" switch
+nnoremap <Leader>s :Switch<CR>
 
 syntax enable
 
