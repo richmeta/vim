@@ -188,6 +188,7 @@ noremap <Leader>lc :lclose<CR>
 
 " \dw = remove trailing whitespace
 nnoremap <Leader>dw :%s/\s\+$//g<CR>
+vnoremap <Leader>dw :s/\s\+$//g<CR>
 
 " \- \=  insert ruler using -
 nnoremap <Leader>- o<Esc>80a-<Esc>
