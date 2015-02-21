@@ -181,6 +181,11 @@ nnoremap <Leader>mr :call MultiCursorSearch('')<CR>
 noremap <Leader>qf :copen<CR>
 noremap <Leader>qc :cclose<CR>
 
+" \lf = Location open
+" \lc = Location close
+noremap <Leader>lf :lopen<CR>
+noremap <Leader>lc :lclose<CR>
+
 " \dw = remove trailing whitespace
 nnoremap <Leader>dw :%s/\s\+$//g<CR>
 
@@ -193,6 +198,14 @@ nnoremap <Leader>v :vnew<CR>
 
 " \h - open new horizontal split
 nnoremap <Leader>h :new<CR>
+
+" Switch
+nnoremap <Leader>sw :Switch<CR>
+
+" Syntastic 
+nnoremap <Leader>sc :SyntasticCheck<CR>
+nnoremap <Leader>st :SyntasticToggleMode<CR>
+nnoremap <Leader>sr :SyntasticReset<CR>
 
 " OTHER MAPPINGS
 " --------------
@@ -235,7 +248,6 @@ autocmd FileType python set tabstop=4 shiftwidth=4
 " copypath
 " \cf = fullpath, 
 " \cv = copy filename
-" todo \cd = copy file's dir
 if has('win32')
   nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<CR>
   nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
@@ -307,9 +319,9 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_warning_symbol = "⸮"
 let g:syntastic_error_symbol = "»"
@@ -325,6 +337,10 @@ let g:syntastic_error_symbol = "»"
 "  W391 blank line at end of file 
 let g:syntastic_python_checkers=["flake8"]
 let g:syntastic_python_flake8_args='--ignore=E302,E501,E303,W291,E251,E201,E202'
+" let b:syntastic_mode = 'passive'
+
+let g:syntastic_mode_map = { "mode": "passive" }
+
 
 " multicursor
 let g:multicursor_quit = "q"
@@ -332,8 +348,6 @@ let g:multicursor_quit = "q"
 " NERDComment space around nerd commenter blocks
 let NERDSpaceDelims=1
 
-" switch
-nnoremap <Leader>s :Switch<CR>
 
 syntax enable
 

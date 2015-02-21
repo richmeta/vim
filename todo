@@ -26,7 +26,6 @@ plugins:
 --------------------------------------------------------------------------------
   
 octave
-
 ack (vim plugin) or EasyGrep
 renumber: http://www.vim.org/scripts/script.php?script_id=189 OR VisIncr: https://github.com/vim-scripts/VisIncr
 textobj-word-column: https://github.com/coderifous/textobj-word-column.vim
