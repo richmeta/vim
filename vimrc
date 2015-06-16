@@ -5,7 +5,7 @@
 
 set nocompatible
 filetype off
-set runtimepath+=~/.vim/bundle/Vundle.vim
+set runtimepath+=~/vimfiles/bundle/Vundle.vim
 call vundle#rc()
 
 " let Vundle manage Vundle, required
@@ -17,7 +17,6 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-scripts/tlib'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'godlygeek/tabular'
-Bundle 'LStinson/perlhelp-vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/CmdlineComplete'
 Bundle 'tpope/vim-surround'
@@ -74,6 +73,7 @@ set grepprg=ack
 set matchpairs+=<:>
 set iskeyword+=-
 set wildignore=*.sw*,*.pyc
+set shellslash
 
 
 if &term == "win32" 
@@ -89,24 +89,26 @@ if has("autocmd")
   
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
-  au!
+    autocmd!
 
-  " For all text files set 'textwidth' to 78 characters.
-  " autocmd FileType text setlocal textwidth=78
+    " For all text files set 'textwidth' to 78 characters.
+    autocmd FileType text setlocal textwidth=78
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
-  autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    " Also don't do it when the mark is in the first line, that is the default
+    " position when opening a file.
+    autocmd BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 
+    autocmd BufRead * :call CheckDropbox()
   augroup END
 
   augroup Shebang
+    autocmd!
     autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl>\"|$
     autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl -w\<nl>\"|$
     autocmd BufNewFile *.html 0put =\"<!DOCTYPE html>\"|$
@@ -275,6 +277,13 @@ function! MapToggle(key, opt)
 endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
+function! CheckDropbox()
+  let buffDir = expand('%:p:h')
+  if match(buffDir, '\/dropbox') > -1
+    set noswapfile
+  endif
+endfunction
+
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
 map <F3> :TagbarToggle<CR>
 
@@ -324,8 +333,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_warning_symbol = "⸮"
-let g:syntastic_error_symbol = "»"
+let g:syntastic_warning_symbol = "~"
+let g:syntastic_error_symbol = "!"
 
 " NOTE: needs flake8
 " ignore errors/warnings:
