@@ -5,7 +5,12 @@
 
 set nocompatible
 filetype off
-set runtimepath+=~/vimfiles/bundle/Vundle.vim
+if has('win32')
+  set runtimepath+=~/vimfiles/bundle/Vundle.vim
+else 
+  set runtimepath+=~/.vim/bundle/Vundle.vim
+endif
+
 call vundle#rc()
 
 " let Vundle manage Vundle, required
@@ -40,13 +45,13 @@ source $VIMRUNTIME/mswin.vim
 behave mswin
 set hidden
 set nobackup
-set tabstop=2
-set softtabstop=2
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 set nowrap
 set novisualbell
 set noerrorbells
 set expandtab
-set shiftwidth=2
 set ignorecase
 set smartcase
 set nohls
@@ -279,7 +284,7 @@ command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 function! CheckDropbox()
   let buffDir = expand('%:p:h')
-  if match(buffDir, '\/dropbox') > -1
+  if match(buffDir, '\c\/dropbox') > -1
     set noswapfile
   endif
 endfunction
@@ -346,9 +351,7 @@ let g:syntastic_error_symbol = "!"
 "  E201,E202 whitespace after/before '(' ')'
 "  W391 blank line at end of file 
 let g:syntastic_python_checkers=["flake8"]
-let g:syntastic_python_flake8_args='--ignore=E302,E501,E303,W291,E251,E201,E202'
-" let b:syntastic_mode = 'passive'
-
+let g:syntastic_python_flake8_args='--ignore=E302,E501,E303,W291,E251,E201,E202,W391'
 let g:syntastic_mode_map = { "mode": "passive" }
 
 
