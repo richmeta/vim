@@ -109,7 +109,7 @@ if has("autocmd")
       \   exe "normal! g`\"" |
       \ endif
 
-    autocmd BufRead * :call CheckDropbox()
+    autocmd BufWinEnter,BufRead * :call CheckDropbox()
   augroup END
 
   augroup Shebang
