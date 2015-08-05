@@ -35,6 +35,8 @@ Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 Bundle 'paradigm/vim-multicursor'
 Bundle 'AndrewRadev/switch.vim'
+Bundle 'fs111/pydoc.vim'
+Bundle 'd11wtq/ctrlp_bdelete.vim'
 
 
 
@@ -50,6 +52,7 @@ set softtabstop=4
 set shiftwidth=4
 set nowrap
 set novisualbell
+set vb t_vb=
 set noerrorbells
 set expandtab
 set ignorecase
@@ -168,7 +171,7 @@ nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
 inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 
 " \yy = copy to end of line to clipboard ( i.e. without CR)
-nnoremap <Leader>cY "+y$
+nnoremap <Leader>yy "*y$
 
 " \u = CtrlP MRU, \b = CtrlP Buffer
 nnoremap <Leader>u :CtrlPMRU<CR>
@@ -307,6 +310,8 @@ MapToggle <F11> ignorecase
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
+MapToggle <Leader>f fullscreen
+
 " perl support 
 if has('win32') && executable('perl')
   " set complete=.,w,b,u,t
@@ -325,6 +330,7 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn))$',
   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
 \}
+call ctrlp_bdelete#init()
 
 " airline
 let g:airline#extensions#syntastic#enabled = 1
