@@ -1,13 +1,6 @@
 
 tasks:
 --------------------------------------------------------------------------------
-mappings for
-  dq = double quote
-  sq = single quote
-  ddq = remove double quote
-  dsq = remove single quote
-  not sure how to do directions here
-
 
 add to search in commands:
   command! -nargs=1 Ngrep vimgrep "<args>" $COMMANDS_DIR/**/*

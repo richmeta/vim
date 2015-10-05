@@ -2,7 +2,7 @@ if !has("unix")
   set guifont=Consolas:h10:cANSI
 else
   if has("mac")
-    set guifont=Droid\ Sans\ Mono:h13
+    set guifont=Droid\ Sans\ Mono:h12
   else
     set guifont=Consolas\ 11
   endif
