@@ -18,7 +18,6 @@ Bundle 'gmarik/Vundle.vim'
 
 Bundle 'scrooloose/nerdtree'
 Bundle 'edsono/vim-matchit'
-Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-scripts/tlib'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'godlygeek/tabular'
@@ -35,6 +34,10 @@ Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 Bundle 'paradigm/vim-multicursor'
 Bundle 'AndrewRadev/switch.vim'
+Bundle 'fs111/pydoc.vim'
+Bundle 'd11wtq/ctrlp_bdelete.vim'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'strogonoff/vim-coffee-script'
 
 
 
@@ -50,12 +53,15 @@ set softtabstop=4
 set shiftwidth=4
 set nowrap
 set novisualbell
+set vb t_vb=
 set noerrorbells
 set expandtab
 set ignorecase
 set smartcase
 set nohls
-set autochdir
+if !&diff
+    set autochdir
+endif
 set autowrite
 set modelines=0
 set backspace=indent,eol,start
@@ -96,9 +102,6 @@ if has("autocmd")
   augroup vimrcEx
     autocmd!
 
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=78
-
     " When editing a file, always jump to the last known cursor position.
     " Don't do it when the position is invalid or when inside an event handler
     " (happens when dropping a file on gvim).
@@ -119,6 +122,11 @@ if has("autocmd")
     autocmd BufNewFile *.html 0put =\"<!DOCTYPE html>\"|$
   augroup END
 
+endif
+
+if has('mac')
+    " use pound symbol
+    inoremap £ #
 endif
 
 " LEADER MAPPINGS
@@ -155,6 +163,7 @@ endif
 " \jf = format json
 if executable('python')
   map <Leader>jf :silent %!python -mjson.tool<CR>
+  vmap <Leader>jf :!python -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
 endif
 
 " \ds = time stamp
@@ -167,17 +176,29 @@ inoremap <C-D>d <C-R>=strftime("%d/%m/%Y")<CR>
 nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
 inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 
+" \dq = double quote
+" \sq = single quote 
+" \ddq = delete double quote
+" \dsq = delete single quote 
+vmap <Leader>dq :normal yss"<CR>
+vmap <Leader>sq :normal yss'<CR>
+vmap <Leader>ddq :normal ds"<CR>
+vmap <Leader>dsq :normal ds'<CR>
+
+" \cl = comma separate lines
+vmap <Leader>cl :normal A,<CR>
+
 " \yy = copy to end of line to clipboard ( i.e. without CR)
-nnoremap <Leader>cY "+y$
+nnoremap <Leader>yy "*y$
 
 " \u = CtrlP MRU, \b = CtrlP Buffer
 nnoremap <Leader>u :CtrlPMRU<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
 
-" \Mp = Manually place Multicursor
-" \Mm = start Multicursor manual mode
-" \Mv = Visual Multicursor mode
-" \Mr = search Multicursor search regex
+" \mp = Manually place Multicursor
+" \mm = start Multicursor manual mode
+" \mv = Visual Multicursor mode
+" \mr = search Multicursor search regex
 nnoremap <Leader>mp :call MultiCursorPlaceCursor()<CR>
 nnoremap <Leader>mm :call MultiCursorManual()<CR>
 xnoremap <Leader>mv :call MultiCursorVisual()<CR>
@@ -242,7 +263,11 @@ nnoremap <C-P> :prev<CR>
 nmap L ]b
 nmap H [b
 nmap <silent> Q :bp<CR>:bd #<CR>
-nmap <silent> <A-q> :bp<CR>:bd! #<CR>
+if has("mac")
+    nmap <silent> œ :bp<CR>:bd! #<CR>
+else
+    nmap <silent> <M-q> :bp<CR>:bd! #<CR>
+endif
 
 " Window switching
 nmap <silent> <c-k> :wincmd k<CR>
@@ -307,6 +332,8 @@ MapToggle <F11> ignorecase
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
+MapToggle <Leader>f fullscreen
+
 " perl support 
 if has('win32') && executable('perl')
   " set complete=.,w,b,u,t
@@ -325,6 +352,7 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn))$',
   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
 \}
+call ctrlp_bdelete#init()
 
 " airline
 let g:airline#extensions#syntastic#enabled = 1
@@ -357,9 +385,6 @@ let g:syntastic_mode_map = { "mode": "passive" }
 
 " multicursor
 let g:multicursor_quit = "q"
-
-" NERDComment space around nerd commenter blocks
-let NERDSpaceDelims=1
 
 
 syntax enable
