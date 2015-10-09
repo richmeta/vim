@@ -85,6 +85,7 @@ set matchpairs+=<:>
 set iskeyword+=-
 set wildignore=*.sw*,*.pyc
 set shellslash
+set laststatus=2
 
 
 if &term == "win32" 
@@ -176,6 +177,10 @@ inoremap <C-D>d <C-R>=strftime("%d/%m/%Y")<CR>
 nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
 inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 
+" quoting:  
+"    , = with trailing comma
+"    <leader> = without
+"         
 " \dq = double quote
 " \sq = single quote 
 " \ddq = delete double quote
@@ -184,6 +189,10 @@ vmap <Leader>dq :normal yss"<CR>
 vmap <Leader>sq :normal yss'<CR>
 vmap <Leader>ddq :normal ds"<CR>
 vmap <Leader>dsq :normal ds'<CR>
+vmap ,dq :normal yss"A,<CR>
+vmap ,sq :normal yss'A,<CR>
+vmap ,ddq :normal ds"$x<CR>
+vmap ,dsq :normal ds'$x<CR>
 
 " \cl = comma separate lines
 vmap <Leader>cl :normal A,<CR>
