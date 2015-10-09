@@ -113,7 +113,7 @@ if has("autocmd")
       \   exe "normal! g`\"" |
       \ endif
 
-    autocmd BufRead * :call CheckDropbox()
+    autocmd BufWinEnter,BufRead * :call CheckDropbox()
   augroup END
 
   augroup Shebang
@@ -319,7 +319,7 @@ command! -nargs=+ MapToggle call MapToggle(<f-args>)
 function! CheckDropbox()
   let buffDir = expand('%:p:h')
   if match(buffDir, '\c\/dropbox') > -1
-    set noswapfile
+    setlocal noswapfile
   endif
 endfunction
 
