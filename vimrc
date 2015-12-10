@@ -38,6 +38,8 @@ Bundle 'fs111/pydoc.vim'
 Bundle 'd11wtq/ctrlp_bdelete.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'strogonoff/vim-coffee-script'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-easytags'
 
 
 
@@ -52,8 +54,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set nowrap
-set novisualbell
-set vb t_vb=
+set novisualbell t_vb=
 set noerrorbells
 set expandtab
 set ignorecase

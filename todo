@@ -1,17 +1,23 @@
 
 tasks:
 --------------------------------------------------------------------------------
-
-add to search in commands:
+1.  add to search in commands:
   command! -nargs=1 Ngrep vimgrep "<args>" $COMMANDS_DIR/**/*
   nnoreamp <leader>[ :Ngrep
+
+--------------------------------------------------------------------------------
+2.  mechanism for loading Domain specific VIMRC files
+     use ENV vars and separate vimrcs:
+    eg:
+        enable python specific development  PYVIM=~/.vim/rcs/python_vimrc 
+        enable work specific stuff  WORKVIM=~/.vim/rcs/work_vimrc    [ eg. coffeescript ]
+
 
 consider using localleader for commands specific to a buffer (usewith with autocmds?)
 Non greedy quantifiers
 using cdpath
 cindenting
 folding 
-turn off swpfile if inside Dropbox folder
 
 mechanism for auto loading of tags 
 	if tags in current ( project ) directory load tags 
