@@ -38,6 +38,7 @@ Bundle 'fs111/pydoc.vim'
 Bundle 'd11wtq/ctrlp_bdelete.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'strogonoff/vim-coffee-script'
+Bundle 'rking/ag.vim'
 
 
 
