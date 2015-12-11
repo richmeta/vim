@@ -164,8 +164,8 @@ endif
 
 " \jf = format json
 if executable('python')
-  map <Leader>jf :silent %!python -mjson.tool<CR>
-  vmap <Leader>jf :!python -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
+  map <Leader>jf :silent %!python3 -mjson.tool<CR>
+  vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
 endif
 
 " \ds = time stamp
