@@ -354,6 +354,12 @@ endif
 " PLUGIN SETTINGS 
 " ---------------
 
+" nerdtree overrides
+" s = split horizontally (not vertically [NT default])
+" v = split vertically (not i=horizontally)(
+let NERDTreeMapOpenVSplit='v'
+let NERDTreeMapOpenSplit='s'
+
 " ctrlp = \p
 " ( ctrlpmru = \u )
 let g:ctrlp_map = '<Leader>p'
