@@ -1,10 +1,11 @@
 todo:
-  using gutentags [and how it works with tagbar]
-  ctrlp - working dir
-  fugitive mappings
-  snippets
   disable airline on log files
   searching dropbox commands
+  using gutentags [and how it works with tagbar]
+    does gutentags rootmarkers override default set ones
+
+  fugitive mappings
+  snippets
 
 
 

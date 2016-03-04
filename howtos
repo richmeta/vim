@@ -138,3 +138,24 @@ tags
 " look for tags in current dir (./tags) and up  (;)
 :set tags=./tags;
 
+
+ctrlp
+--------------------------------------------------------------------------------
+open ctrlp
+    :CtrlP <dir> - std open
+    :CtrlPBuffer - searches buffer
+    :CtrlPMRU    - most recently used
+    :CtrlPMixed  - search files, buffers, mru all at same time
+    :CtrlPRoot   - reset root dir
+
+when inside ctrlp:
+    ctrl-d   - switches between fullpath and filename searching
+    ctrl-r   - switches between searching in regex mode
+    <F5>     - clean cache
+    <F7>     - wipe MRU
+    ctrl-y   - create new file [after typing name]
+
+root markers:
+    override default root_markers like .git 
+    if this file is found use this as root dir
+    let g:ctrlp_root_markers = ['.project_root']

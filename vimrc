@@ -368,6 +368,12 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](\.(git|hg|svn))$',
   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
 \}
+if has('win32') 
+    let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
+else 
+    let g:ctrlp_user_command = 'find %s -type f'
+endif
+let g:ctrlp_mruf_exclude = '\v/private|var/.*'
 call ctrlp_bdelete#init()
 
 " airline
