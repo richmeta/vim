@@ -15,7 +15,6 @@ call vundle#rc()
 
 " let Vundle manage Vundle, required
 Bundle 'gmarik/Vundle.vim'
-
 Bundle 'scrooloose/nerdtree'
 Bundle 'edsono/vim-matchit'
 Bundle 'vim-scripts/tlib'
@@ -32,7 +31,6 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
-Bundle 'paradigm/vim-multicursor'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'fs111/pydoc.vim'
 Bundle 'd11wtq/ctrlp_bdelete.vim'
@@ -40,7 +38,8 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'strogonoff/vim-coffee-script'
 Bundle 'rking/ag.vim'
 Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-easytags'
+Bundle 'thinca/vim-localrc'
+Bundle 'ludovicchabant/vim-gutentags'
 
 
 
@@ -164,9 +163,15 @@ endif
 
 " \jf = format json
 if executable('python')
-  map <Leader>jf :silent %!python3 -mjson.tool<CR>
+  " map <Leader>jf :silent %!python3 -mjson.tool<CR>
+  map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
   vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
+
+  map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <CR><CR> 
+  vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <CR><CR> 
 endif
+
+
 
 " \ds = time stamp
 " \dd = date only
@@ -186,6 +191,10 @@ inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 " \sq = single quote 
 " \ddq = delete double quote
 " \dsq = delete single quote 
+" ,dq = double quote with commas
+" ,sq = single quote with commas
+" ,ddq = delete double quote incl comma
+" ,dsq = delete single quote incl comma
 vmap <Leader>dq :normal yss"<CR>
 vmap <Leader>sq :normal yss'<CR>
 vmap <Leader>ddq :normal ds"<CR>
@@ -204,15 +213,6 @@ nnoremap <Leader>yy "*y$
 " \u = CtrlP MRU, \b = CtrlP Buffer
 nnoremap <Leader>u :CtrlPMRU<CR>
 nnoremap <Leader>b :CtrlPBuffer<CR>
-
-" \mp = Manually place Multicursor
-" \mm = start Multicursor manual mode
-" \mv = Visual Multicursor mode
-" \mr = search Multicursor search regex
-nnoremap <Leader>mp :call MultiCursorPlaceCursor()<CR>
-nnoremap <Leader>mm :call MultiCursorManual()<CR>
-xnoremap <Leader>mv :call MultiCursorVisual()<CR>
-nnoremap <Leader>mr :call MultiCursorSearch('')<CR>
 
 " \qf = Quick fix open
 " \qc = Quick fix close
@@ -303,7 +303,7 @@ endif
 
 " sudo write 
 if has('unix')
-	command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
+	" command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
 	command! -bar -nargs=0 WX silent! exec "write !chmod a+x % >/dev/null" | silent! edit!
 elseif has('win32')
 	command! -bar -nargs=0 WR silent! exec "write !attrib -r %" | silent! edit!
@@ -397,10 +397,6 @@ let g:syntastic_error_symbol = "!"
 let g:syntastic_python_checkers=["flake8"]
 let g:syntastic_python_flake8_args='--ignore=E302,E501,E303,W291,E251,E201,E202,W391'
 let g:syntastic_mode_map = { "mode": "passive" }
-
-
-" multicursor
-let g:multicursor_quit = "q"
 
 
 syntax enable
