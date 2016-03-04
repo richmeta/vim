@@ -126,3 +126,15 @@ By hex value: ^VXnn or ^Vxnn (with 00 <= nn <= FF)
 By hex value for BMP Unicode codepoints: ^Vunnnn (with 0000 <= nnnn <= FFFF)
 By hex value for any Unicode codepoint: ^VUnnnnnnnn (with 00000000 <= nnnnnnnn <= 7FFFFFFF) 
 
+file associations
+--------------------------------------------------------------------------------
+au BufRead,BufNewFile *.module set filetype=php
+au BufRead,BufNewFile *.sls set filetype=yaml
+
+
+
+tags
+--------------------------------------------------------------------------------
+" look for tags in current dir (./tags) and up  (;)
+:set tags=./tags;
+
