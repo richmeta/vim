@@ -40,6 +40,8 @@ Bundle 'rking/ag.vim'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
 Bundle 'ludovicchabant/vim-gutentags'
+Bundle 'wellle/targets.vim'
+
 
 
 
@@ -122,12 +124,14 @@ if has("autocmd")
     autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl -w\<nl>\"|$
     autocmd BufNewFile *.html 0put =\"<!DOCTYPE html>\"|$
   augroup END
-
 endif
 
 if has('mac')
-    " use pound symbol
+    " use pound symbol instead of awkward hash
+    inoremap # £
     inoremap £ #
+    nnoremap £ #
+    cnoremap £ #
 endif
 
 " LEADER MAPPINGS
@@ -350,6 +354,10 @@ if has('win32') && executable('perl')
   " disable incremental searching (only a problem on windows)
   set complete-=i
 endif
+
+" search dropbox 
+command! -nargs=1 Ngrep Ag "<args>" ~/Dropbox/commands/*
+
 
 " PLUGIN SETTINGS 
 " ---------------

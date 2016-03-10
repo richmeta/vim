@@ -1,6 +1,4 @@
 todo:
-  disable airline on log files
-  searching dropbox commands
   using gutentags [and how it works with tagbar]
     does gutentags rootmarkers override default set ones
 
@@ -8,11 +6,7 @@ todo:
   snippets
 
 
-
-
-
-
-
+--------------------------------------------------------------------------------
 
 
 fugituve bindings:   EG: 
@@ -33,31 +27,12 @@ nnoremap <space>go :Git checkout<Space>
 nnoremap <space>gps :Dispatch! git push<CR>
 nnoremap <space>gpl :Dispatch! git pull<CR>
 
---------------------------------------------------------------------------------
-
-sort out tags
---------------------------------------------------------------------------------
-plugin:
-vim git-gutter
-https://github.com/wellle/targets.vim
---------------------------------------------------------------------------------
-tags for project   OR   vim-easytags
-  run set of vim commands in current directory if file found
-  list of tags in quicklist window
-
-disable airline for large / log files 
-syntax of for log files 
-
 
 
 tasks:
---------------------------------------------------------------------------------
-1.  add to search in commands:
-  command! -nargs=1 Ngrep vimgrep "<args>" $COMMANDS_DIR/**/*
-  nnoreamp <leader>[ :Ngrep
 
 --------------------------------------------------------------------------------
-2.  mechanism for loading Domain specific VIMRC files
+2.  idea for loading Domain specific VIMRC files
      use ENV vars and separate vimrcs:
     eg:
         enable python specific development  PYVIM=~/.vim/rcs/python_vimrc 
