@@ -250,6 +250,11 @@ nnoremap <Leader>sc :SyntasticCheck<CR>
 nnoremap <Leader>st :SyntasticToggleMode<CR>
 nnoremap <Leader>sr :SyntasticReset<CR>
 
+" COMMAND MAPPINGS
+" ----------------
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+
 " OTHER MAPPINGS
 " --------------
 "

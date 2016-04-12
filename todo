@@ -4,6 +4,10 @@ todo:
 
   fugitive mappings
   snippets
+    python start class:
+        class XXX(Y):
+            def __init__(self, ZZZ):
+                fin
 
 
 --------------------------------------------------------------------------------
