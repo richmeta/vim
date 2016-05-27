@@ -65,7 +65,7 @@ if !&diff
     set autochdir
 endif
 set autowrite
-set modelines=0
+set modelines=5
 set backspace=indent,eol,start
 set background=dark
 set history=10000
@@ -99,31 +99,34 @@ else
 endif
 
 if has("autocmd")
-  filetype plugin indent on
-  
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-    autocmd!
+    filetype plugin indent on
 
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it when the position is invalid or when inside an event handler
-    " (happens when dropping a file on gvim).
-    " Also don't do it when the mark is in the first line, that is the default
-    " position when opening a file.
-    autocmd BufReadPost *
-      \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
+    " Put these in an autocmd group, so that we can delete them easily.
+    augroup vimrcEx
+        autocmd!
 
-    autocmd BufWinEnter,BufRead * :call CheckDropbox()
-  augroup END
+        " When editing a file, always jump to the last known cursor position.
+        " Don't do it when the position is invalid or when inside an event handler
+        " (happens when dropping a file on gvim).
+        " Also don't do it when the mark is in the first line, that is the default
+        " position when opening a file.
+        autocmd BufReadPost *
+                    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                    \   exe "normal! g`\"" |
+                    \ endif
 
-  augroup Shebang
-    autocmd!
-    autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl>\"|$
-    autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl -w\<nl>\"|$
-    autocmd BufNewFile *.html 0put =\"<!DOCTYPE html>\"|$
-  augroup END
+        autocmd BufWinEnter,BufRead * :call CheckDropbox()
+    augroup END
+
+    augroup Shebang
+        autocmd!
+        autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl>\"|$
+        autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl -w\<nl>\"|$
+        autocmd BufNewFile *.html 0put =\"<!DOCTYPE html>\"|$
+    augroup END
+
+    autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
+    autocmd BufNewFile,BufRead *.log :AirlineToggle
 endif
 
 if has('mac')
@@ -133,6 +136,20 @@ if has('mac')
     nnoremap £ #
     cnoremap £ #
 endif
+
+" SYNTAX BLOCKS
+" -------------
+"    http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
+"   ( used for code inside txt files etc )
+
+function! SetPartialSyntax()
+    syntax include @JS syntax/javascript.vim
+    syntax region jsSnip matchgroup=Snip start="@begin=js@" end="@end=js@" contains=@JS
+    " TODO: doesn't seem to work for python
+    " syntax include @PYTHON syntax/python.vim
+    " syntax region pySnip matchgroup=Snip start="@begin=py@" end="@end=py@" contains=@PYTHON
+    hi link Snip SpecialComment
+endfunction
 
 " LEADER MAPPINGS
 " ---------------
@@ -376,17 +393,20 @@ let NERDTreeMapOpenSplit='s'
 " ctrlp = \p
 " ( ctrlpmru = \u )
 let g:ctrlp_map = '<Leader>p'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn))$',
-  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-\}
+
+" note: g:ctrlp_custom_ignore not used here since g:ctrlp_user_command
+" overrides
 if has('win32') 
     let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
 else 
-    let g:ctrlp_user_command = 'find %s -type f'
+    let g:ctrlp_user_command = 'find %s -type f | grep -v -E ".git|.sass-cache" '
 endif
-let g:ctrlp_mruf_exclude = '\v/private|var/.*'
+let g:ctrlp_mruf_exclude = '/\(private\|var\)/.*'
+
+let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth = 40
+let g:ctrlp_working_path_mode = ''
+let g:ctrlp_match_window = 'results:50'
 call ctrlp_bdelete#init()
 
 " airline
@@ -413,10 +433,14 @@ let g:syntastic_error_symbol = "!"
 "  E251 unexpected spaces around keyword / parameter equals 
 "  E201,E202 whitespace after/before '(' ')'
 "  W391 blank line at end of file 
-let g:syntastic_python_checkers=["flake8"]
-let g:syntastic_python_flake8_args='--ignore=E302,E501,E303,W291,E251,E201,E202,W391'
+let g:syntastic_python_checkers = ["flake8"]
+let g:syntastic_python_flake8_args = '--ignore=E302,E501,E303,W291,E251,E201,E202,W391'
 let g:syntastic_mode_map = { "mode": "passive" }
 
+
+" Gutentags
+"  prevent ctags firing on sql files (was hanging on large sql files)
+let g:gutentags_exclude = ["*.sql"]
 
 syntax enable
 

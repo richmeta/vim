@@ -1,4 +1,12 @@
 todo:
+learn targets.vim
+  new plugins:
+https://github.com/christoomey/vim-sort-motion
+https://github.com/vim-scripts/ReplaceWithRegister
+https://github.com/michaeljsmith/vim-indent-object
+https://github.com/mhinz/vim-grepper
+
+
   using gutentags [and how it works with tagbar]
     does gutentags rootmarkers override default set ones
 
