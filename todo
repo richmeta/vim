@@ -1,10 +1,17 @@
 todo:
-learn targets.vim
-  new plugins:
-https://github.com/christoomey/vim-sort-motion
-https://github.com/vim-scripts/ReplaceWithRegister
-https://github.com/michaeljsmith/vim-indent-object
-https://github.com/mhinz/vim-grepper
+    vimwiki
+
+    mapping for inserting gmail / work email
+
+    mapping for switching all paths to windows / unix using %s
+
+    learn targets.vim
+
+    new plugins:
+        https://github.com/christoomey/vim-sort-motion
+        https://github.com/vim-scripts/ReplaceWithRegister
+        https://github.com/michaeljsmith/vim-indent-object
+        https://github.com/mhinz/vim-grepper
 
 
   using gutentags [and how it works with tagbar]

@@ -16,7 +16,6 @@ call vundle#rc()
 " let Vundle manage Vundle, required
 Bundle 'gmarik/Vundle.vim'
 Bundle 'scrooloose/nerdtree'
-Bundle 'edsono/vim-matchit'
 Bundle 'vim-scripts/tlib'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'godlygeek/tabular'
@@ -24,7 +23,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/CmdlineComplete'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
-Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'SirVer/ultisnips'
@@ -41,6 +40,7 @@ Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
 Bundle 'ludovicchabant/vim-gutentags'
 Bundle 'wellle/targets.vim'
+Bundle 'leafgarland/typescript-vim'
 
 
 
@@ -88,6 +88,7 @@ set iskeyword+=-
 set wildignore=*.sw*,*.pyc
 set shellslash
 set laststatus=2
+set keymodel=startsel
 
 
 if &term == "win32" 
@@ -116,13 +117,6 @@ if has("autocmd")
                     \ endif
 
         autocmd BufWinEnter,BufRead * :call CheckDropbox()
-    augroup END
-
-    augroup Shebang
-        autocmd!
-        autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python\<nl>\"|$
-        autocmd BufNewFile *.pl 0put =\"#!/usr/bin/perl -w\<nl>\"|$
-        autocmd BufNewFile *.html 0put =\"<!DOCTYPE html>\"|$
     augroup END
 
     autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
@@ -379,6 +373,7 @@ endif
 
 " search dropbox 
 command! -nargs=1 Ngrep Ag "<args>" ~/Dropbox/commands/*
+command! -nargs=1 Nopen edit ~/Dropbox/commands/<args>
 
 
 " PLUGIN SETTINGS 
@@ -394,18 +389,15 @@ let NERDTreeMapOpenSplit='s'
 " ( ctrlpmru = \u )
 let g:ctrlp_map = '<Leader>p'
 
-" note: g:ctrlp_custom_ignore not used here since g:ctrlp_user_command
-" overrides
-if has('win32') 
-    let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
-else 
-    let g:ctrlp_user_command = 'find %s -type f | grep -v -E ".git|.sass-cache" '
-endif
 let g:ctrlp_mruf_exclude = '/\(private\|var\)/.*'
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/](\.git|py\d\+)$',
+    \ 'file': '\v\.(pyc|sw?|jpg|gif|png)$',
+    \ }
 
 let g:ctrlp_max_files = 0
 let g:ctrlp_max_depth = 40
-let g:ctrlp_working_path_mode = ''
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_match_window = 'results:50'
 call ctrlp_bdelete#init()
 
