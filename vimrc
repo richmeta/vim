@@ -41,6 +41,7 @@ Bundle 'thinca/vim-localrc'
 Bundle 'ludovicchabant/vim-gutentags'
 Bundle 'wellle/targets.vim'
 Bundle 'leafgarland/typescript-vim'
+Plugin 'isRuslan/vim-es6'
 
 
 
