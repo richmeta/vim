@@ -1,5 +1,11 @@
 todo:
+    python:  
+        convert between lists of value=pair to dictionary instances
+
     vimwiki
+
+    command line args for filtering NERDTree:
+        vim -X *.xml => only show *.xml in NERDTree
 
     mapping for inserting gmail / work email
 
@@ -8,14 +14,23 @@ todo:
     learn targets.vim
 
     new plugins:
+        https://github.com/itchyny/lightline.vim
+        https://github.com/dbakker/vim-projectroot
         https://github.com/christoomey/vim-sort-motion
         https://github.com/vim-scripts/ReplaceWithRegister
         https://github.com/michaeljsmith/vim-indent-object
         https://github.com/mhinz/vim-grepper
 
+    function which searches for virtualenv directories  
+        and adds to 
+            g:gutentags_exclude_project_root
+            g:ctrlp_custom_ignore
+            agignore (in vim?)
+
 
   using gutentags [and how it works with tagbar]
     does gutentags rootmarkers override default set ones
+    ignore directories
 
   fugitive mappings
   snippets
