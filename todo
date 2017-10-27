@@ -14,12 +14,11 @@ todo:
     learn targets.vim
 
     new plugins:
-        https://github.com/itchyny/lightline.vim
         https://github.com/dbakker/vim-projectroot
         https://github.com/christoomey/vim-sort-motion
         https://github.com/vim-scripts/ReplaceWithRegister
         https://github.com/michaeljsmith/vim-indent-object
-        https://github.com/mhinz/vim-grepper
+        https://github.com/tpope/vim-vinegar
 
     function which searches for virtualenv directories  
         and adds to 

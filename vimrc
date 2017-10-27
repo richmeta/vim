@@ -28,21 +28,20 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
-Bundle 'bling/vim-airline'
+" Bundle 'itchyny/lightline.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'fs111/pydoc.vim'
 Bundle 'd11wtq/ctrlp_bdelete.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'strogonoff/vim-coffee-script'
-Bundle 'rking/ag.vim'
+Bundle 'mhinz/vim-grepper'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
 Bundle 'ludovicchabant/vim-gutentags'
 Bundle 'wellle/targets.vim'
-Bundle 'leafgarland/typescript-vim'
-Plugin 'isRuslan/vim-es6'
-
+Bundle 'isRuslan/vim-es6'
+Bundle 'flazz/vim-colorschemes'
 
 
 
@@ -121,7 +120,7 @@ if has("autocmd")
     augroup END
 
     autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
-    autocmd BufNewFile,BufRead *.log :AirlineToggle
+    " autocmd BufNewFile,BufRead *.log :AirlineToggle
 endif
 
 if has('mac')
@@ -403,7 +402,7 @@ let g:ctrlp_match_window = 'results:50'
 call ctrlp_bdelete#init()
 
 " airline
-let g:airline#extensions#syntastic#enabled = 1
+" let g:airline#extensions#syntastic#enabled = 1
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -430,10 +429,13 @@ let g:syntastic_python_checkers = ["flake8"]
 let g:syntastic_python_flake8_args = '--ignore=E302,E501,E303,W291,E251,E201,E202,W391'
 let g:syntastic_mode_map = { "mode": "passive" }
 
+" eslint -> syntastic 
+let g:syntastic_javascript_checkers=['eslint']
+
 
 " Gutentags
 "  prevent ctags firing on sql files (was hanging on large sql files)
-let g:gutentags_exclude = ["*.sql"]
+let g:gutentags_ctags_exclude = ["*.sql"]
 
 syntax enable
 
