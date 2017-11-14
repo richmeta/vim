@@ -6,14 +6,14 @@
 set nocompatible
 filetype off
 if has('win32')
-  set runtimepath+=~/vimfiles/bundle/Vundle.vim
+    set runtimepath+=~/vimfiles/bundle/Vundle.vim
 else 
-  set runtimepath+=~/.vim/bundle/Vundle.vim
+    set runtimepath+=~/.vim/bundle/Vundle.vim
 endif
 
 " for fzf
 if executable('fzf')
-  set runtimepath+=/usr/local/opt/fzf
+    set runtimepath+=/usr/local/opt/fzf
 endif
 
 call vundle#rc()
@@ -51,9 +51,12 @@ Bundle 'mileszs/ack.vim'
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
-" source $VIMRUNTIME/mswin.vim
-" enable selectmode and mouse behaviour
-behave mswin
+if !has('mac')
+    source $VIMRUNTIME/mswin.vim
+else
+    behave mswin
+endif
+
 set hidden
 set nobackup
 set tabstop=4

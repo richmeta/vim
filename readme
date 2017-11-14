@@ -10,18 +10,12 @@ Symlinks (windows)
   C:\Program Files\Vim>fsutil hardlink create _vimrc vimfiles\vimrc
   C:\Program Files\Vim>fsutil hardlink create _gvimrc vimfiles\gvimrc
 
-push
+git setup
   [ config one off: git remote add origin https://jimmy_frog@bitbucket.org/jimmy_from/vim.git ]
 
   git push -u origin master 
-  git push 
-  git pull
  
-submodules
-  git submodule add https://github.com/tsaleh/vim-matchit.git bundle/matchit
-  git submodule update --init
 
-  # fetch all submodules 
-  git submodule foreach git pull origin master 
-
-
+installation of vundle:
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+the open vim and :PluginInstall
