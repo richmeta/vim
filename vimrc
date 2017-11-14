@@ -11,6 +11,11 @@ else
   set runtimepath+=~/.vim/bundle/Vundle.vim
 endif
 
+" for fzf
+if executable('fzf')
+  set runtimepath+=/usr/local/opt/fzf
+endif
+
 call vundle#rc()
 
 " let Vundle manage Vundle, required
@@ -23,16 +28,14 @@ Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/CmdlineComplete'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
-Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
-" Bundle 'itchyny/lightline.vim'
+Bundle 'itchyny/lightline.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'fs111/pydoc.vim'
-Bundle 'd11wtq/ctrlp_bdelete.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'strogonoff/vim-coffee-script'
 Bundle 'mhinz/vim-grepper'
@@ -42,11 +45,13 @@ Bundle 'ludovicchabant/vim-gutentags'
 Bundle 'wellle/targets.vim'
 Bundle 'isRuslan/vim-es6'
 Bundle 'flazz/vim-colorschemes'
+Bundle 'junegunn/fzf.vim'
+Bundle 'mileszs/ack.vim'
 
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
-source $VIMRUNTIME/mswin.vim
+" source $VIMRUNTIME/mswin.vim
 " enable selectmode and mouse behaviour
 behave mswin
 set hidden
@@ -120,7 +125,6 @@ if has("autocmd")
     augroup END
 
     autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
-    " autocmd BufNewFile,BufRead *.log :AirlineToggle
 endif
 
 if has('mac')
@@ -225,9 +229,10 @@ vmap <Leader>cl :normal A,<CR>
 " \yy = copy to end of line to clipboard ( i.e. without CR)
 nnoremap <Leader>yy "*y$
 
-" \u = CtrlP MRU, \b = CtrlP Buffer
-nnoremap <Leader>u :CtrlPMRU<CR>
-nnoremap <Leader>b :CtrlPBuffer<CR>
+" \p = FILES, \u = FZF MRU, \b = FZF Buffer
+nnoremap <Leader>p :Files<CR>
+nnoremap <Leader>u :History<CR>
+nnoremap <Leader>b :Buffers<CR>
 
 " \qf = Quick fix open
 " \qc = Quick fix close
@@ -275,7 +280,6 @@ nmap gw f<space>
 nmap gb F<space>
 
 " Ctrl-E/Ctrl-Y scroll up/down
-unmap <C-y>
 nmap <C-up> <C-y>
 imap <C-up> <C-o><C-y>
 nmap <C-down> <C-e>
@@ -384,25 +388,6 @@ command! -nargs=1 Nopen edit ~/Dropbox/commands/<args>
 " v = split vertically (not i=horizontally)(
 let NERDTreeMapOpenVSplit='v'
 let NERDTreeMapOpenSplit='s'
-
-" ctrlp = \p
-" ( ctrlpmru = \u )
-let g:ctrlp_map = '<Leader>p'
-
-let g:ctrlp_mruf_exclude = '/\(private\|var\)/.*'
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/](\.git|py\d\+)$',
-    \ 'file': '\v\.(pyc|sw?|jpg|gif|png)$',
-    \ }
-
-let g:ctrlp_max_files = 0
-let g:ctrlp_max_depth = 40
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_match_window = 'results:50'
-call ctrlp_bdelete#init()
-
-" airline
-" let g:airline#extensions#syntastic#enabled = 1
 
 " syntastic
 set statusline+=%#warningmsg#
