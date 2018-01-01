@@ -33,7 +33,6 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'itchyny/lightline.vim'
-Bundle 'scrooloose/syntastic'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'fs111/pydoc.vim'
 Bundle 'tomtom/tcomment_vim'
@@ -41,21 +40,19 @@ Bundle 'strogonoff/vim-coffee-script'
 Bundle 'mhinz/vim-grepper'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
-Bundle 'ludovicchabant/vim-gutentags'
+" Bundle 'ludovicchabant/vim-gutentags'         # TODO: gutentags not working that well 
 Bundle 'wellle/targets.vim'
 Bundle 'isRuslan/vim-es6'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'junegunn/fzf.vim'
 Bundle 'mileszs/ack.vim'
-
+Bundle 'w0rp/ale'
+Bundle 'tmhedberg/matchit'
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
-if !has('mac')
-    source $VIMRUNTIME/mswin.vim
-else
-    behave mswin
-endif
+source $VIMRUNTIME/mswin.vim
+unmap <C-F>
 
 set hidden
 set nobackup
@@ -97,7 +94,10 @@ set wildignore=*.sw*,*.pyc
 set shellslash
 set laststatus=2
 set keymodel=startsel
-
+set listchars=tab:\|\ ,trail:.,extends:❯,precedes:❮,nbsp:⍽,conceal:⋰
+set splitbelow
+set splitright
+set nojoinspaces
 
 if &term == "win32" 
   " console vim, |lucius| doesn't support console
@@ -264,11 +264,6 @@ nnoremap <Leader>h :new<CR>
 " Switch
 nnoremap <Leader>sw :Switch<CR>
 
-" Syntastic 
-nnoremap <Leader>sc :SyntasticCheck<CR>
-nnoremap <Leader>st :SyntasticToggleMode<CR>
-nnoremap <Leader>sr :SyntasticReset<CR>
-
 " COMMAND MAPPINGS
 " ----------------
 cnoremap <C-A> <Home>
@@ -291,6 +286,15 @@ imap <C-down> <C-o><C-e>
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
+
+" insert mode remappings
+inoremap II <Esc>I
+inoremap AA <Esc>A
+inoremap OO <Esc>O
+inoremap CC <Esc>C
+inoremap SS <Esc>S
+inoremap DD <Esc>dd
+inoremap UU <Esc>u
 
 " Next/Previous file
 nnoremap <C-N> :next<CR>
@@ -330,7 +334,7 @@ endif
 
 " sudo write 
 if has('unix')
-	" command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
+	command! -bar -nargs=0 W  echo "Password: " | silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
 	command! -bar -nargs=0 WX silent! exec "write !chmod a+x % >/dev/null" | silent! edit!
 elseif has('win32')
 	command! -bar -nargs=0 WR silent! exec "write !attrib -r %" | silent! edit!
@@ -351,8 +355,17 @@ function! CheckDropbox()
   endif
 endfunction
 
+" syntax on/off
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
+
+" tagbar
 map <F3> :TagbarToggle<CR>
+
+" ALE
+nmap <S-F5> :ALEToggle<CR>
+imap <S-F5> <C-o>:ALEToggle<CR>
+vmap <S-F5> :ALEToggle<CR>
+
 
 " Display-altering option toggles
 MapToggle <F2> spell
@@ -392,34 +405,19 @@ command! -nargs=1 Nopen edit ~/Dropbox/commands/<args>
 let NERDTreeMapOpenVSplit='v'
 let NERDTreeMapOpenSplit='s'
 
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_warning_symbol = "~"
-let g:syntastic_error_symbol = "!"
-
-" NOTE: needs flake8
-" ignore errors/warnings:
-"  E302 expected 2 blank lines, found 1
-"  E501 line too long
-"  E303 too many blank lines 
-"  W291 trailing whitespace
-"  E251 unexpected spaces around keyword / parameter equals 
-"  E201,E202 whitespace after/before '(' ')'
-"  W391 blank line at end of file 
-let g:syntastic_python_checkers = ["flake8"]
-let g:syntastic_python_flake8_args = '--ignore=E302,E501,E303,W291,E251,E201,E202,W391'
-let g:syntastic_mode_map = { "mode": "passive" }
-
-" eslint -> syntastic 
-let g:syntastic_javascript_checkers=['eslint']
-
+" ALE
+" -----------
+" python: needs flake8
+"   ignore errors/warnings:
+"    E501 line too long
+"    W391 blank line at end of file 
+"    F403 unabled to detect undefined names
+let g:ale_python_flake8_options = '--ignore=E501,W391,F403'
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8'],
+\}
 
 " Gutentags
 "  prevent ctags firing on sql files (was hanging on large sql files)

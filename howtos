@@ -159,3 +159,10 @@ root markers:
     override default root_markers like .git 
     if this file is found use this as root dir
     let g:ctrlp_root_markers = ['.project_root']
+
+
+" vimrc - loading source files
+exe 'source' '~/.vim/mappings.vim'
+for file in split(globpath('~/.vim', 'settings.*.vim'), '\n')
+	exe 'source' file
+endfor
