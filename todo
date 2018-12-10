@@ -20,6 +20,9 @@ todo:
         https://github.com/michaeljsmith/vim-indent-object
         https://github.com/tpope/vim-vinegar
 
+        # EMACS command chars
+        https://github.com/tpope/vim-rsi
+
     function which searches for virtualenv directories  
         and adds to 
             g:gutentags_exclude_project_root

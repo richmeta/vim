@@ -48,6 +48,10 @@ Bundle 'junegunn/fzf.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'w0rp/ale'
 Bundle 'tmhedberg/matchit'
+Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-jdaddy'
+Bundle 'kshenoy/vim-signature'
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
@@ -98,6 +102,22 @@ set listchars=tab:\|\ ,trail:.,extends:❯,precedes:❮,nbsp:⍽,conceal:⋰
 set splitbelow
 set splitright
 set nojoinspaces
+set viminfo='1000,<50,s10,h
+
+" 
+" Fav colorschemes
+"  gruvbox
+"  jellybeans
+"  apprentice
+"  feral
+"  django
+"  Green
+"  candy
+"  eclm_wombat
+"  flatlandia
+"  greyblue
+"  vanzan_color
+"  candy
 
 if &term == "win32" 
   " console vim, |lucius| doesn't support console
@@ -287,14 +307,6 @@ imap <C-down> <C-o><C-e>
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
-" insert mode remappings
-inoremap II <Esc>I
-inoremap AA <Esc>A
-inoremap OO <Esc>O
-inoremap CC <Esc>C
-inoremap SS <Esc>S
-inoremap DD <Esc>dd
-inoremap UU <Esc>u
 
 " Next/Previous file
 nnoremap <C-N> :next<CR>
@@ -330,6 +342,7 @@ elseif has('unix')
   nmap <Leader>cd :let @+=expand("%:p:h")<CR>
   nmap <Leader>cf :let @+=expand("%:p")<CR>
   nmap <Leader>cv :let @+=expand("%")<CR>
+  nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? fugitive#buffer().path() : '')<CR>
 endif
 
 " sudo write 
@@ -413,7 +426,7 @@ let NERDTreeMapOpenSplit='s'
 "    E501 line too long
 "    W391 blank line at end of file 
 "    F403 unabled to detect undefined names
-let g:ale_python_flake8_options = '--ignore=E501,W391,F403'
+let g:ale_python_flake8_options = '--ignore=E501,E731,W391,F403'
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
