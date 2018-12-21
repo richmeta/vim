@@ -5,10 +5,11 @@
 
 set nocompatible
 filetype off
-if has('win32')
-    set runtimepath+=~/vimfiles/bundle/Vundle.vim
-else 
+
+if isdirectory(expand("~/.vim/bundle/Vundle.vim"))
     set runtimepath+=~/.vim/bundle/Vundle.vim
+elseif isdirectory(expand("~/vimfiles/bundle/Vundle.vim"))
+    set runtimepath+=~/vimfiles/bundle/Vundle.vim
 endif
 
 " for fzf
@@ -36,13 +37,10 @@ Bundle 'itchyny/lightline.vim'
 Bundle 'AndrewRadev/switch.vim'
 Bundle 'fs111/pydoc.vim'
 Bundle 'tomtom/tcomment_vim'
-Bundle 'strogonoff/vim-coffee-script'
 Bundle 'mhinz/vim-grepper'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
-" Bundle 'ludovicchabant/vim-gutentags'         # TODO: gutentags not working that well 
 Bundle 'wellle/targets.vim'
-Bundle 'isRuslan/vim-es6'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'junegunn/fzf.vim'
 Bundle 'mileszs/ack.vim'
@@ -431,10 +429,6 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
 \}
-
-" Gutentags
-"  prevent ctags firing on sql files (was hanging on large sql files)
-let g:gutentags_ctags_exclude = ["*.sql"]
 
 syntax enable
 
