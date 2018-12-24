@@ -34,22 +34,25 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'itchyny/lightline.vim'
-Bundle 'AndrewRadev/switch.vim'
 Bundle 'fs111/pydoc.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'mhinz/vim-grepper'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
-Bundle 'wellle/targets.vim'
+Bundle 'wellle/targets.vim'                     " Extra text objects
 Bundle 'flazz/vim-colorschemes'
 Bundle 'junegunn/fzf.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'w0rp/ale'
 Bundle 'tmhedberg/matchit'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-jdaddy'
-Bundle 'kshenoy/vim-signature'
+Bundle 'tpope/vim-speeddating'                  " use CTRL-A/CTRL-X to increment dates, times,
+Bundle 'tpope/vim-jdaddy'                       " JSON manipulation and pretty printing
+Bundle 'kshenoy/vim-signature'                  " Show/Hide Marks
+
+
+" - Havent found use case for these:
+" Bundle 'AndrewRadev/switch.vim'               " Toggle words/expressions
+" Bundle 'tpope/vim-abolish'                    " Abbreviations and Replacement on steriods
 
 
 " enable ctrl-c, ctrl-v, ctrl-a

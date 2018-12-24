@@ -1,45 +1,72 @@
+Plugins to learn:
+    fugitive
+    vim-signature
+    vim-jdaddy
+    vim-abolish
+    vim-speeddating
+    vim-localrc     - for work addons
+    targets
+    vim-grepper (also why vim-ack)
+
+
+Possible Plugins to install:
+    https://github.com/jeetsukumaran/vim-pythonsense
+        text objects and motions for Python
+
+    https://github.com/AndrewRadev/sideways.vim
+        Move function arguments left or right
+
+    https://github.com/dbakker/vim-projectroot
+        Find out which project a file belongs to, easy to use in scripts/mappings
+
+    https://github.com/kana/vim-textobj-indent OR https://github.com/michaeljsmith/vim-indent-object
+        Text objects for indented blocks
+
+    https://github.com/christoomey/vim-sort-motion
+        Sort by lines, visual, indentation (requires vim-textobj-indent)
+
+    https://github.com/tpope/vim-rsi
+        EMACS command chars
+
+    https://github.com/vimwiki/vimwiki
+        Personal Wiki for Vim
+
+    https://github.com/coderifous/textobj-word-column.vim
+        Adds text-objects for word-based columns
+
+    Plugin for numbering
+
+    Plugin for working with python
+
+
+
+
+
 todo:
+    mapping for inserting gmail / work email
+
     python:  
         convert between lists of value=pair to dictionary instances
-
-    vimwiki
 
     command line args for filtering NERDTree:
         vim -X *.xml => only show *.xml in NERDTree
 
-    mapping for inserting gmail / work email
 
-    mapping for switching all paths to windows / unix using %s
+create snippets:
+    python 
+    
+        start class:
+            class XXX(Y):
+                def __init__(self, ZZZ):
+                    fin
 
-    learn targets.vim
+        borg pattern
 
-    new plugins:
-        https://github.com/dbakker/vim-projectroot
-        https://github.com/christoomey/vim-sort-motion
-        https://github.com/vim-scripts/ReplaceWithRegister
-        https://github.com/michaeljsmith/vim-indent-object
-        https://github.com/tpope/vim-vinegar
-
-        # EMACS command chars
-        https://github.com/tpope/vim-rsi
-
-    function which searches for virtualenv directories  
-        and adds to 
-            g:gutentags_exclude_project_root
-            g:ctrlp_custom_ignore
-            agignore (in vim?)
+        argparse
 
 
-  using gutentags [and how it works with tagbar]
-    does gutentags rootmarkers override default set ones
-    ignore directories
-
-  fugitive mappings
-  snippets
-    python start class:
-        class XXX(Y):
-            def __init__(self, ZZZ):
-                fin
+    bash 
+        script with args
 
 
 --------------------------------------------------------------------------------
@@ -94,8 +121,6 @@ open header =>   :e %:r.h
 plugins:
 --------------------------------------------------------------------------------
   
-octave
-ack (vim plugin) or EasyGrep
 renumber: http://www.vim.org/scripts/script.php?script_id=189 OR VisIncr: https://github.com/vim-scripts/VisIncr
 textobj-word-column: https://github.com/coderifous/textobj-word-column.vim
 
