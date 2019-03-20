@@ -36,18 +36,22 @@ Bundle 'honza/vim-snippets'
 Bundle 'itchyny/lightline.vim'
 Bundle 'fs111/pydoc.vim'
 Bundle 'tomtom/tcomment_vim'
-Bundle 'mhinz/vim-grepper'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
-Bundle 'wellle/targets.vim'                     " Extra text objects
+
+" Extra text objects
+Bundle 'wellle/targets.vim'                     
 Bundle 'flazz/vim-colorschemes'
 Bundle 'junegunn/fzf.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'w0rp/ale'
 Bundle 'tmhedberg/matchit'
-Bundle 'tpope/vim-speeddating'                  " use CTRL-A/CTRL-X to increment dates, times,
-Bundle 'tpope/vim-jdaddy'                       " JSON manipulation and pretty printing
-Bundle 'kshenoy/vim-signature'                  " Show/Hide Marks
+
+" use CTRL-A/CTRL-X to increment dates, times,
+Bundle 'tpope/vim-speeddating'                  
+
+" Show/Hide Marks
+Bundle 'kshenoy/vim-signature'
 
 
 " - Havent found use case for these:
@@ -92,7 +96,7 @@ set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 set winminheight=0
 set shiftround
 set showcmd
-set grepprg=ack
+set grepprg=ag
 set matchpairs+=<:>
 set iskeyword+=-
 set wildignore=*.sw*,*.pyc
@@ -149,6 +153,11 @@ if has("autocmd")
     augroup END
 
     autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
+
+    augroup myfiletypes
+        autocmd!
+        autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
+    augroup END
 endif
 
 if has('mac')
@@ -164,6 +173,7 @@ endif
 "    http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
 "   ( used for code inside txt files etc )
 
+" Only on TXT files currently
 function! SetPartialSyntax()
     syntax include @JS syntax/javascript.vim
     syntax region jsSnip matchgroup=Snip start="@begin=js@" end="@end=js@" contains=@JS
@@ -290,6 +300,9 @@ nnoremap <Leader>sw :Switch<CR>
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 
+imap <c-e> <c-o>$
+imap <c-a> <c-o>^
+
 " OTHER MAPPINGS
 " --------------
 "
@@ -398,13 +411,6 @@ set pastetoggle=<F12>
 
 MapToggle <Leader>f fullscreen
 
-" perl support 
-if has('win32') && executable('perl')
-  " set complete=.,w,b,u,t
-  " disable incremental searching (only a problem on windows)
-  set complete-=i
-endif
-
 " search dropbox 
 command! -nargs=1 Ngrep Ag "<args>" ~/Dropbox/commands/*
 command! -nargs=1 Nopen edit ~/Dropbox/commands/<args>
@@ -419,6 +425,20 @@ command! -nargs=1 Nopen edit ~/Dropbox/commands/<args>
 let NERDTreeMapOpenVSplit='v'
 let NERDTreeMapOpenSplit='s'
 
+" Lightline
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+" Ack
+" -----
+let g:ackprg = 'ag --vimgrep'
 
 " ALE
 " -----------
