@@ -38,9 +38,6 @@ Bundle 'fs111/pydoc.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
-
-" Extra text objects
-Bundle 'wellle/targets.vim'                     
 Bundle 'flazz/vim-colorschemes'
 Bundle 'junegunn/fzf.vim'
 Bundle 'mileszs/ack.vim'
@@ -52,6 +49,10 @@ Bundle 'tpope/vim-speeddating'
 
 " Show/Hide Marks
 Bundle 'kshenoy/vim-signature'
+
+" text objects
+Bundle 'wellle/targets.vim'                     
+Bundle 'jeetsukumaran/vim-pythonsense'
 
 
 " - Havent found use case for these:
