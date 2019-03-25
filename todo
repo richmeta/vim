@@ -1,18 +1,14 @@
+Mapping for opening history and searching
+
 Plugins to learn:
     fugitive
     vim-signature
-    vim-jdaddy
-    vim-abolish
     vim-speeddating
     vim-localrc     - for work addons
     targets
-    vim-grepper (also why vim-ack)
 
 
 Possible Plugins to install:
-    https://github.com/jeetsukumaran/vim-pythonsense
-        text objects and motions for Python
-
     https://github.com/AndrewRadev/sideways.vim
         Move function arguments left or right
 
@@ -24,9 +20,6 @@ Possible Plugins to install:
 
     https://github.com/christoomey/vim-sort-motion
         Sort by lines, visual, indentation (requires vim-textobj-indent)
-
-    https://github.com/tpope/vim-rsi
-        EMACS command chars
 
     https://github.com/vimwiki/vimwiki
         Personal Wiki for Vim

@@ -107,6 +107,9 @@ set splitbelow
 set splitright
 set nojoinspaces
 set viminfo='1000,<50,s10,h
+if has('mac')
+    set macmeta
+endif
 
 " 
 " Fav colorschemes
@@ -331,12 +334,11 @@ nnoremap <C-P> :prev<CR>
 " Buffer switching 
 nmap L ]b
 nmap H [b
+
+" Buffer delete
 nmap <silent> Q :bp<CR>:bd #<CR>
-if has("mac")
-    nmap <silent> œ :bp<CR>:bd! #<CR>
-else
-    nmap <silent> <M-q> :bp<CR>:bd! #<CR>
-endif
+nmap <silent> <M-q> :bp<CR>:bd! #<CR>
+nmap <silent> <C-M-q> :bd!<CR>:tabclose<CR>
 
 " Window switching
 nmap <silent> <c-k> :wincmd k<CR>
