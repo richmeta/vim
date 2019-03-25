@@ -54,10 +54,8 @@ Bundle 'kshenoy/vim-signature'
 Bundle 'wellle/targets.vim'                     
 Bundle 'jeetsukumaran/vim-pythonsense'
 
-
-" - Havent found use case for these:
-" Bundle 'AndrewRadev/switch.vim'               " Toggle words/expressions
-" Bundle 'tpope/vim-abolish'                    " Abbreviations and Replacement on steriods
+" Toggle words/expressions
+Bundle 'AndrewRadev/switch.vim'               
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
@@ -150,7 +148,7 @@ if has("autocmd")
                     \   exe "normal! g`\"" |
                     \ endif
 
-        autocmd BufWinEnter,BufRead * :call CheckDropbox()
+        autocmd BufWinEnter,BufRead * :call CheckSyncDir()
     augroup END
 
     autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
@@ -158,6 +156,8 @@ if has("autocmd")
     augroup myfiletypes
         autocmd!
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
+
+        " TODO: Python switch def for kwargs to dict
     augroup END
 endif
 
@@ -216,6 +216,7 @@ if executable('html_pp.py')
 endif
 
 " \jf = format json
+" \pf = format json
 if executable('python')
   " map <Leader>jf :silent %!python3 -mjson.tool<CR>
   map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
@@ -224,8 +225,6 @@ if executable('python')
   map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <CR><CR> 
   vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <CR><CR> 
 endif
-
-
 
 " \ds = time stamp
 " \dd = date only
@@ -240,7 +239,8 @@ inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 " quoting:  
 "    , = with trailing comma
 "    <leader> = without
-"         
+"
+"  TODO: clean up mappings
 " \dq = double quote
 " \sq = single quote 
 " \ddq = delete double quote
@@ -293,8 +293,9 @@ nnoremap <Leader>v :vnew<CR>
 " \h - open new horizontal split
 nnoremap <Leader>h :new<CR>
 
-" Switch
-nnoremap <Leader>sw :Switch<CR>
+" \rm - Remove file (confirm)
+nnoremap <Leader>rm :!rm -i %
+
 
 " COMMAND MAPPINGS
 " ----------------
@@ -376,9 +377,9 @@ function! MapToggle(key, opt)
 endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
-function! CheckDropbox()
+function! CheckSyncDir()
   let buffDir = expand('%:p:h')
-  if match(buffDir, '\c\/dropbox') > -1
+  if match(buffDir, '\c\/sync\/') > -1
     setlocal noswapfile
   endif
 endfunction
@@ -412,9 +413,21 @@ set pastetoggle=<F12>
 
 MapToggle <Leader>f fullscreen
 
-" search dropbox 
-command! -nargs=1 Ngrep Ag "<args>" ~/Dropbox/commands/*
-command! -nargs=1 Nopen edit ~/Dropbox/commands/<args>
+" search Sync
+command! -nargs=1 Ngrep Ack "<args>" ~/sync/stuff/commands/*
+command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen edit ~/sync/stuff/commands/<args>
+
+function! GlobCommandsDir(A,L,P)
+    let l:pat = '^' . a:A
+    let l:result = []
+    for fn in split(globpath('~/sync/stuff/commands', '*'), "\n")
+        let l:file = fnamemodify(fn, ':t')
+        if match(l:file, l:pat) >= 0
+            call add(l:result, l:file)
+        endif
+    endfor
+    return l:result
+endfun
 
 
 " PLUGIN SETTINGS 
@@ -453,6 +466,14 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
 \}
+
+" Switch
+" ------
+let g:switch_custom_definitions =
+    \ [
+    \   ['True', 'False'],
+    \   ['true', 'false']
+    \ ]
 
 syntax enable
 
