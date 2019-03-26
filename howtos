@@ -20,6 +20,9 @@ CalcCheckSum
 
 
 # handy key mappings
+Mapping for opening history and searching
+q:  - opens new buffer with history
+
 [{  jump to beginning of code block
 ]}  end
 

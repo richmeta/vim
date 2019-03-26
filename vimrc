@@ -222,7 +222,7 @@ endif
 " \pf = format json
 if executable('python')
   " map <Leader>jf :silent %!python3 -mjson.tool<CR>
-  map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
+  map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>:setf json<CR>
   vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
 
   map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <CR><CR> 
@@ -297,7 +297,23 @@ nnoremap <Leader>v :vnew<CR>
 nnoremap <Leader>h :new<CR>
 
 " \rm - Remove file (confirm)
-nnoremap <Leader>rm :!rm -i %
+nnoremap <Leader>rm :!rm -i %<CR>
+
+" \us - Unique sort whole file
+if has("mac")
+    nnoremap <Leader>us :%!gsort -u<CR>
+    vnoremap <Leader>us :'<,'>!gsort -u<CR>
+else
+    nnoremap <Leader>us :%!sort -u<CR>
+    vnoremap <Leader>us :'<,'>!sort -u<CR>
+endif
+
+" \vrc - open vimrc
+nnoremap <Leader>vrc :e $MYVIMRC<CR>
+nnoremap <Leader>vso :so $MYVIMRC<CR>
+
+" \sb - shebang for bash
+nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
 
 
 " COMMAND MAPPINGS
