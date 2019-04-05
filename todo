@@ -1,3 +1,15 @@
+surround lines with try/catch (except) => snippets
+shortcut for surround argument with function and parethesis
+quote lists \, \s, \d,
+shortcuts for copy to clipboard  (eg \Yi" )
+wrapper to take constructor params and set this/self.  - not sure which plugin
+
+big:
+fzf - setting search directory OR alternatives
+python keywords completion (eg stopiteration)   =>   davidhalter/jedi-vim
+function to choose random colorscheme, and function to delete it
+
+
 learn :help pattern-overview
 
 Plugins to learn:

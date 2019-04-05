@@ -1,6 +1,6 @@
 " NOTE: more VIMRC => plugin bindings in commands in
 " .vim/after/plugin/postplugin.vim
-" 
+"
 "
 
 set nocompatible
@@ -43,19 +43,20 @@ Bundle 'junegunn/fzf.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'w0rp/ale'
 Bundle 'tmhedberg/matchit'
+Bundle 'isRuslan/vim-es6'
 
 " use CTRL-A/CTRL-X to increment dates, times,
-Bundle 'tpope/vim-speeddating'                  
+Bundle 'tpope/vim-speeddating'
 
 " Show/Hide Marks
 Bundle 'kshenoy/vim-signature'
 
 " text objects
-Bundle 'wellle/targets.vim'                     
+Bundle 'wellle/targets.vim'
 Bundle 'jeetsukumaran/vim-pythonsense'
 
 " Toggle words/expressions
-Bundle 'AndrewRadev/switch.vim'               
+Bundle 'AndrewRadev/switch.vim'
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
@@ -111,7 +112,7 @@ if has('mac')
     set macmeta
 endif
 
-" 
+"
 " Fav colorschemes
 "  gruvbox
 "  jellybeans
@@ -125,8 +126,9 @@ endif
 "  greyblue
 "  vanzan_color
 "  candy
+"  TODO: function random colorscheme from this list
 
-if &term == "win32" 
+if &term == "win32"
   " console vim, |lucius| doesn't support console
   colorscheme torte
 else
@@ -168,8 +170,11 @@ if has('mac')
     " use pound symbol instead of awkward hash
     inoremap # £
     inoremap £ #
+    inoremap ³ #
     nnoremap £ #
+    nnoremap ³ #
     cnoremap £ #
+    cnoremap ³ #
 endif
 
 " SYNTAX BLOCKS
@@ -199,19 +204,19 @@ if executable('perltidy')
   vmap <Leader>pt :!perltidy<CR>
 endif
 
-" \w 
+" \w
 " open window on current word
 nnoremap <Leader>w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
 nnoremap <Leader>W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 
-" \xf = re-format xml 
+" \xf = re-format xml
 if executable('xml_pp')
   " xml_pp = xml pretty print from XML::Twig
   map <Leader>xf :silent %!xml_pp -- <CR>
   vmap <Leader>xf :!xml_pp -- <CR>
 endif
 
-" \hf = re-format html 
+" \hf = re-format html
 if executable('html_pp.py')
   " html_pp = html pretty print using Beautiful Soup
   map <Leader>hf :silent %!html_pp.py - <CR>
@@ -225,8 +230,8 @@ if executable('python')
   map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>:setf json<CR>
   vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
 
-  map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <CR><CR> 
-  vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <CR><CR> 
+  map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <CR><CR>
+  vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <CR><CR>
 endif
 
 " \ds = time stamp
@@ -239,15 +244,15 @@ inoremap <C-D>d <C-R>=strftime("%d/%m/%Y")<CR>
 nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
 inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 
-" quoting:  
+" quoting:
 "    , = with trailing comma
 "    <leader> = without
 "
 "  TODO: clean up mappings
 " \dq = double quote
-" \sq = single quote 
+" \sq = single quote
 " \ddq = delete double quote
-" \dsq = delete single quote 
+" \dsq = delete single quote
 " ,dq = double quote with commas
 " ,sq = single quote with commas
 " ,ddq = delete double quote incl comma
@@ -310,7 +315,7 @@ endif
 
 " \vrc - open vimrc
 nnoremap <Leader>vrc :e $MYVIMRC<CR>
-nnoremap <Leader>vso :so $MYVIMRC<CR>
+nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 
 " \sb - shebang for bash
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
@@ -347,9 +352,10 @@ inoremap <C-U> <C-G>u<C-U>
 nnoremap <C-N> :next<CR>
 nnoremap <C-P> :prev<CR>
 
-" Buffer switching 
+" Buffer switching
 nmap L ]b
 nmap H [b
+nmap bb :b#<CR>
 
 " Buffer delete
 nmap <silent> Q :bp<CR>:bd #<CR>
@@ -366,7 +372,7 @@ nmap <silent> <c-l> :wincmd l<CR>
 autocmd FileType python set tabstop=4 shiftwidth=4
 
 " copypath
-" \cf = fullpath, 
+" \cf = fullpath,
 " \cv = copy filename
 if has('win32')
   nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<CR>
@@ -379,12 +385,12 @@ elseif has('unix')
   nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? fugitive#buffer().path() : '')<CR>
 endif
 
-" sudo write 
+" sudo write
 if has('unix')
-	command! -bar -nargs=0 W  echo "Password: " | silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
-	command! -bar -nargs=0 WX silent! exec "write !chmod a+x % >/dev/null" | silent! edit!
+	command! -bar -nargs=0 W echo "Password: " | silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
+	command! -bar -nargs=0 WX silent! | exec "write" | exec "write !chmod a+x % >/dev/null" | silent! edit!
 elseif has('win32')
-	command! -bar -nargs=0 WR silent! exec "write !attrib -r %" | silent! edit!
+	command! -bar -nargs=0 WR silent! | exec "write" | exec "write !attrib -r %" | silent! edit!
 endif
 
 " Map key to toggle opt
@@ -448,7 +454,7 @@ function! GlobCommandsDir(A,L,P)
 endfun
 
 
-" PLUGIN SETTINGS 
+" PLUGIN SETTINGS
 " ---------------
 
 " nerdtree overrides
@@ -477,9 +483,10 @@ let g:ackprg = 'ag --vimgrep'
 " python: needs flake8
 "   ignore errors/warnings:
 "    E501 line too long
-"    W391 blank line at end of file 
+"    W391 blank line at end of file
 "    F403 unabled to detect undefined names
-let g:ale_python_flake8_options = '--ignore=E501,E731,W391,F403'
+let g:ale_python_flake8_executable = 'python3'
+let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403'
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
