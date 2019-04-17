@@ -34,7 +34,6 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'itchyny/lightline.vim'
-Bundle 'fs111/pydoc.vim'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
@@ -44,6 +43,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 'w0rp/ale'
 Bundle 'tmhedberg/matchit'
 Bundle 'isRuslan/vim-es6'
+Bundle 'davidhalter/jedi-vim'
 
 " use CTRL-A/CTRL-X to increment dates, times,
 Bundle 'tpope/vim-speeddating'
@@ -112,6 +112,8 @@ if has('mac')
     set macmeta
 endif
 
+set dictionary=~/.vim/dict/dict.txt
+
 "
 " Fav colorschemes
 "  gruvbox
@@ -157,6 +159,9 @@ if has("autocmd")
     augroup END
 
     autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
+
+    " for vim-es6
+    augroup filetype javascript syntax=javascript
 
     augroup myfiletypes
         autocmd!
@@ -355,7 +360,7 @@ nnoremap <C-P> :prev<CR>
 " Buffer switching
 nmap L ]b
 nmap H [b
-nmap bb :b#<CR>
+nmap <C-b>b :b#<CR>
 
 " Buffer delete
 nmap <silent> Q :bp<CR>:bd #<CR>
@@ -500,10 +505,16 @@ let g:switch_custom_definitions =
     \   ['true', 'false']
     \ ]
 
+" Jedi
+" -----
+let g:jedi#popup_on_dot = 0
+let g:jedi#use_splits_not_buffers = "bottom"
+
 syntax enable
 
 if filereadable("myextras.vim")
   :source myextras.vim
 endif
 
-set dictionary=~/.vim/dict/dict.txt
+" UltiSnips
+let g:UltiSnipsUsePythonVersion = 3

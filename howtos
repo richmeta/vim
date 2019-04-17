@@ -169,3 +169,16 @@ exe 'source' '~/.vim/mappings.vim'
 for file in split(globpath('~/.vim', 'settings.*.vim'), '\n')
 	exe 'source' file
 endfor
+
+
+# search replace multiple buffers
+:bufdo %s/pattern/replace/ge | update
+
+bufdo 	Apply the following commands to all buffers.
+%s 	Search and replace all lines in the buffer.
+pattern 	Search pattern.
+replace 	Replacement text.
+g 	Change all occurrences in each line (global).
+e 	No error if the pattern is not found.
+| 	Separator between commands.
+update 	Save (write file only if changes were made). 

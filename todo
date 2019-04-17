@@ -1,5 +1,10 @@
-surround lines with try/catch (except) => snippets
-shortcut for surround argument with function and parethesis
+linewise surround
+
+NERDTree - \p from dir
+
+1. surround lines with try/catch (except) => Using VISUAL snippets
+
+2. shortcut for surround argument with function and parethesis => using snippet pa<TAB>
 quote lists \, \s, \d,
 shortcuts for copy to clipboard  (eg \Yi" )
 wrapper to take constructor params and set this/self.  - not sure which plugin
