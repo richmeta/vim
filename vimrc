@@ -166,8 +166,14 @@ if has("autocmd")
     augroup myfiletypes
         autocmd!
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
+        autocmd FileType python set ts=4 sw=4
 
         " TODO: Python switch def for kwargs to dict
+    augroup END
+
+    augroup vimrc     " Source vim configuration upon save
+        autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+        autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
 endif
 
@@ -320,7 +326,9 @@ endif
 
 " \vrc - open vimrc
 nnoremap <Leader>vrc :e $MYVIMRC<CR>
-nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
+
+" not sure about the autocmd
+" nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 
 " \sb - shebang for bash
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
@@ -372,9 +380,6 @@ nmap <silent> <c-k> :wincmd k<CR>
 nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
-
-" python sw=4
-autocmd FileType python set tabstop=4 shiftwidth=4
 
 " copypath
 " \cf = fullpath,
