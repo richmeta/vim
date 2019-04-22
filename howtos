@@ -182,3 +182,23 @@ g 	Change all occurrences in each line (global).
 e 	No error if the pattern is not found.
 | 	Separator between commands.
 update 	Save (write file only if changes were made). 
+
+
+# partial syntax highlighting
+" SYNTAX BLOCKS
+" -------------
+"    http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
+"   ( used for code inside txt files etc )
+
+" Only on TXT files currently
+function! SetPartialSyntax()
+    syntax include @JS syntax/javascript.vim
+    syntax region jsSnip matchgroup=Snip start="@begin=js@" end="@end=js@" contains=@JS
+    " TODO: doesn't seem to work for python
+    " syntax include @PYTHON syntax/python.vim
+    " syntax region pySnip matchgroup=Snip start="@begin=py@" end="@end=py@" contains=@PYTHON
+    hi link Snip SpecialComment
+endfunction
+
+autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
+

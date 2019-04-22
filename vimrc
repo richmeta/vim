@@ -3,6 +3,8 @@
 "
 "
 
+" TODO: move plugin mappings next to plugins
+
 set nocompatible
 filetype off
 
@@ -10,11 +12,6 @@ if isdirectory(expand("~/.vim/bundle/Vundle.vim"))
     set runtimepath+=~/.vim/bundle/Vundle.vim
 elseif isdirectory(expand("~/vimfiles/bundle/Vundle.vim"))
     set runtimepath+=~/vimfiles/bundle/Vundle.vim
-endif
-
-" for fzf
-if executable('fzf')
-    set runtimepath+=/usr/local/opt/fzf
 endif
 
 call vundle#rc()
@@ -38,7 +35,7 @@ Bundle 'tomtom/tcomment_vim'
 Bundle 'xolox/vim-misc'
 Bundle 'thinca/vim-localrc'
 Bundle 'flazz/vim-colorschemes'
-Bundle 'junegunn/fzf.vim'
+Bundle 'Yggdroot/LeaderF'
 Bundle 'mileszs/ack.vim'
 Bundle 'w0rp/ale'
 Bundle 'tmhedberg/matchit'
@@ -158,8 +155,6 @@ if has("autocmd")
         autocmd BufWinEnter,BufRead * :call CheckSyncDir()
     augroup END
 
-    autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
-
     " for vim-es6
     augroup filetype javascript syntax=javascript
 
@@ -172,6 +167,7 @@ if has("autocmd")
     augroup END
 
     augroup vimrc     " Source vim configuration upon save
+        autocmd!
         autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
         autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
@@ -187,21 +183,6 @@ if has('mac')
     cnoremap £ #
     cnoremap ³ #
 endif
-
-" SYNTAX BLOCKS
-" -------------
-"    http://vim.wikia.com/wiki/Different_syntax_highlighting_within_regions_of_a_file
-"   ( used for code inside txt files etc )
-
-" Only on TXT files currently
-function! SetPartialSyntax()
-    syntax include @JS syntax/javascript.vim
-    syntax region jsSnip matchgroup=Snip start="@begin=js@" end="@end=js@" contains=@JS
-    " TODO: doesn't seem to work for python
-    " syntax include @PYTHON syntax/python.vim
-    " syntax region pySnip matchgroup=Snip start="@begin=py@" end="@end=py@" contains=@PYTHON
-    hi link Snip SpecialComment
-endfunction
 
 " LEADER MAPPINGS
 " ---------------
@@ -283,10 +264,10 @@ vmap <Leader>cl :normal A,<CR>
 " \yy = copy to end of line to clipboard ( i.e. without CR)
 nnoremap <Leader>yy "*y$
 
-" \p = FILES, \u = FZF MRU, \b = FZF Buffer
-nnoremap <Leader>p :Files<CR>
-nnoremap <Leader>u :History<CR>
-nnoremap <Leader>b :Buffers<CR>
+" " \p = FILES, \u = FZF MRU, \b = FZF Buffer
+" nnoremap <Leader>p :Files<CR>
+" nnoremap <Leader>u :History<CR>
+" nnoremap <Leader>b :Buffers<CR>
 
 " \qf = Quick fix open
 " \qc = Quick fix close
@@ -445,7 +426,8 @@ MapToggle <F11> ignorecase
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
-MapToggle <Leader>f fullscreen
+" TODO: temp disabled for LeaderF
+" MapToggle <Leader>f fullscreen
 
 " search Sync
 command! -nargs=1 Ngrep Ack "<args>" ~/sync/stuff/commands/*
@@ -523,3 +505,15 @@ endif
 
 " UltiSnips
 let g:UltiSnipsUsePythonVersion = 3
+
+" LeaderF
+" \p = FILES
+" \u = MRU
+" \b = Buffer
+let g:Lf_PythonVersion = 3
+let g:Lf_ShortcutF = '<Leader>p'
+let g:Lf_WildIgnore = {
+        \ 'dir': ['.svn','.git','.hg', 'node_modules'],
+        \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+        \}
+nmap <Leader>u :LeaderfMru<CR>
