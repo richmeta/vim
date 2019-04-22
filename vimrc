@@ -1,9 +1,7 @@
-" NOTE: more VIMRC => plugin bindings in commands in
+" NOTE: 
+"  more VIMRC => plugin bindings in commands in
 " .vim/after/plugin/postplugin.vim
 "
-"
-
-" TODO: move plugin mappings next to plugins
 
 set nocompatible
 filetype off
@@ -58,6 +56,8 @@ Bundle 'AndrewRadev/switch.vim'
 
 " enable ctrl-c, ctrl-v, ctrl-a
 source $VIMRUNTIME/mswin.vim
+
+" don't want gui find
 unmap <C-F>
 
 set hidden
@@ -190,12 +190,6 @@ endif
 " \t = new tab
 noremap <Leader>t :tabnew<CR>
 
-" \pt = perltidy
-if executable('perltidy')
-  nmap <Leader>pt :%!perltidy<CR>
-  vmap <Leader>pt :!perltidy<CR>
-endif
-
 " \w
 " open window on current word
 nnoremap <Leader>w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
@@ -229,6 +223,7 @@ endif
 " \ds = time stamp
 " \dd = date only
 " \dt = time only
+" TODO: move to snippet
 nnoremap <Leader>ds "=strftime("%d/%m/%Y %H:%M")<CR>P
 inoremap <C-D>s <C-R>=strftime("%d/%m/%Y %H:%M")<CR>
 nnoremap <Leader>dd "=strftime("%d/%m/%Y")<CR>P
@@ -264,11 +259,6 @@ vmap <Leader>cl :normal A,<CR>
 " \yy = copy to end of line to clipboard ( i.e. without CR)
 nnoremap <Leader>yy "*y$
 
-" " \p = FILES, \u = FZF MRU, \b = FZF Buffer
-" nnoremap <Leader>p :Files<CR>
-" nnoremap <Leader>u :History<CR>
-" nnoremap <Leader>b :Buffers<CR>
-
 " \qf = Quick fix open
 " \qc = Quick fix close
 noremap <Leader>qf :copen<CR>
@@ -298,6 +288,7 @@ nnoremap <Leader>rm :!rm -i %<CR>
 
 " \us - Unique sort whole file
 if has("mac")
+    " TODO: move gsort or sort into own variable
     nnoremap <Leader>us :%!gsort -u<CR>
     vnoremap <Leader>us :'<,'>!gsort -u<CR>
 else
@@ -402,15 +393,6 @@ endfunction
 " syntax on/off
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
 
-" tagbar
-map <F3> :TagbarToggle<CR>
-
-" ALE
-nmap <S-F5> :ALEToggle<CR>
-imap <S-F5> <C-o>:ALEToggle<CR>
-vmap <S-F5> :ALEToggle<CR>
-
-
 " Display-altering option toggles
 MapToggle <F2> spell
 MapToggle <F5> wrapscan
@@ -426,8 +408,10 @@ MapToggle <F11> ignorecase
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
-" TODO: temp disabled for LeaderF
-" MapToggle <Leader>f fullscreen
+if has("mac")
+    MapToggle <Leader>F fullscreen
+endif
+
 
 " search Sync
 command! -nargs=1 Ngrep Ack "<args>" ~/sync/stuff/commands/*
@@ -449,7 +433,10 @@ endfun
 " PLUGIN SETTINGS
 " ---------------
 
-" nerdtree overrides
+" Tagbar
+map <F3> :TagbarToggle<CR>
+
+" Nerdtree overrides
 " s = split horizontally (not vertically [NT default])
 " v = split vertically (not i=horizontally)(
 let NERDTreeMapOpenVSplit='v'
@@ -484,6 +471,10 @@ let g:ale_linters = {
 \   'python': ['flake8'],
 \}
 
+nmap <S-F5> :ALEToggle<CR>
+imap <S-F5> <C-o>:ALEToggle<CR>
+vmap <S-F5> :ALEToggle<CR>
+
 " Switch
 " ------
 let g:switch_custom_definitions =
@@ -497,11 +488,6 @@ let g:switch_custom_definitions =
 let g:jedi#popup_on_dot = 0
 let g:jedi#use_splits_not_buffers = "bottom"
 
-syntax enable
-
-if filereadable("myextras.vim")
-  :source myextras.vim
-endif
 
 " UltiSnips
 let g:UltiSnipsUsePythonVersion = 3
@@ -517,3 +503,13 @@ let g:Lf_WildIgnore = {
         \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
         \}
 nmap <Leader>u :LeaderfMru<CR>
+
+"
+" End Plugins
+"
+
+syntax enable
+
+if filereadable("myextras.vim")
+  :source myextras.vim
+endif
