@@ -1,21 +1,35 @@
-switch autochdir on or off 
+quote lists \, \s, \d,
+shortcuts for copy to clipboard  (eg \Yi" )
+
+Nopen from NERDTree window shouldn't use nerdtree window
+
+operator for javascript 'f' => function
+
+mapping for switch autochdir on or off 
     affects leaderF (g:Lf_WorkingDirectoryMode)
-    afffects ack
+    affects ack
 
-linewise surround
+leaderf
+    using \u from Nerdtree, should open in rhs window
 
-NERDTree - \p from dir
+using ack
+    mapping from 'project root' (no cr)
+    mapping from current search  (no cr)
+    mapping from current filetype (eg --py) (no cr)
+    
+lightline - show cwd
+
+tab mappings
+    alt N for tab N
+    left tab or right tab
+
 
 1. surround lines with try/catch (except) => Using VISUAL snippets
 
 2. shortcut for surround argument with function and parethesis => using snippet pa<TAB>
-quote lists \, \s, \d,
-shortcuts for copy to clipboard  (eg \Yi" )
 wrapper to take constructor params and set this/self.  - not sure which plugin
 
 big:
-fzf - setting search directory OR alternatives
-python keywords completion (eg stopiteration)   =>   davidhalter/jedi-vim
 function to choose random colorscheme, and function to delete it
 
 
@@ -30,6 +44,14 @@ Plugins to learn:
 
 
 Possible Plugins to install:
+    vim-bumblebee (https://github.com/PeterRincker/vim-bumblebee)
+        fuzzy buffer switching
+
+    vim-vinegar (https://www.youtube.com/watch?v=OgQW07saWb0)
+
+    https://github.com/tpope/vim-projectionist
+        projections (https://www.youtube.com/watch?v=3jDafvUESbs
+
     https://github.com/AndrewRadev/sideways.vim
         Move function arguments left or right
 

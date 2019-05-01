@@ -125,6 +125,14 @@ set dictionary=~/.vim/dict/dict.txt
 "  greyblue
 "  vanzan_color
 "  candy
+"  phd
+"  predawn
+"  made_of_code
+"  navajo-night
+"  wombat
+"  xterm16
+"  pt_black
+"  oceandeep
 "  TODO: function random colorscheme from this list
 
 if &term == "win32"
@@ -340,7 +348,8 @@ nnoremap <C-P> :prev<CR>
 " Buffer switching
 nmap L ]b
 nmap H [b
-nmap <C-b>b :b#<CR>
+" TODO: find mapping that doesn't interfere with \b or <C-B>
+" nmap <C-b>b :b#<CR>
 
 " Buffer delete
 nmap <silent> Q :bp<CR>:bd #<CR>
@@ -364,7 +373,8 @@ elseif has('unix')
   nmap <Leader>cd :let @+=expand("%:p:h")<CR>
   nmap <Leader>cf :let @+=expand("%:p")<CR>
   nmap <Leader>cv :let @+=expand("%")<CR>
-  nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? fugitive#buffer().path() : '')<CR>
+  " nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? fugitive#buffer().path() : '')<CR>
+  nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath() : '')<CR>
 endif
 
 " sudo write
@@ -436,26 +446,38 @@ endfun
 " Tagbar
 map <F3> :TagbarToggle<CR>
 
-" Nerdtree overrides
-" s = split horizontally (not vertically [NT default])
-" v = split vertically (not i=horizontally)(
+" NERDTree
+let NERDTreeIgnore = ['\.pyc', '\.pyo', '^tags$', '__pycache__', 'node_modules']
+
+" s = split horizontally
+" v = split vertically
 let NERDTreeMapOpenVSplit='v'
 let NERDTreeMapOpenSplit='s'
 
+map <F4> :NERDTreeToggle<CR>
+map <S-F4> :NERDTreeFind<CR>
+
+
 " Lightline
 let g:lightline = {
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+    \   },
+    \ 'component_function': {
+    \       'gitbranch': 'fugitive#head'
+    \   },
+    \ }
 
 " Ack
 " -----
 let g:ackprg = 'ag --vimgrep'
+
+let g:ack_mappings = {
+    \   'v':  '<C-W><CR><C-W>L<C-W>p<C-W>J<C-W>p',
+    \   'gv': '<C-W><CR><C-W>L<C-W>p<C-W>J' 
+    \ }
+
 
 " ALE
 " -----------
@@ -467,9 +489,9 @@ let g:ackprg = 'ag --vimgrep'
 let g:ale_python_flake8_executable = 'python3'
 let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403'
 let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'python': ['flake8'],
-\}
+    \   'javascript': ['eslint'],
+    \   'python': ['flake8'],
+    \ }
 
 nmap <S-F5> :ALEToggle<CR>
 imap <S-F5> <C-o>:ALEToggle<CR>
@@ -499,9 +521,9 @@ let g:UltiSnipsUsePythonVersion = 3
 let g:Lf_PythonVersion = 3
 let g:Lf_ShortcutF = '<Leader>p'
 let g:Lf_WildIgnore = {
-        \ 'dir': ['.svn','.git','.hg', 'node_modules'],
-        \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-        \}
+    \   'dir': ['.svn','.git','.hg', 'node_modules'],
+    \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+    \ }
 nmap <Leader>u :LeaderfMru<CR>
 
 "
