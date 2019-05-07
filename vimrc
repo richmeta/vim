@@ -1,7 +1,3 @@
-" NOTE: 
-"  more VIMRC => plugin bindings in commands in
-" .vim/after/plugin/postplugin.vim
-"
 
 set nocompatible
 filetype off
@@ -307,10 +303,10 @@ endif
 " \vrc - open vimrc
 nnoremap <Leader>vrc :e $MYVIMRC<CR>
 
-" not sure about the autocmd
-" nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
+" \vso - reload vimrc manually
+nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 
-" \sb - shebang for bash
+" \sb - shebang for bash -> TODO: move this to snippet
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
 
 
@@ -405,12 +401,20 @@ map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable
 
 " Display-altering option toggles
 MapToggle <F2> spell
+" <F3> - tagbar
+" <F4> - nerdtree
 MapToggle <F5> wrapscan
+" <F6> - toggle syntax
 MapToggle <F7> hlsearch
 MapToggle <F8> wrap
 MapToggle <F9> list
 MapToggle <S-F8> number
 MapToggle <S-F9> relativenumber
+
+if !&diff
+    " \ac - autochdir
+    MapToggle <Leader>ac autochdir
+endif
 
 " Behavior-altering option toggles
 MapToggle <F10> scrollbind
@@ -440,13 +444,18 @@ function! GlobCommandsDir(A,L,P)
 endfun
 
 
+" ===============
 " PLUGIN SETTINGS
-" ---------------
+" ===============
+
 
 " Tagbar
+" ------
 map <F3> :TagbarToggle<CR>
 
+
 " NERDTree
+" --------
 let NERDTreeIgnore = ['\.pyc', '\.pyo', '^tags$', '__pycache__', 'node_modules']
 
 " s = split horizontally
@@ -459,18 +468,21 @@ map <S-F4> :NERDTreeFind<CR>
 
 
 " Lightline
+" ---------
+
 let g:lightline = {
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+    \   'active': {
+    \       'left': [ [ 'mode', 'paste' ],
+    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
     \   },
-    \ 'component_function': {
-    \       'gitbranch': 'fugitive#head'
+    \   'component_function': {
+    \       'gitbranch': 'fugitive#head',
     \   },
     \ }
 
+
 " Ack
-" -----
+" ---
 let g:ackprg = 'ag --vimgrep'
 
 let g:ack_mappings = {
@@ -480,7 +492,7 @@ let g:ack_mappings = {
 
 
 " ALE
-" -----------
+" ---
 " python: needs flake8
 "   ignore errors/warnings:
 "    E501 line too long
@@ -497,6 +509,7 @@ nmap <S-F5> :ALEToggle<CR>
 imap <S-F5> <C-o>:ALEToggle<CR>
 vmap <S-F5> :ALEToggle<CR>
 
+
 " Switch
 " ------
 let g:switch_custom_definitions =
@@ -505,6 +518,7 @@ let g:switch_custom_definitions =
     \   ['true', 'false']
     \ ]
 
+
 " Jedi
 " -----
 let g:jedi#popup_on_dot = 0
@@ -512,9 +526,12 @@ let g:jedi#use_splits_not_buffers = "bottom"
 
 
 " UltiSnips
+" ---------
 let g:UltiSnipsUsePythonVersion = 3
 
 " LeaderF
+" -------
+"
 " \p = FILES
 " \u = MRU
 " \b = Buffer
@@ -526,9 +543,9 @@ let g:Lf_WildIgnore = {
     \ }
 nmap <Leader>u :LeaderfMru<CR>
 
-"
+" ===========
 " End Plugins
-"
+" ===========
 
 syntax enable
 

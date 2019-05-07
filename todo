@@ -1,11 +1,15 @@
+goto next/prev ALE issue
+
 quote lists \, \s, \d,
-shortcuts for copy to clipboard  (eg \Yi" )
+    - can i use surround from function with Operator
+
+shortcuts for copy to clipboard  (eg \Yi" ) with motion
 
 Nopen from NERDTree window shouldn't use nerdtree window
 
 operator for javascript 'f' => function
 
-mapping for switch autochdir on or off 
+mapping for switch autochdir on or off  => \ac
     affects leaderF (g:Lf_WorkingDirectoryMode)
     affects ack
 
@@ -17,7 +21,8 @@ using ack
     mapping from current search  (no cr)
     mapping from current filetype (eg --py) (no cr)
     
-lightline - show cwd
+lightline - 
+    show ic / etc ?
 
 tab mappings
     alt N for tab N
@@ -36,6 +41,7 @@ function to choose random colorscheme, and function to delete it
 learn :help pattern-overview
 
 Plugins to learn:
+    switch
     fugitive
     vim-signature
     vim-speeddating
