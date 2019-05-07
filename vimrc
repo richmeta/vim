@@ -265,6 +265,7 @@ nnoremap <Leader>yy "*y$
 
 " \qf = Quick fix open
 " \qc = Quick fix close
+" TODO: toggle for Quick fix open/closed
 noremap <Leader>qf :copen<CR>
 noremap <Leader>qc :cclose<CR>
 
@@ -344,7 +345,9 @@ nnoremap <C-P> :prev<CR>
 " Buffer switching
 nmap L ]b
 nmap H [b
-" TODO: find mapping that doesn't interfere with \b or <C-B>
+
+" TODO: switch to last buffer
+"   find mapping that doesn't interfere with \b or <C-B>
 " nmap <C-b>b :b#<CR>
 
 " Buffer delete
@@ -396,31 +399,32 @@ function! CheckSyncDir()
   endif
 endfunction
 
-" syntax on/off
-map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
-
 " Display-altering option toggles
 MapToggle <F2> spell
 " <F3> - tagbar
 " <F4> - nerdtree
 MapToggle <F5> wrapscan
-" <F6> - toggle syntax
+
+" syntax on/off
+map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
+
 MapToggle <F7> hlsearch
 MapToggle <F8> wrap
 MapToggle <F9> list
 MapToggle <S-F8> number
 MapToggle <S-F9> relativenumber
 
-if !&diff
-    " \ac - autochdir
-    MapToggle <Leader>ac autochdir
-endif
-
 " Behavior-altering option toggles
 MapToggle <F10> scrollbind
 MapToggle <F11> ignorecase
 MapToggle <F12> paste
 set pastetoggle=<F12>
+
+if !&diff
+    " \ac - autochdir
+    MapToggle <Leader>ac autochdir
+endif
+
 
 if has("mac")
     MapToggle <Leader>F fullscreen
@@ -429,7 +433,6 @@ endif
 
 " search Sync
 command! -nargs=1 Ngrep Ack "<args>" ~/sync/stuff/commands/*
-command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen edit ~/sync/stuff/commands/<args>
 
 function! GlobCommandsDir(A,L,P)
     let l:pat = '^' . a:A
@@ -441,8 +444,32 @@ function! GlobCommandsDir(A,L,P)
         endif
     endfor
     return l:result
-endfun
+endfunction
 
+function! NerdWrapNopen(arg)
+    if (g:NERDTree.ExistsForBuf())
+        if (winnr('$') == 1)
+            call g:NERDTreeOpener._newVSplit()
+        else
+            execute "wincmd w"
+        endif
+    endif
+    execute "edit ~/sync/stuff/commands/" . a:arg
+endfunction
+
+" Open command wiki
+command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :call NerdWrapNopen("<args>")
+
+" ALT-N for tabs
+nnoremap <M-1> 1gt
+nnoremap <M-2> 2gt
+nnoremap <M-3> 3gt
+nnoremap <M-4> 4gt
+nnoremap <M-5> 5gt
+nnoremap <M-6> 6gt
+nnoremap <M-7> 7gt
+nnoremap <M-8> 8gt
+nnoremap <M-9> 9gt
 
 " ===============
 " PLUGIN SETTINGS
@@ -465,6 +492,8 @@ let NERDTreeMapOpenSplit='s'
 
 map <F4> :NERDTreeToggle<CR>
 map <S-F4> :NERDTreeFind<CR>
+
+" TODO: mapping for NERDTreeFocus
 
 
 " Lightline
@@ -541,7 +570,20 @@ let g:Lf_WildIgnore = {
     \   'dir': ['.svn','.git','.hg', 'node_modules'],
     \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
     \ }
-nmap <Leader>u :LeaderfMru<CR>
+
+function! NerdWrapLeaderfMru()
+    if (g:NERDTree.ExistsForBuf())
+        if (winnr('$') == 1)
+            call g:NERDTreeOpener._newVSplit()
+        else
+            execute "wincmd w"
+        endif
+    endif
+    LeaderfMru
+endfunction
+
+nmap <Leader>u :call NerdWrapLeaderfMru()<CR>
+
 
 " ===========
 " End Plugins

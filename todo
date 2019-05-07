@@ -5,16 +5,7 @@ quote lists \, \s, \d,
 
 shortcuts for copy to clipboard  (eg \Yi" ) with motion
 
-Nopen from NERDTree window shouldn't use nerdtree window
-
 operator for javascript 'f' => function
-
-mapping for switch autochdir on or off  => \ac
-    affects leaderF (g:Lf_WorkingDirectoryMode)
-    affects ack
-
-leaderf
-    using \u from Nerdtree, should open in rhs window
 
 using ack
     mapping from 'project root' (no cr)
@@ -27,6 +18,7 @@ lightline -
 tab mappings
     alt N for tab N
     left tab or right tab
+
 
 
 1. surround lines with try/catch (except) => Using VISUAL snippets
