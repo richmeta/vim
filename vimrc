@@ -216,7 +216,6 @@ endif
 " \jf = format json
 " \pf = format json
 if executable('python')
-  " map <Leader>jf :silent %!python3 -mjson.tool<CR>
   map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>:setf json<CR>
   vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
 
@@ -224,41 +223,18 @@ if executable('python')
   vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <CR><CR>
 endif
 
-" \ds = time stamp
-" \dd = date only
-" \dt = time only
-" TODO: move to snippet
-nnoremap <Leader>ds "=strftime("%d/%m/%Y %H:%M")<CR>P
-inoremap <C-D>s <C-R>=strftime("%d/%m/%Y %H:%M")<CR>
-nnoremap <Leader>dd "=strftime("%d/%m/%Y")<CR>P
-inoremap <C-D>d <C-R>=strftime("%d/%m/%Y")<CR>
-nnoremap <Leader>dt "=strftime("%H:%M")<CR>P
-inoremap <C-D>t <C-R>=strftime("%H:%M")<CR>
 
 " quoting:
-"    , = with trailing comma
-"    <leader> = without
-"
-"  TODO: clean up mappings
-" \dq = double quote
-" \sq = single quote
-" \ddq = delete double quote
-" \dsq = delete single quote
-" ,dq = double quote with commas
-" ,sq = single quote with commas
-" ,ddq = delete double quote incl comma
-" ,dsq = delete single quote incl comma
-vmap <Leader>dq :normal yss"<CR>
-vmap <Leader>sq :normal yss'<CR>
-vmap <Leader>ddq :normal ds"<CR>
-vmap <Leader>dsq :normal ds'<CR>
-vmap ,dq :normal yss"A,<CR>
-vmap ,sq :normal yss'A,<CR>
-vmap ,ddq :normal ds"$x<CR>
-vmap ,dsq :normal ds'$x<CR>
-
-" \cl = comma separate lines
-vmap <Leader>cl :normal A,<CR>
+" \qs = single
+" \qd = double
+" \s, = single with comma
+" \d, = double with comma
+" \, = comma separate
+vnoremap <Leader>qs :norm yss'<CR>
+vnoremap <Leader>qd :norm yss"<CR>
+vnoremap <Leader>s, :norm yss'A,<CR>
+vnoremap <Leader>d, :norm yss"A,<CR>
+vnoremap <Leader>, :normal A,<CR>
 
 " \yy = copy to end of line to clipboard ( i.e. without CR)
 nnoremap <Leader>yy "*y$
@@ -293,7 +269,6 @@ nnoremap <Leader>rm :!rm -i %<CR>
 
 " \us - Unique sort whole file
 if has("mac")
-    " TODO: move gsort or sort into own variable
     nnoremap <Leader>us :%!gsort -u<CR>
     vnoremap <Leader>us :'<,'>!gsort -u<CR>
 else
@@ -446,19 +421,9 @@ function! GlobCommandsDir(A,L,P)
     return l:result
 endfunction
 
-function! NerdWrapNopen(arg)
-    if (g:NERDTree.ExistsForBuf())
-        if (winnr('$') == 1)
-            call g:NERDTreeOpener._newVSplit()
-        else
-            execute "wincmd w"
-        endif
-    endif
-    execute "edit ~/sync/stuff/commands/" . a:arg
-endfunction
 
 " Open command wiki
-command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :call NerdWrapNopen("<args>")
+command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :call NerdWrap() <bar> edit ~/sync/stuff/commands/<args>
 
 " ALT-N for tabs
 nnoremap <M-1> 1gt
@@ -485,6 +450,9 @@ map <F3> :TagbarToggle<CR>
 " --------
 let NERDTreeIgnore = ['\.pyc', '\.pyo', '^tags$', '__pycache__', 'node_modules']
 
+" delete buffers after delete from tree
+let NERDTreeAutoDeleteBuffer=1
+
 " s = split horizontally
 " v = split vertically
 let NERDTreeMapOpenVSplit='v'
@@ -493,7 +461,19 @@ let NERDTreeMapOpenSplit='s'
 map <F4> :NERDTreeToggle<CR>
 map <S-F4> :NERDTreeFind<CR>
 
-" TODO: mapping for NERDTreeFocus
+" \nt - Focus to NerdTree
+map <Leader>nt :NERDTreeFocus<CR>
+
+" prevent opens using the nerdtree window
+function! NerdWrap()
+    if (g:NERDTree.ExistsForBuf())
+        if (winnr('$') == 1)
+            call g:NERDTreeOpener._newVSplit()
+        else
+            execute "wincmd w"
+        endif
+    endif
+endfunction
 
 
 " Lightline
@@ -564,6 +544,8 @@ let g:UltiSnipsUsePythonVersion = 3
 " \p = FILES
 " \u = MRU
 " \b = Buffer
+let g:Lf_MruMaxFiles = 1000
+let g:Lf_HistoryNumber = &history
 let g:Lf_PythonVersion = 3
 let g:Lf_ShortcutF = '<Leader>p'
 let g:Lf_WildIgnore = {
@@ -571,19 +553,7 @@ let g:Lf_WildIgnore = {
     \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
     \ }
 
-function! NerdWrapLeaderfMru()
-    if (g:NERDTree.ExistsForBuf())
-        if (winnr('$') == 1)
-            call g:NERDTreeOpener._newVSplit()
-        else
-            execute "wincmd w"
-        endif
-    endif
-    LeaderfMru
-endfunction
-
-nmap <Leader>u :call NerdWrapLeaderfMru()<CR>
-
+nmap <Leader>u :call NerdWrap() <bar> LeaderfMru<CR>
 
 " ===========
 " End Plugins
