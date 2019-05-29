@@ -35,6 +35,7 @@ Bundle 'w0rp/ale'
 Bundle 'tmhedberg/matchit'
 Bundle 'isRuslan/vim-es6'
 Bundle 'davidhalter/jedi-vim'
+Plugin 'Glench/Vim-Jinja2-Syntax'
 
 " use CTRL-A/CTRL-X to increment dates, times,
 Bundle 'tpope/vim-speeddating'
@@ -266,6 +267,9 @@ nnoremap <Leader>h :new<CR>
 
 " \rm - Remove file (confirm)
 nnoremap <Leader>rm :!rm -i %<CR>
+
+" \pw - Pwd
+nnoremap <Leader>pw :pwd<CR>
 
 " \us - Unique sort whole file
 if has("mac")
@@ -517,6 +521,8 @@ let g:ale_linters = {
 nmap <S-F5> :ALEToggle<CR>
 imap <S-F5> <C-o>:ALEToggle<CR>
 vmap <S-F5> :ALEToggle<CR>
+nnoremap ]g :ALENext<CR>
+nnoremap [g :ALEPrevious<CR>
 
 
 " Switch
