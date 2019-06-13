@@ -204,3 +204,7 @@ autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
 
 
 
+--------------------------------------------------------------------------------
+
+leaderF delete buffer
+press Tab, then d to delete

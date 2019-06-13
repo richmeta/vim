@@ -208,10 +208,10 @@ if executable('xml_pp')
 endif
 
 " \hf = re-format html
-if executable('html_pp.py')
+if executable('html_pp')
   " html_pp = html pretty print using Beautiful Soup
-  map <Leader>hf :silent %!html_pp.py - <CR>
-  vmap <Leader>hf :!html_pp.py - <CR>
+  map <Leader>hf :silent %!html_pp - <CR>
+  vmap <Leader>hf :!html_pp - <CR>
 endif
 
 " \jf = format json

@@ -1,7 +1,12 @@
+how to use javascript.node snippets
+
+setup local vimrc for setting filetype
+    eg: filetype jinja *.html
+
 setup home/work/all plugins 
     source plugins.vim (all)
     source $PLUGINS (csv)
-    settings for each plugin should be added in these files
+    settings for each plugin could be added in these files
 
 setup eslint on arch
 
