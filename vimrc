@@ -178,15 +178,16 @@ if has("autocmd")
     augroup END
 endif
 
+
 if has('mac')
-    " use pound symbol instead of awkward hash
-    inoremap # £
+    " hash instead of pound
     inoremap £ #
-    inoremap ³ #
     nnoremap £ #
-    nnoremap ³ #
     cnoremap £ #
-    cnoremap ³ #
+
+    " alt-3
+    inoremap <M-3> £
+    cnoremap <M-3> £
 endif
 
 " LEADER MAPPINGS
