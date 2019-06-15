@@ -352,8 +352,6 @@ elseif has('unix')
   nmap <Leader>cd :let @+=expand("%:p:h")<CR>
   nmap <Leader>cf :let @+=expand("%:p")<CR>
   nmap <Leader>cv :let @+=expand("%")<CR>
-  " nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? fugitive#buffer().path() : '')<CR>
-  nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath() : '')<CR>
 endif
 
 " sudo write
@@ -450,6 +448,9 @@ nnoremap <M-9> 9gt
 " ------
 map <F3> :TagbarToggle<CR>
 
+" Fugative
+" --------
+nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
 
 " NERDTree
 " --------
