@@ -105,6 +105,7 @@ set viminfo='1000,<50,s10,h
 if has('mac')
     set macmeta
 endif
+set tags=./tags;
 
 set dictionary=~/.vim/dict/dict.txt
 
@@ -555,13 +556,14 @@ let g:UltiSnipsUsePythonVersion = 3
 let g:Lf_MruMaxFiles = 1000
 let g:Lf_HistoryNumber = &history
 let g:Lf_PythonVersion = 3
-let g:Lf_ShortcutF = '<Leader>p'
+let g:Lf_ShortcutF = ''
 let g:Lf_WildIgnore = {
     \   'dir': ['.svn','.git','.hg', 'node_modules'],
     \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
     \ }
 
 nmap <Leader>u :call NerdWrap() <bar> LeaderfMru<CR>
+nmap <Leader>p :call NerdWrap() <bar> LeaderfFile<CR>
 
 " ===========
 " End Plugins

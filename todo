@@ -1,6 +1,6 @@
-how to use javascript.node snippets
+1. how to use javascript.node snippets
 
-setup local vimrc for setting filetype
+2. setup local vimrc for setting filetype
     eg: filetype jinja *.html
 
 setup home/work/all plugins 
@@ -9,8 +9,113 @@ setup home/work/all plugins
     settings for each plugin could be added in these files
 
 setup eslint on arch
-
-goto next/prev ALE issue
+{
+    "env": {
+        "browser": true,
+        "jquery": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": ["eslint:recommended","plugin:react/recommended"],
+    "parserOptions": {
+	"sourceType": "module",
+        "ecmaVersion": 8,
+        "ecmaFeatures": {
+            "jsx": true,
+	    "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "array-bracket-spacing": [
+            "error",
+            "never"
+        ],
+        "block-scoped-var": [
+            "error"
+        ],
+        "camelcase": [
+            "warn",
+            {
+                "properties": "always"
+            }
+        ],
+        "comma-dangle": [
+            "error",
+            "always-multiline"
+        ],
+        "comma-style": [
+            "error",
+            "last"
+        ],
+        "computed-property-spacing": [
+            "error",
+            "never"
+        ],
+        "curly": [
+            "error",
+            "all"
+        ],
+        "default-case": [
+            "error"
+        ],
+        "eqeqeq": [
+            "error",
+            "smart"
+        ],        
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "no-console": [
+            "warn",
+            {
+                "allow": ["warn", "error"]
+            }
+        ],
+        "no-else-return": [
+            "error"
+        ],
+        "no-empty-function": [
+            "error"
+        ],
+        "no-fallthrough": [
+            "warn"
+        ],
+        "no-lonely-if": [
+            "error"
+        ],
+        "no-use-before-define": [
+            "error"
+        ],
+        "no-useless-return": [
+            "error"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "radix": [
+            "error",
+            "always"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "spaced-comment": [
+            "error",
+            "always",
+            {
+                "block": {
+                    "balanced": true
+                }
+            }
+        ],
+        "vars-on-top": [
+            "warn"
+        ]
+    }
+}
 
 shortcuts for copy to clipboard  (eg \Yi" ) with motion
 
