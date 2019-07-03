@@ -169,7 +169,14 @@ if has("autocmd")
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
         autocmd FileType python set ts=4 sw=4
 
-        " TODO: Python switch def for kwargs to dict
+        autocmd FileType python let b:switch_custom_definitions = 
+            \ [
+            \   {
+            \       '\(\k\+\)=\([^),]\+\)': '''\1'': \2',
+            \       '[''"]\(\k\+\)[''"]:\s*\([^},]\+\)': '\1=\2'
+            \   }
+            \ ]
+
     augroup END
 
     augroup vimrc     " Source vim configuration upon save
@@ -326,10 +333,6 @@ nnoremap <C-P> :prev<CR>
 " Buffer switching
 nmap L ]b
 nmap H [b
-
-" TODO: switch to last buffer
-"   find mapping that doesn't interfere with \b or <C-B>
-" nmap <C-b>b :b#<CR>
 
 " Buffer delete
 nmap <silent> Q :bp<CR>:bd #<CR>
@@ -532,10 +535,11 @@ nnoremap [g :ALEPrevious<CR>
 " ------
 let g:switch_custom_definitions =
     \ [
-    \   ['True', 'False'],
-    \   ['true', 'false']
+    \   switch#NormalizedCase(['true', 'false']),
+    \   {
+    \       '\(\d\+\)[/.-]\(\d\+\)[/.-]\(\d\+\)': '\3-\2-\1'
+    \   }
     \ ]
-
 
 " Jedi
 " -----

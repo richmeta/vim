@@ -1,3 +1,4 @@
+
 1. how to use javascript.node snippets
 
 2. setup local vimrc for setting filetype
@@ -7,6 +8,8 @@ setup home/work/all plugins
     source plugins.vim (all)
     source $PLUGINS (csv)
     settings for each plugin could be added in these files
+
+profile leaderf 
 
 setup eslint on arch
 {
