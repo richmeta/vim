@@ -7,6 +7,25 @@ if __name__ == '__main__':
 	main()
 endsnippet
 
+snippet mainpa
+import argparse
+
+
+def parse_args():
+	parser = argparse.ArgumentParser(description="$1")
+	parser.add_argument($2)
+
+	return parser.parse_args()
+
+
+def main():
+	argv = parse_args()
+
+
+if __name__ == '__main__':
+	main()
+endsnippet
+
 snippet #!3
 #!/usr/bin/env python3
 endsnippet
@@ -19,6 +38,6 @@ snippet parse_args "Parse Args"
 def parse_args():
 	parser = argparse.ArgumentParser(description=$1)
 	parser.add_argument($2)
-	
+
 	return parser.parse_args()
 endsnippet
