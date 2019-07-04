@@ -55,7 +55,9 @@ Bundle 'AndrewRadev/switch.vim'
 source $VIMRUNTIME/mswin.vim
 
 " don't want gui find
-unmap <C-F>
+if has('gui_running')
+    unmap <C-F>
+endif
 
 set hidden
 set nobackup
@@ -102,7 +104,7 @@ set splitbelow
 set splitright
 set nojoinspaces
 set viminfo='1000,<50,s10,h
-if has('mac')
+if has('gui_macvim')
     set macmeta
 endif
 set tags=./tags;
@@ -169,6 +171,7 @@ if has("autocmd")
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
         autocmd FileType python set ts=4 sw=4
 
+        " 1 - switch between kwargs and dict
         autocmd FileType python let b:switch_custom_definitions = 
             \ [
             \   {
@@ -533,6 +536,9 @@ nnoremap [g :ALEPrevious<CR>
 
 " Switch
 " ------
+"
+" 1 - switch true/false
+" 2 - switch dd/mm/yyyy to isodate
 let g:switch_custom_definitions =
     \ [
     \   switch#NormalizedCase(['true', 'false']),

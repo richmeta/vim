@@ -211,5 +211,16 @@ press Tab, then d to delete
 
 
 --------------------------------------------------------------------------------
-reloading snippets
+Ultisnips:
+
+move to next/prev Ctrl-J, Ctrl-K
+
+
+# reloading snippets
 :call UltiSnips#RefreshSnippets()
+
+# adding additional ulti snips
+# note: .local.vimrc can be in parent dirs too
+$ cat .local.vimrc
+autocmd Filetype html UltiSnipsAddFiletypes htmldjango
+autocmd Filetype python UltiSnipsAddFiletypes django

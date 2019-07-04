@@ -1,9 +1,4 @@
 
-1. how to use javascript.node snippets
-
-2. setup local vimrc for setting filetype
-    eg: filetype jinja *.html
-
 setup home/work/all plugins 
     source plugins.vim (all)
     source $PLUGINS (csv)
