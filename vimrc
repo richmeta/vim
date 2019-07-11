@@ -468,11 +468,17 @@ let NERDTreeAutoDeleteBuffer=1
 let NERDTreeMapOpenVSplit='v'
 let NERDTreeMapOpenSplit='s'
 
-map <F4> :NERDTreeToggle<CR>
-map <S-F4> :NERDTreeFind<CR>
+" open or focus
+" here could have Open VCS + focus, but requires function
+map <F4> :silent NERDTreeFocus<CR>
+map <S-F4> :silent NERDTreeFind<CR>
 
-" \nt - Focus to NerdTree
-map <Leader>nt :NERDTreeFocus<CR>
+" \nc - Focus to NerdTree
+map <Leader>nc :silent NERDTreeClose<CR>
+
+" \ng - Open NerdTree to git root
+map <Leader>ng :silent NERDTreeVCS<CR>
+
 
 " prevent opens using the nerdtree window
 function! NerdWrap()
