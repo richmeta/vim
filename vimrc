@@ -38,17 +38,16 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
 
 " use CTRL-A/CTRL-X to increment dates, times,
-Bundle 'tpope/vim-speeddating'
+Plugin 'tpope/vim-speeddating'
 
-" Show/Hide Marks
-Bundle 'kshenoy/vim-signature'
 
 " text objects
-Bundle 'wellle/targets.vim'
-Bundle 'jeetsukumaran/vim-pythonsense'
+Plugin 'wellle/targets.vim'
+Plugin 'jeetsukumaran/vim-pythonsense'
+Plugin 'coderifous/textobj-word-column.vim'
 
 " Toggle words/expressions
-Bundle 'AndrewRadev/switch.vim'
+Plugin 'AndrewRadev/switch.vim'
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
