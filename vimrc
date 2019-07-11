@@ -70,9 +70,6 @@ set expandtab
 set ignorecase
 set smartcase
 set nohls
-if !&diff
-    set autochdir
-endif
 set autowrite
 set modelines=5
 set backspace=indent,eol,start
