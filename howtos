@@ -203,10 +203,16 @@ endfunction
 autocmd BufNewFile,BufRead *.txt call SetPartialSyntax()
 
 
+--------------------------------------------------------------------------------
+VimScript:
+# output variable to buffer( using string() to stringify the dict )
+# exe ":normal i" . string(g:current_ulti_dict_info) 
+
 
 --------------------------------------------------------------------------------
+leaderF:
 
-leaderF delete buffer
+# delete buffer
 press Tab, then d to delete
 
 

@@ -1,121 +1,18 @@
-
-setup home/work/all plugins 
-    source plugins.vim (all)
-    source $PLUGINS (csv)
-    settings for each plugin could be added in these files
-
-profile leaderf 
-
-setup eslint on arch
-{
-    "env": {
-        "browser": true,
-        "jquery": true,
-        "es6": true,
-        "node": true
-    },
-    "extends": ["eslint:recommended","plugin:react/recommended"],
-    "parserOptions": {
-	"sourceType": "module",
-        "ecmaVersion": 8,
-        "ecmaFeatures": {
-            "jsx": true,
-	    "experimentalObjectRestSpread": true
-        }
-    },
-    "rules": {
-        "array-bracket-spacing": [
-            "error",
-            "never"
-        ],
-        "block-scoped-var": [
-            "error"
-        ],
-        "camelcase": [
-            "warn",
-            {
-                "properties": "always"
-            }
-        ],
-        "comma-dangle": [
-            "error",
-            "always-multiline"
-        ],
-        "comma-style": [
-            "error",
-            "last"
-        ],
-        "computed-property-spacing": [
-            "error",
-            "never"
-        ],
-        "curly": [
-            "error",
-            "all"
-        ],
-        "default-case": [
-            "error"
-        ],
-        "eqeqeq": [
-            "error",
-            "smart"
-        ],        
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "no-console": [
-            "warn",
-            {
-                "allow": ["warn", "error"]
-            }
-        ],
-        "no-else-return": [
-            "error"
-        ],
-        "no-empty-function": [
-            "error"
-        ],
-        "no-fallthrough": [
-            "warn"
-        ],
-        "no-lonely-if": [
-            "error"
-        ],
-        "no-use-before-define": [
-            "error"
-        ],
-        "no-useless-return": [
-            "error"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "radix": [
-            "error",
-            "always"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "spaced-comment": [
-            "error",
-            "always",
-            {
-                "block": {
-                    "balanced": true
-                }
-            }
-        ],
-        "vars-on-top": [
-            "warn"
-        ]
-    }
-}
-
 shortcuts for copy to clipboard  (eg \Yi" ) with motion
+
+how to surround lines with try/catch (except) => Using VISUAL snippets
+
+how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
+wrapper to take constructor params and set this/self.  - not sure which plugin
+
+create snippets:
+    python class + init
+    borg pattern
+    bash script with args
+
+
+filtering NERDTree:
+   only show *.xml in NERDTree
 
 operator for javascript 'f' => function
 
@@ -123,19 +20,21 @@ using ack
     mapping from 'project root' (no cr)
     mapping from current search  (no cr)
     mapping from current filetype (eg --py) (no cr)
-    
+
 lightline - 
     show ic / etc ?
 
-tab mappings
-    left tab or right tab
+
+mapping for Camelcase word
+https://github.com/bkad/CamelCaseMotion
+
+setup home/work/all plugins 
+    source plugins.vim (all)
+    source $PLUGINS (csv)
+    settings for each plugin could be added in these files
+    - there's only one work plugin (localrc), so not yet
 
 
-
-1. surround lines with try/catch (except) => Using VISUAL snippets
-
-2. shortcut for surround argument with function and parethesis => using snippet pa<TAB>
-wrapper to take constructor params and set this/self.  - not sure which plugin
 
 big:
 function to choose random colorscheme, and function to delete it
@@ -185,35 +84,6 @@ Possible Plugins to install:
 
 
 
-
-
-todo:
-    mapping for inserting gmail / work email
-
-    python:  
-        convert between lists of value=pair to dictionary instances
-
-    command line args for filtering NERDTree:
-        vim -X *.xml => only show *.xml in NERDTree
-
-
-create snippets:
-    python 
-    
-        start class:
-            class XXX(Y):
-                def __init__(self, ZZZ):
-                    fin
-
-        borg pattern
-
-        argparse
-
-
-    bash 
-        script with args
-
-
 --------------------------------------------------------------------------------
 
 
@@ -237,15 +107,6 @@ nnoremap <space>gpl :Dispatch! git pull<CR>
 
 
 
-tasks:
-
---------------------------------------------------------------------------------
-2.  idea for loading Domain specific VIMRC files
-     use ENV vars and separate vimrcs:
-    eg:
-        enable python specific development  PYVIM=~/.vim/rcs/python_vimrc 
-        enable work specific stuff  WORKVIM=~/.vim/rcs/work_vimrc    [ eg. coffeescript ]
-
 
 consider using localleader for commands specific to a buffer (usewith with autocmds?)
 Non greedy quantifiers
@@ -253,17 +114,9 @@ using cdpath
 cindenting
 folding 
 
-mechanism for auto loading of tags 
-	if tags in current ( project ) directory load tags 
-  if .autoctag in directory regen ctags
+learn expand(), eg :e %:r.h
 
-function to change font size
 
-useful:
---------------------------------------------------------------------------------
-open header =>   :e %:r.h
-
-plugins:
 --------------------------------------------------------------------------------
   
 renumber: http://www.vim.org/scripts/script.php?script_id=189 OR VisIncr: https://github.com/vim-scripts/VisIncr
