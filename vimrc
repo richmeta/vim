@@ -384,7 +384,8 @@ endfunction
 MapToggle <F2> spell
 " <F3> - tagbar
 " <F4> - nerdtree
-MapToggle <F5> wrapscan
+" <F5> - ALEToggle
+MapToggle <Leader>ws wrapscan
 
 " syntax on/off
 map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
@@ -523,9 +524,9 @@ let g:ale_linters = {
     \   'python': ['flake8'],
     \ }
 
-nmap <S-F5> :ALEToggle<CR>
-imap <S-F5> <C-o>:ALEToggle<CR>
-vmap <S-F5> :ALEToggle<CR>
+nmap <F5> :ALEToggle<CR>
+imap <F5> <C-o>:ALEToggle<CR>
+vmap <F5> :ALEToggle<CR>
 nnoremap ]g :ALENext<CR>
 nnoremap [g :ALEPrevious<CR>
 
