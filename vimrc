@@ -166,6 +166,7 @@ if has("autocmd")
         autocmd!
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
         autocmd FileType python set ts=4 sw=4
+        autocmd FileType vim set iskeyword+=:
 
         " 1 - switch between kwargs and dict
         autocmd FileType python let b:switch_custom_definitions = 
@@ -195,6 +196,9 @@ if has('mac')
     " alt-3
     inoremap <M-3> £
     cnoremap <M-3> £
+
+    " for replace
+    nnoremap r£ r#
 endif
 
 " LEADER MAPPINGS

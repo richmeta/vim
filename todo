@@ -1,3 +1,8 @@
+when .vimrc (link) open fugitive not loaded 
+
+mapping for Gvdiff
+
+
 shortcuts for copy to clipboard  (eg \Yi" ) with motion
 
 how to surround lines with try/catch (except) => Using VISUAL snippets
