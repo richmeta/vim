@@ -230,3 +230,10 @@ move to next/prev Ctrl-J, Ctrl-K
 $ cat .local.vimrc
 autocmd Filetype html UltiSnipsAddFiletypes htmldjango
 autocmd Filetype python UltiSnipsAddFiletypes django
+
+
+--------------------------------------------------------------------------------
+Surround
+
+surround with function: 
+ys iw f

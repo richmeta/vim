@@ -1,6 +1,21 @@
+
+ack from nerdtree shouldn't use nerd window OR remap ack to ack!
+
+mapping for alefix
+
+mapping for comment whole file
+
+gf for javascript require
+
+!ll is not working 
+
 when .vimrc (link) open fugitive not loaded 
 
-mapping for Gvdiff
+mapping for Gvdiff + Gstatus
+
+mapping for cd to current file
+
+can't paste into LeaderF line
 
 
 shortcuts for copy to clipboard  (eg \Yi" ) with motion

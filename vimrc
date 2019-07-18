@@ -1,10 +1,10 @@
-
 set nocompatible
+scriptencoding utf-8
 filetype off
 
-if isdirectory(expand("~/.vim/bundle/Vundle.vim"))
+if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
     set runtimepath+=~/.vim/bundle/Vundle.vim
-elseif isdirectory(expand("~/vimfiles/bundle/Vundle.vim"))
+elseif isdirectory(expand('~/vimfiles/bundle/Vundle.vim'))
     set runtimepath+=~/vimfiles/bundle/Vundle.vim
 endif
 
@@ -49,6 +49,9 @@ Plugin 'coderifous/textobj-word-column.vim'
 " Toggle words/expressions
 Plugin 'AndrewRadev/switch.vim'
 
+" VimSript
+Plugin 'junegunn/vader.vim'
+
 
 " enable ctrl-c, ctrl-v, ctrl-a
 source $VIMRUNTIME/mswin.vim
@@ -69,7 +72,7 @@ set noerrorbells
 set expandtab
 set ignorecase
 set smartcase
-set nohls
+set nohlsearch
 set autowrite
 set modelines=5
 set backspace=indent,eol,start
@@ -131,7 +134,7 @@ set dictionary=~/.vim/dict/dict.txt
 "  oceandeep
 "  TODO: function random colorscheme from this list
 
-if &term == "win32"
+if &term ==# 'win32'
   " console vim, |lucius| doesn't support console
   colorscheme torte
 else
@@ -139,7 +142,7 @@ else
   colorscheme lucius
 endif
 
-if has("autocmd")
+if has('autocmd')
     filetype plugin indent on
 
     " Put these in an autocmd group, so that we can delete them easily.
@@ -284,7 +287,7 @@ nnoremap <Leader>rm :!rm -i %<CR>
 nnoremap <Leader>pw :pwd<CR>
 
 " \us - Unique sort whole file
-if has("mac")
+if has('mac')
     nnoremap <Leader>us :%!gsort -u<CR>
     vnoremap <Leader>us :'<,'>!gsort -u<CR>
 else
@@ -412,7 +415,7 @@ if !&diff
 endif
 
 
-if has("mac")
+if has('mac')
     MapToggle <Leader>F fullscreen
 endif
 
@@ -485,12 +488,12 @@ map <Leader>ng :silent NERDTreeVCS<CR>
 
 
 " prevent opens using the nerdtree window
-function! NerdWrap()
+function! NerdWrap() abort
     if (g:NERDTree.ExistsForBuf())
         if (winnr('$') == 1)
             call g:NERDTreeOpener._newVSplit()
         else
-            execute "wincmd w"
+            execute 'wincmd w'
         endif
     endif
 endfunction
@@ -532,6 +535,11 @@ let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403'
 let g:ale_linters = {
     \   'javascript': ['eslint'],
     \   'python': ['flake8'],
+    \   'c': ['gcc']
+    \ }
+
+let g:ale_fixers = {
+    \   'javascript': ['eslint']
     \ }
 
 nmap <F5> :ALEToggle<CR>
@@ -549,6 +557,7 @@ nnoremap [g :ALEPrevious<CR>
 let g:switch_custom_definitions =
     \ [
     \   switch#NormalizedCase(['true', 'false']),
+    \   switch#NormalizedCase(['enabled', 'disabled']),
     \   {
     \       '\(\d\+\)[/.-]\(\d\+\)[/.-]\(\d\+\)': '\3-\2-\1'
     \   }
@@ -557,7 +566,7 @@ let g:switch_custom_definitions =
 " Jedi
 " -----
 let g:jedi#popup_on_dot = 0
-let g:jedi#use_splits_not_buffers = "bottom"
+let g:jedi#use_splits_not_buffers = 'bottom'
 
 
 " UltiSnips
@@ -588,6 +597,6 @@ nmap <Leader>p :call NerdWrap() <bar> LeaderfFile<CR>
 
 syntax enable
 
-if filereadable("myextras.vim")
+if filereadable('myextras.vim')
   :source myextras.vim
 endif
