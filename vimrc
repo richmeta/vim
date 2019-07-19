@@ -110,6 +110,9 @@ set tags=./tags;
 
 set dictionary=~/.vim/dict/dict.txt
 
+" bash alias expansion
+let $BASH_ENV='~/.bash_aliases'
+
 "
 " Fav colorschemes
 "  gruvbox
@@ -547,13 +550,15 @@ imap <F5> <C-o>:ALEToggle<CR>
 vmap <F5> :ALEToggle<CR>
 nnoremap ]g :ALENext<CR>
 nnoremap [g :ALEPrevious<CR>
+nmap <C-F5> :ALEFix<CR>
 
 
 " Switch
 " ------
 "
-" 1 - switch true/false
-" 2 - switch dd/mm/yyyy to isodate
+" 1 - true/false
+" 2 - enabled/disabled
+" 3 - dd/mm/yyyy to isodate
 let g:switch_custom_definitions =
     \ [
     \   switch#NormalizedCase(['true', 'false']),

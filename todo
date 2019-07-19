@@ -1,13 +1,11 @@
 
-ack from nerdtree shouldn't use nerd window OR remap ack to ack!
+switch to tpope/vim-commentary
 
-mapping for alefix
+ack from nerdtree shouldn't use nerd window OR remap ack to ack!
 
 mapping for comment whole file
 
 gf for javascript require
-
-!ll is not working 
 
 when .vimrc (link) open fugitive not loaded 
 
