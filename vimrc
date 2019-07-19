@@ -172,6 +172,7 @@ if has('autocmd')
     augroup myfiletypes
         autocmd!
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
+        autocmd FileType javascript setlocal suffixesadd=.js,.jsx
         autocmd FileType python set ts=4 sw=4
         autocmd FileType vim set iskeyword+=:
 
