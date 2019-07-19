@@ -525,6 +525,8 @@ let g:ack_mappings = {
     \   'gv': '<C-W><CR><C-W>L<C-W>p<C-W>J' 
     \ }
 
+map <leader>ak :call NerdWrap()<CR> <bar> :Ack! 
+
 
 " ALE
 " ---
