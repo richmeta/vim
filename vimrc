@@ -104,10 +104,16 @@ set splitbelow
 set splitright
 set nojoinspaces
 set viminfo='1000,<50,s10,h
+set tags=./tags;
+set shortmess=I
+set showmatch
+set matchtime=1
+
 if has('gui_macvim')
     set macmeta
 endif
-set tags=./tags;
+
+
 
 set dictionary=~/.vim/dict/dict.txt
 
@@ -545,7 +551,9 @@ let g:ale_linters = {
     \   'c': ['gcc']
     \ }
 
+    
 let g:ale_fixers = {
+    \   'python': 'black',
     \   'javascript': ['eslint']
     \ }
 

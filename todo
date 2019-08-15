@@ -1,3 +1,17 @@
+removing quotes/commas
+
+mapping for ack in current directory
+
+comment vimrc with leader mappings + write command to grep (in case i forget a mapping)
+
+mapping for :messages
+
+Nopen should open in newtab
+
+mapping for expression in line, inserts to beginning of line
+    + visual selection
+
+mapping for cd current file (:cd %:h)
 
 gf for javascript require
 

@@ -237,3 +237,8 @@ Surround
 
 surround with function: 
 ys iw f
+
+
+--------------------------------------------------------------------------------
+clear messages 
+:messages clear
