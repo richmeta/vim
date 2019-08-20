@@ -36,7 +36,7 @@ Plugin 'tmhedberg/matchit'
 Plugin 'isRuslan/vim-es6'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
-Plugin 'aymericbeaumet/symlink.vim'
+" Plugin 'aymericbeaumet/symlink.vim'
 
 " use CTRL-A/CTRL-X to increment dates, times,
 Plugin 'tpope/vim-speeddating'
@@ -105,7 +105,7 @@ set splitright
 set nojoinspaces
 set viminfo='1000,<50,s10,h
 set tags=./tags;
-set shortmess=I
+set shortmess+=I
 set showmatch
 set matchtime=1
 
@@ -548,7 +548,7 @@ let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403'
 let g:ale_linters = {
     \   'javascript': ['eslint'],
     \   'python': ['flake8'],
-    \   'c': ['gcc']
+    \   'c': ['gcc'],
     \ }
 
     
@@ -573,12 +573,17 @@ nmap <C-F5> :ALEFix<CR>
 " 3 - dd/mm/yyyy to isodate
 let g:switch_custom_definitions =
     \ [
-    \   switch#NormalizedCase(['true', 'false']),
-    \   switch#NormalizedCase(['enabled', 'disabled']),
     \   {
     \       '\(\d\+\)[/.-]\(\d\+\)[/.-]\(\d\+\)': '\3-\2-\1'
     \   }
     \ ]
+
+if exists('*switch#NormalizedCase')
+    let g:switch_custom_definitions += [
+    \   switch#NormalizedCase(['true', 'false']),
+    \   switch#NormalizedCase(['enabled', 'disabled'])
+    \ ]
+endif
 
 " Jedi
 " -----
