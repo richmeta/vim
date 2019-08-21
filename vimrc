@@ -36,7 +36,6 @@ Plugin 'tmhedberg/matchit'
 Plugin 'isRuslan/vim-es6'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'Glench/Vim-Jinja2-Syntax'
-" Plugin 'aymericbeaumet/symlink.vim'
 
 " use CTRL-A/CTRL-X to increment dates, times,
 Plugin 'tpope/vim-speeddating'
@@ -610,7 +609,7 @@ let g:Lf_WildIgnore = {
     \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
     \ }
 
-nmap <Leader>u :call NerdWrap() <bar> LeaderfMru<CR>
+nmap <Leader>f :call NerdWrap() <bar> LeaderfMru<CR>
 nmap <Leader>p :call NerdWrap() <bar> LeaderfFile<CR>
 
 " Commentary
