@@ -316,7 +316,13 @@ nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
 
 " Vgrep = Ack '^\s*".*<args>.*=' vimrc
-command! -nargs=1 Vgrep execute "normal! :Ack '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . ".*=' " . g:_vimrc . "<CR>"
+command! -nargs=1 Vgrep :execute ":Ack '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . ".*=' " . g:_vimrc
+
+" \ms = messages
+nnoremap <Leader>ms :messages<CR>
+
+" \mc = messages clear
+nnoremap <Leader>mc :messages clear<CR>
 
 
 " COMMAND MAPPINGS
