@@ -231,6 +231,9 @@ if executable('python')
     vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <CR><CR>
 endif
 
+" shift-F1 - help current word
+nnoremap <S-F1> :execute 'help ' . expand('<cword>')<CR>
+
 
 " Quoting
 
@@ -509,7 +512,7 @@ map <F3> :TagbarToggle<CR>
 " Fugative
 " --------
 " \cg = copy git path relative
-nmap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
+nnoremap <silent> <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
 
 " NERDTree
 " --------
