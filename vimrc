@@ -11,7 +11,7 @@ endif
 call vundle#rc()
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-scripts/tlib'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -31,7 +31,7 @@ Plugin 'thinca/vim-localrc'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'Yggdroot/LeaderF'
 Plugin 'mileszs/ack.vim'
-Plugin 'w0rp/ale'
+Plugin 'dense-analysis/ale'
 Plugin 'tmhedberg/matchit'
 Plugin 'isRuslan/vim-es6'
 Plugin 'davidhalter/jedi-vim'
