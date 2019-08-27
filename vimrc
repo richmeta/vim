@@ -593,6 +593,7 @@ let g:ack_mappings = {
 
 " \ak = Ack!
 map <leader>ak :call NerdWrap()<CR> <bar> :Ack! 
+map <leader>aK :call NerdWrap()<CR> <bar> :execute ':Ack! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
 
 
 " ALE

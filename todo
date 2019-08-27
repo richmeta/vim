@@ -1,23 +1,12 @@
+mapping for execute current line vimscript
+mapping for execute current line vimscript (+without : variable prefixes)
+
 removing quotes/commas
-
-mapping for ack in current directory
-
-comment vimrc with leader mappings + write command to grep (in case i forget a mapping)
-
-mapping for :messages
-
-Nopen should open in newtab
 
 mapping for expression in line, inserts to beginning of line
     + visual selection
 
-mapping for cd current file (:cd %:h)
-
 gf for javascript require
-
-mapping for Gvdiff + Gstatus
-
-mapping for cd to current file
 
 can't paste into LeaderF line
 
@@ -28,6 +17,7 @@ how to surround lines with try/catch (except) => Using VISUAL snippets
 
 how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
 wrapper to take constructor params and set this/self.  - not sure which plugin
+
 
 create snippets:
     python class + init
@@ -48,21 +38,11 @@ using ack
 lightline - 
     show ic / etc ?
 
-
-mapping for Camelcase word
-https://github.com/bkad/CamelCaseMotion
-
 setup home/work/all plugins 
     source plugins.vim (all)
     source $PLUGINS (csv)
     settings for each plugin could be added in these files
     - there's only one work plugin (localrc), so not yet
-
-
-
-big:
-function to choose random colorscheme, and function to delete it
-
 
 learn :help pattern-overview
 
@@ -138,6 +118,7 @@ using cdpath
 cindenting
 folding 
 
+-> move to howto
 learn expand(), eg :e %:r.h
 
 
