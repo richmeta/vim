@@ -119,31 +119,8 @@ set dictionary=~/.vim/dict/dict.txt
 " bash alias expansion
 let $BASH_ENV='~/.bash_aliases'
 
-"
-" Fav colorschemes
-"  gruvbox
-"  jellybeans
-"  apprentice
-"  feral
-"  django
-"  Green
-"  candy
-"  eclm_wombat
-"  flatlandia
-"  greyblue
-"  vanzan_color
-"  candy
-"  phd
-"  predawn
-"  made_of_code
-"  navajo-night
-"  wombat
-"  xterm16
-"  pt_black
-"  oceandeep
-"  TODO: function random colorscheme from this list
-
-if &term ==# 'win32'
+" colorscheme
+if &term is# 'win32'
   " console vim, |lucius| doesn't support console
   colorscheme torte
 else
@@ -194,11 +171,13 @@ if has('autocmd')
 
     augroup vimrc     " Source vim configuration upon save
         autocmd!
-        autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+        autocmd! BufWritePost ~/.vim/vimrc source % | echom "Reloaded vimrc" | redraw
+        autocmd! BufWritePost ~/.vimfiles/vimrc source % | echom "Reloaded vimrc" | redraw
+        autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded vimrc" | redraw
+        autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded vimrc" | redraw
         autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
 endif
-
 
 if has('mac')
     " hash instead of pound
