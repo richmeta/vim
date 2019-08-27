@@ -289,6 +289,9 @@ nnoremap <Leader>rm :!rm -i %<CR>
 " \pw = Pwd
 nnoremap <Leader>pw :pwd<CR>
 
+" \wd = change working directory to current buffer
+nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<CR>
+
 " \us = Unique sort whole file
 if has('mac')
     nnoremap <Leader>us :%!gsort -u<CR>
