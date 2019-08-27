@@ -495,7 +495,7 @@ endfunction
 
 " Open command wiki
 " Nopen = open command wiki
-command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :call NerdWrap() <bar> edit ~/sync/stuff/commands/<args>
+command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :call NerdWrap() <bar> tabedit ~/sync/stuff/commands/<args>
 
 " alt-N = switch to tab
 nnoremap <M-1> 1gt
