@@ -518,10 +518,16 @@ nnoremap <M-9> 9gt
 " F3 = toggle tagbar
 map <F3> :TagbarToggle<CR>
 
-" Fugative
+" Fugitive
 " --------
 " \cg = copy git path relative
 nnoremap <silent> <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
+
+" \gd = Gvdiff
+nnoremap <Leader>gd :Gvdiff<CR>
+
+" \gs = Gstatus
+nnoremap <Leader>gs :Gstatus<CR>
 
 " NERDTree
 " --------
