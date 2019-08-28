@@ -303,9 +303,9 @@ endif
 
 " \vrc - open vimrc
 if has('unix')
-    nnoremap <Leader>vrc :e ~/.vim/vimrc<CR>
+    nnoremap <Leader>vrc :tabedit ~/.vim/vimrc<CR>
 else
-    nnoremap <Leader>vrc :e ~/.vimfiles/vimrc<CR>
+    nnoremap <Leader>vrc :tabedit ~/.vimfiles/vimrc<CR>
 endif
 
 " \vso = reload vimrc manually
