@@ -695,7 +695,7 @@ nmap gcaf gggcG
 
 syntax enable
 
-if filereadable('myextras.vim')
+if filereadable(glob('~/.vim/myextras.vim'))
     " put work stuff in here
-    :source myextras.vim
+    :source ~/.vim/myextras.vim
 endif
