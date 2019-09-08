@@ -316,7 +316,7 @@ nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
 
 " Vgrep = Ack '^\s*".*<args>.*=' vimrc
-command! -nargs=1 Vgrep :execute ":Ack '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . ".*=' " . g:_vimrc
+command! -nargs=1 Vgrep :execute ":Ack '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . "' " . g:_vimrc
 
 " \ms = messages
 nnoremap <Leader>ms :messages<CR>
@@ -593,6 +593,8 @@ let g:ack_mappings = {
 
 " \ak = Ack!
 map <leader>ak :call NerdWrap()<CR> <bar> :Ack! 
+
+" \aK = Ack! from file directory
 map <leader>aK :call NerdWrap()<CR> <bar> :execute ':Ack! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
 
 

@@ -1,3 +1,5 @@
+using NerdWrap with :e or :edit
+
 https://github.com/jonmorehouse/vim-flow
 
 removing quotes/commas
