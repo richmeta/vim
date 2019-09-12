@@ -670,6 +670,7 @@ let g:UltiSnipsUsePythonVersion = 3
 " \b = Fuzzy Buffer
 "
 let g:Lf_MruMaxFiles = 1000
+let g:Lf_FollowLinks = 1
 let g:Lf_HistoryNumber = &history
 let g:Lf_PythonVersion = 3
 let g:Lf_ShortcutF = ''
