@@ -201,6 +201,12 @@ endif
 " \t = new tab
 noremap <Leader>t :tabnew<CR>
 
+" \T = close tab
+noremap <Leader>T :tabclose<CR>
+
+" \O = only this tab
+noremap <Leader>O :tabonly<CR>
+
 " \w = split window search cword
 nnoremap <Leader>w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
 
@@ -237,16 +243,16 @@ nnoremap <S-F1> :execute 'help ' . expand('<cword>')<CR>
 
 " Quoting
 
-" \qs = single
+" \qs = quote single
 vnoremap <Leader>qs :norm yss'<CR>
 
-" \qd = double
+" \qd = quote double
 vnoremap <Leader>qd :norm yss"<CR>
 
-" \s, = single with comma
+" \s, = quote single with comma
 vnoremap <Leader>s, :norm yss'A,<CR>
 
-" \d, = double with comma
+" \d, = quote double with comma
 vnoremap <Leader>d, :norm yss"A,<CR>
 
 " \, = comma separate
@@ -327,11 +333,20 @@ nnoremap <Leader>mc :messages clear<CR>
 
 " COMMAND MAPPINGS
 " ----------------
+
+" ctrl-a = begin of line (emacs)
 cnoremap <C-A> <Home>
+
+" ctrl-e = begin of line (emacs)
 cnoremap <C-E> <End>
+
+" ctrl-k = delete to eol (emacs)
+cnoremap <c-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<CR>
 
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
+
+cabbrev cs colorscheme
 
 " OTHER MAPPINGS
 " --------------
@@ -521,7 +536,7 @@ map <F3> :TagbarToggle<CR>
 " Fugitive
 " --------
 " \cg = copy git path relative
-nnoremap <silent> <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
+nnoremap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
 
 " \gd = Gvdiff
 nnoremap <Leader>gd :Gvdiff<CR>
@@ -574,12 +589,23 @@ endfunction
 let g:lightline = {
     \   'active': {
     \       'left': [ [ 'mode', 'paste' ],
-    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ], 
+    \       'right': [ [ 'percent', 'lineinfo' ],
+    \                  [ 'filetype', 'ALEenabled' ] ]
     \   },
     \   'component_function': {
     \       'gitbranch': 'fugitive#head',
+    \       'ALEenabled': 'LightLineALEEnabled',
     \   },
     \ }
+
+function! LightLineALEEnabled() abort
+    if getbufvar('', 'ale_enabled', get(g:, 'ale_enabled', 0))
+        return 'lint'
+    else
+        return ''
+    endif 
+endfunction
 
 
 " Ack
@@ -621,6 +647,7 @@ let g:ale_fixers = {
 
 " F5 = toggle ALE
 nmap <F5> :ALEToggle<CR>
+nmap <S-F5> :ALEToggleBuffer<CR>
 imap <F5> <C-o>:ALEToggle<CR>
 vmap <F5> :ALEToggle<CR>
 
