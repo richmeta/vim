@@ -1,3 +1,7 @@
+https://vim.fandom.com/wiki/Creating_new_text_objects
+    create text object for keyword.attribute
+
+
 python indentation is annoying : 
         fields = {
                 "project": {

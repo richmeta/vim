@@ -33,7 +33,7 @@ Plugin 'thinca/vim-localrc'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'Yggdroot/LeaderF'
 Plugin 'mileszs/ack.vim'
-Plugin 'richyfish/ale'
+Plugin 'dense-analysis/ale'
 Plugin 'tmhedberg/matchit'
 Plugin 'isRuslan/vim-es6'
 Plugin 'davidhalter/jedi-vim'
@@ -52,7 +52,7 @@ Plugin 'coderifous/textobj-word-column.vim'
 Plugin 'AndrewRadev/switch.vim'
 
 " VimSript
-Plugin 'junegunn/vader.vim'
+" Plugin 'junegunn/vader.vim'
 
 
 " enable ctrl-c, ctrl-v, ctrl-a
@@ -591,7 +591,7 @@ let g:lightline = {
     \       'left': [ [ 'mode', 'paste' ],
     \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ], 
     \       'right': [ [ 'percent', 'lineinfo' ],
-    \                  [ 'filetype', 'ALEenabled' ] ]
+    \                  [ 'fileformat', 'filetype', 'ALEenabled' ] ]
     \   },
     \   'component_function': {
     \       'gitbranch': 'fugitive#head',
@@ -637,6 +637,7 @@ let g:ale_linters = {
     \   'javascript': ['eslint'],
     \   'python': ['flake8'],
     \   'c': ['gcc'],
+    \   'go': ['gobuild'],
     \ }
 
     
