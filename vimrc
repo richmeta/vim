@@ -51,7 +51,7 @@ Plugin 'coderifous/textobj-word-column.vim'
 " Toggle words/expressions
 Plugin 'AndrewRadev/switch.vim'
 
-" VimSript
+" VimSript Testing
 " Plugin 'junegunn/vader.vim'
 
 
@@ -171,6 +171,11 @@ if has('autocmd')
 
     augroup END
 
+    augroup PreciseTrimWhiteSpace
+        autocmd!
+        autocmd InsertLeave * call PreciseTrimWhiteSpace()
+    augroup end
+
     augroup vimrc     " Source vim configuration upon save
         autocmd!
         autocmd! BufWritePost ~/.vim/vimrc source % | echom "Reloaded vimrc" | redraw
@@ -180,6 +185,20 @@ if has('autocmd')
         autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
 endif
+
+function! PreciseTrimWhiteSpace()
+  " We need to save the view because the substitute command might
+  " or might not move the cursor, depending on whether it finds
+  " any whitespace.
+  let saved_view = winsaveview()
+
+  " Remove white space. Ignore "not found" errors. Don't change jumplist.
+  keepjumps '[,']s/\s\+$//e
+
+  " Move cursor back if necessary.
+  call winrestview(saved_view)
+endfunction
+
 
 if has('mac')
     " hash instead of pound
