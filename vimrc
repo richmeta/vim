@@ -347,6 +347,11 @@ nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
 " Vgrep = Ack '^\s*".*<args>.*=' vimrc
 command! -nargs=1 Vgrep :execute ":Ack '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . "' " . g:_vimrc
 
+" ReadUrl = download + edit the url
+if executable('curl')
+    command! -nargs=1 ReadUrl :r!curl -s '<args>'
+endif
+
 " \ms = messages
 nnoremap <Leader>ms :messages<CR>
 
