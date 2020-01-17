@@ -1,23 +1,20 @@
-https://vim.fandom.com/wiki/Creating_new_text_objects
-    create text object for keyword.attribute
-
-
 python indentation is annoying : 
         fields = {
                 "project": {
                     },
                 "hello": {
                     }
+
+using NerdWrap with :e or :edit
+
+https://vim.fandom.com/wiki/Creating_new_text_objects
+    create text object for keyword.attribute
+
                 
+https://github.com/jonmorehouse/vim-flow
 
 
 toggle ale_lint_on_save
-shortcut for aleinfo
-
-map  :r!curl -s 'http://whatthecommit.com/index.txt'<cr>
-
-
-how to reload ale (eg: b:ale_enabled=0)
 
 
 python switch
@@ -25,11 +22,8 @@ python switch
         to {firstname:'bob', lastname:'smith', position:'surgeon', email:'bob.smith@vetsRus.com'}
 
 
-using NerdWrap with :e or :edit
 
-https://github.com/jonmorehouse/vim-flow
 
-removing quotes/commas
 
 mapping for expression in line, inserts to beginning of line
     + visual selection
