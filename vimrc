@@ -274,6 +274,10 @@ vnoremap <Leader>s, :norm yss'A,<CR>
 " \d, = quote double with comma
 vnoremap <Leader>d, :norm yss"A,<CR>
 
+" \dc = remove trailing comma
+nnoremap <Leader>dc :.s/,\s*$//<CR>
+vnoremap <Leader>dc :s/,\s*$//<CR>
+
 " \, = comma separate
 vnoremap <Leader>, :normal A,<CR>
 
