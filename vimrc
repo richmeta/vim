@@ -467,6 +467,7 @@ endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 function! CheckSyncDir()
+    " TODO: set to env var
     let buffDir = expand('%:p:h')
     if match(buffDir, '\c\/sync\/') > -1
         setlocal noswapfile
@@ -517,6 +518,9 @@ if has('mac')
     " \F = toggle fullscreen
     MapToggle <Leader>F fullscreen
 endif
+
+" \cc = toggle cursorcolumn
+MapToggle <Leader>cc cursorcolumn
 
 
 " search Sync
