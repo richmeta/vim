@@ -2,58 +2,51 @@ set nocompatible
 scriptencoding utf-8
 filetype off
 
-if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
-    set runtimepath+=~/.vim/bundle/Vundle.vim
-    let g:_vimrc = '~/.vim/vimrc'
-elseif isdirectory(expand('~/vimfiles/bundle/Vundle.vim'))
-    set runtimepath+=~/vimfiles/bundle/Vundle.vim
+if has('win32')
     let g:_vimrc = '~/.vimfiles/vimrc'
+else
+    let g:_vimrc = '~/.vim/vimrc'
 endif
 
-call vundle#rc()
+call plug#begin('~/.vim/bundle')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'vim-scripts/tlib'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'godlygeek/tabular'
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-scripts/CmdlineComplete'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'itchyny/lightline.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'xolox/vim-misc'
-Plugin 'thinca/vim-localrc'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'Yggdroot/LeaderF'
-Plugin 'mileszs/ack.vim'
-Plugin 'dense-analysis/ale'
-Plugin 'tmhedberg/matchit'
-Plugin 'isRuslan/vim-es6'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'Glench/Vim-Jinja2-Syntax'
-
-" use CTRL-A/CTRL-X to increment dates, times,
-Plugin 'tpope/vim-speeddating'
-
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/tlib'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/CmdlineComplete'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-commentary'
+Plug 'xolox/vim-misc'
+Plug 'thinca/vim-localrc'
+Plug 'flazz/vim-colorschemes'
+Plug 'Yggdroot/LeaderF'
+Plug 'mileszs/ack.vim'
+Plug 'dense-analysis/ale'
+Plug 'tmhedberg/matchit'
+Plug 'isRuslan/vim-es6'
+Plug 'davidhalter/jedi-vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
 
 " text objects
-Plugin 'wellle/targets.vim'
-Plugin 'jeetsukumaran/vim-pythonsense'
-Plugin 'coderifous/textobj-word-column.vim'
+Plug 'wellle/targets.vim'
+Plug 'jeetsukumaran/vim-pythonsense'
+Plug 'coderifous/textobj-word-column.vim'
 
 " Toggle words/expressions
-Plugin 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/switch.vim'
 
 " VimSript Testing
-" Plugin 'junegunn/vader.vim'
+" Plug 'junegunn/vader.vim'
 
+call plug#end()
 
 " enable ctrl-c, ctrl-v, ctrl-a
 source $VIMRUNTIME/mswin.vim
@@ -113,7 +106,6 @@ set matchtime=1
 if has('gui_macvim')
     set macmeta
 endif
-
 
 
 set dictionary=~/.vim/dict/dict.txt
@@ -670,6 +662,7 @@ let g:ale_linters = {
     \   'python': ['flake8'],
     \   'c': ['gcc'],
     \   'go': ['gobuild'],
+    \   'erlang': ['erlc'],
     \ }
 
     

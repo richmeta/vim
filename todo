@@ -5,21 +5,32 @@ python indentation is annoying :
                 "hello": {
                     }
 
-using NerdWrap with :e or :edit
+nerdtree:
+
+    using NerdWrap with :e or :edit
+
+    filtering NERDTree:
+        only show *.xml in NERDTree
 
 https://vim.fandom.com/wiki/Creating_new_text_objects
     create text object for keyword.attribute
 
-                
-https://github.com/jonmorehouse/vim-flow
-
-
-toggle ale_lint_on_save
+plugins:
+    https://github.com/jonmorehouse/vim-flow
+    https://github.com/liuchengxu/vim-clap
 
 
 python switch
         data = self.create(firstname='bob', lastname='smith', position='surgeon', email='bob.smith@vetsRus.com')
         to {firstname:'bob', lastname:'smith', position:'surgeon', email:'bob.smith@vetsRus.com'}
+
+using ack
+    mapping from 'project root' (no cr)
+    mapping from current search  (no cr)
+    mapping from current filetype (eg --py) (no cr)
+
+lightline - 
+    show ic / etc ?
 
 
 
@@ -47,18 +58,8 @@ create snippets:
     bash script with args
 
 
-filtering NERDTree:
-   only show *.xml in NERDTree
 
 operator for javascript 'f' => function
-
-using ack
-    mapping from 'project root' (no cr)
-    mapping from current search  (no cr)
-    mapping from current filetype (eg --py) (no cr)
-
-lightline - 
-    show ic / etc ?
 
 setup home/work/all plugins 
     source plugins.vim (all)
