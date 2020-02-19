@@ -102,6 +102,7 @@ set tags=./tags;
 set shortmess+=I
 set showmatch
 set matchtime=1
+set ttyfast
 
 if has('gui_macvim')
     set macmeta
