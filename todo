@@ -1,3 +1,7 @@
+
+save all -> ctrl shift s
+
+
 python indentation is annoying : 
         fields = {
                 "project": {
@@ -6,9 +10,6 @@ python indentation is annoying :
                     }
 
 nerdtree:
-
-    using NerdWrap with :e or :edit
-
     filtering NERDTree:
         only show *.xml in NERDTree
 

@@ -581,16 +581,18 @@ let NERDTreeAutoDeleteBuffer=1
 let NERDTreeMapOpenVSplit='v'
 let NERDTreeMapOpenSplit='s'
 
-" TODO: maybe could have Open VCS + focus, but requires function
 
 " F4 = nerdtree open/focus
 map <F4> :silent NERDTreeFocus<CR>
 
-" shift-F4 = nerdtree open
+" shift F4 = nerdtree open
 map <S-F4> :silent NERDTreeFind<CR>
 
-" \nc = close NerdTree
-map <Leader>nc :silent NERDTreeClose<CR>
+" \F4 = close NerdTree
+map <Leader><F4> :silent NERDTreeClose<CR>
+
+" \\F4 = nerdtree toggle
+map <Leader><Leader><F4> :silent NERDTreeToggle<CR>
 
 " \ng = Open NerdTree to git root
 map <Leader>ng :silent NERDTreeVCS<CR>
@@ -651,6 +653,10 @@ map <leader>aK :call NerdWrap()<CR> <bar> :execute ':Ack! ' . input('Ack! ') . '
 
 " ALE
 " ---
+" by default ALE is off, use F5 to toggle
+let g:ale_enabled = 0
+
+
 " python: needs flake8
 "   ignore errors/warnings:
 "    E501 line too long

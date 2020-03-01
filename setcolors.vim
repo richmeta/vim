@@ -7,7 +7,7 @@
 "  apprentice
 "  candy
 "  candypaper
-"  chasing_logic
+"  chance-of-storm
 "  darkbone
 "  desertex
 "  django
@@ -38,6 +38,8 @@
 "  vanzan_color
 "  wombat
 "  xterm16
+"  underwater-mod
+"  darkbone
 
 
 if v:version < 700 || exists('loaded_setcolors') || &compatible
