@@ -34,6 +34,7 @@ Plug 'tmhedberg/matchit'
 Plug 'isRuslan/vim-es6'
 Plug 'davidhalter/jedi-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'Vimjas/vim-python-pep8-indent'
 
 " text objects
 Plug 'wellle/targets.vim'
@@ -313,6 +314,9 @@ nnoremap <Leader>pw :pwd<CR>
 
 " \wd = change working directory to current buffer
 nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<CR>
+
+" Ctrl-shift s - save all
+nnoremap <C-S-s> :wa<CR>
 
 " \us = Unique sort whole file
 if has('mac')

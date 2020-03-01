@@ -1,14 +1,4 @@
 
-save all -> ctrl shift s
-
-
-python indentation is annoying : 
-        fields = {
-                "project": {
-                    },
-                "hello": {
-                    }
-
 nerdtree:
     filtering NERDTree:
         only show *.xml in NERDTree
@@ -29,11 +19,6 @@ using ack
     mapping from 'project root' (no cr)
     mapping from current search  (no cr)
     mapping from current filetype (eg --py) (no cr)
-
-lightline - 
-    show ic / etc ?
-
-
 
 
 
