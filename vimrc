@@ -154,12 +154,17 @@ if has('autocmd')
         autocmd FileType python set ts=4 sw=4
         autocmd FileType vim set iskeyword+=:
 
-        " 1 - switch between kwargs and dict
+        " 1 - kwargs and dict  {'key': 'value'} => {key='value'}
+        " 2 - kwargs and dict  {key='value'}    => {'key': 'value'}
+        " 3 - import \k+ => from \k import
+        " 4 - from \k import => import \k+
         autocmd FileType python let b:switch_custom_definitions = 
             \ [
             \   {
             \       '\(\k\+\)=\([^),]\+\)': '''\1'': \2',
-            \       '[''"]\(\k\+\)[''"]:\s*\([^},]\+\)': '\1=\2'
+            \       '[''"]\(\k\+\)[''"]:\s*\([^},]\+\)': '\1=\2',
+            \       'import\s\+\(\k\+\)': 'from \1 import ',
+            \       'from\s\+\(\k\+\)\s\+import\s.*$': 'import \1',
             \   }
             \ ]
 
@@ -702,16 +707,18 @@ nnoremap [g :ALEPrevious<CR>
 " ------
 " \gs = Switch
 
-" 1 - true/false
-" 2 - enabled/disabled
-" 3 - dd/mm/yyyy to isodate
+" 1 - dd/mm/yyyy to isodate
+" 2 - 'X \w+ Y' to 'Y \w+ X'
 let g:switch_custom_definitions =
     \ [
     \   {
     \       '\(\d\+\)[/.-]\(\d\+\)[/.-]\(\d\+\)': '\3-\2-\1',
+    \       '\(\w\+\)\(\s\+\w\+\s\+\)\(\w\+\)': '\3\2\1'
     \   }
     \ ]
 
+" 1 - true/false
+" 2 - enabled/disabled
 if exists('*switch#NormalizedCase')
     let g:switch_custom_definitions += [
     \   switch#NormalizedCase(['true', 'false']),
