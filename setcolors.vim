@@ -3,20 +3,25 @@
 "
 "
 " Fav colorschemes
+
+"  Green
+"  Revolution
 "  abra
 "  apprentice
 "  candy
 "  candypaper
 "  chance-of-storm
 "  darkbone
+"  darkbone
+"  deepsea
 "  desertex
 "  django
 "  eclm_wombat
+"  elda
 "  feral
 "  flatlandia
 "  flattened_dark
 "  frozen
-"  Green
 "  jellybeans
 "  lizard
 "  lxvc
@@ -28,19 +33,16 @@
 "  phoenix
 "  predawn
 "  pt_black
-"  Revolution
 "  slate_BG
 "  sourcerer
 "  symfony
 "  tesla
 "  tir_black
 "  underwater
+"  underwater-mod
 "  vanzan_color
 "  wombat
 "  xterm16
-"  underwater-mod
-"  darkbone
-
 
 if v:version < 700 || exists('loaded_setcolors') || &compatible
     finish

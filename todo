@@ -1,10 +1,13 @@
+learn targets
+    target for keyword
 
 nerdtree:
     filtering NERDTree:
         only show *.xml in NERDTree
 
-https://vim.fandom.com/wiki/Creating_new_text_objects
-    create text object for keyword.attribute
+can i use motions for comma/quoting mappings
+    https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
+
 
 plugins:
     https://github.com/jonmorehouse/vim-flow
@@ -21,7 +24,6 @@ using ack
     mapping from current filetype (eg --py) (no cr)
 
 
-
 mapping for expression in line, inserts to beginning of line
     + visual selection
 
@@ -30,7 +32,6 @@ gf for javascript require
 can't paste into LeaderF line
 
 
-shortcuts for copy to clipboard  (eg \Yi" ) with motion
 
 how to surround lines with try/catch (except) => Using VISUAL snippets
 
