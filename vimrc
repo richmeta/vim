@@ -331,8 +331,8 @@ nnoremap <Leader>pw :pwd<CR>
 " \wd = change working directory to current buffer
 nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<CR>
 
-" Ctrl-shift s - save all
-nnoremap <C-S-s> :wa<CR>
+" \ss - save all
+nnoremap <Leader>ss :wa<CR>
 
 " \us = Unique sort whole file
 if has('mac')
@@ -353,7 +353,6 @@ endif
 " \vso = reload vimrc manually
 nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 
-" TODO: move this to snippet
 " \sb = shebang for bash
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
 
