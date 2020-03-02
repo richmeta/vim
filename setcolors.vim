@@ -38,6 +38,7 @@
 "  symfony
 "  tesla
 "  tir_black
+"  thornbird
 "  underwater
 "  underwater-mod
 "  vanzan_color

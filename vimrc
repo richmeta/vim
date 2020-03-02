@@ -280,8 +280,19 @@ vnoremap <Leader>dc :s/,\s*$//<CR>
 " \, = comma separate
 vnoremap <Leader>, :normal A,<CR>
 
+"" TODO: check on X-windows, need to support primary/secondary?
+
+" \ye = copy EOL into clipboard
+nnoremap <Leader>ye "*y$
+
 " \yy = copy EOL into clipboard
-nnoremap <Leader>yy "*y$
+nnoremap <Leader>yy m`^"*y$``
+
+" \yp = copy inner paragraph into clipboard
+nnoremap <Leader>yp "*yip
+
+" \y = copy into clipboard
+vnoremap <Leader>y "*y
 
 " \qf = Quick fix open
 noremap <Leader>qf :copen<CR>
