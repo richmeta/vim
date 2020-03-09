@@ -121,7 +121,7 @@ if &term is# 'win32'
   colorscheme torte
 else
   " gvim
-  colorscheme lucius
+  colorscheme oceandeep
 endif
 
 if has('autocmd')
@@ -342,6 +342,9 @@ else
     nnoremap <Leader>us :%!sort -u<CR>
     vnoremap <Leader>us :'<,'>!sort -u<CR>
 endif
+
+" \vs = Visual sort
+vnoremap <Leader>vs :'<,'>sort<CR>
 
 " \vrc - open vimrc
 if has('unix')

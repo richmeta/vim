@@ -1,9 +1,4 @@
-learn targets
-    target for keyword
-
-nerdtree:
-    filtering NERDTree:
-        only show *.xml in NERDTree
+shortcut for pdb
 
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement

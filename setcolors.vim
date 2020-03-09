@@ -5,17 +5,14 @@
 " Fav colorschemes
 
 "  Green
-"  Revolution
 "  abra
 "  apprentice
 "  candy
 "  candypaper
 "  chance-of-storm
 "  darkbone
-"  darkbone
 "  deepsea
 "  desertex
-"  django
 "  eclm_wombat
 "  elda
 "  feral
@@ -25,6 +22,7 @@
 "  jellybeans
 "  lizard
 "  lxvc
+"  madeofcode
 "  navajo-night
 "  nefertiti
 "  nightflight2
@@ -33,13 +31,11 @@
 "  phoenix
 "  predawn
 "  pt_black
-"  slate_BG
 "  sourcerer
 "  symfony
 "  tesla
 "  tir_black
 "  thornbird
-"  underwater
 "  underwater-mod
 "  vanzan_color
 "  wombat

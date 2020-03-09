@@ -262,3 +262,20 @@ compiling + make
 ./configure --disable-FEATURE
 
 
+--------------------------------------------------------------------------------
+Tabularize first comma
+:Tabularize /^[^,]*\zs,/
+
+--------------------------------------------------------------------------------
+Format program:
+You can use 'equalprg' to run this with =:
+
+autocmd FileType python setlocal equalprg=/home/martin/src/Python-3.5.1/Tools/scripts/reindent.py
+
+or 'autopep8'
+
+
+--------------------------------------------------------------------------------
+profile starting plugins:
+vim --startuptime timeCost.txt timeCost.txt
+
