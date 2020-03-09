@@ -2,7 +2,7 @@ if !has('unix')
   set guifont=Consolas:h9:cANSI
 else
   if has('mac')
-    set guifont=Fantasque\ Sans\ Mono\ Regular:h15 
+    set guifont=FiraMono-Regular:h14
     let g:NERDTreeDirArrowExpandable = '.'
     let g:NERDTreeDirArrowCollapsible = '↓'
   else
