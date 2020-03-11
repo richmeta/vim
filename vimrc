@@ -753,6 +753,7 @@ let g:UltiSnipsUsePythonVersion = 3
 " \b = Fuzzy Buffer
 "
 let g:Lf_MruMaxFiles = 1000
+let g:Lf_MruFileExclude = ['*/tmp/*']
 let g:Lf_FollowLinks = 1
 let g:Lf_HistoryNumber = &history
 let g:Lf_PythonVersion = 3
@@ -761,6 +762,7 @@ let g:Lf_WildIgnore = {
     \   'dir': ['.svn','.git','.hg', 'node_modules'],
     \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
     \ }
+
 
 " \f = Fuzzy MRU
 nmap <Leader>f :call NerdWrap() <bar> LeaderfMru<CR>
