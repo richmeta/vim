@@ -192,6 +192,7 @@ function! PreciseTrimWhiteSpace()
 
   " Remove white space. Ignore "not found" errors. Don't change jumplist.
   keepjumps '[,']s/\s\+$//e
+  keepjumps '[,']s/=$/= /e
 
   " Move cursor back if necessary.
   call winrestview(saved_view)
