@@ -3,3 +3,6 @@ tags
 *.swp
 myextras.vim
 bundle/
+
+# local font
+font.vim

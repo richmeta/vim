@@ -1,4 +1,4 @@
-" copy to ~/.config/nvim
+" copy to ~/.config/nvim/init.vim
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
