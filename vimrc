@@ -233,8 +233,8 @@ nnoremap <Leader>W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR
 " \xf = format xml
 if executable('xml_pp')
     " xml_pp = xml pretty print from XML::Twig
-    map <Leader>xf :silent %!xml_pp -- <CR>
-    vmap <Leader>xf :!xml_pp -- <CR>
+    map <Leader>xf :silent %!xml_pp - <CR>
+    vmap <Leader>xf :!xml_pp - <CR>
 endif
 
 " \hf = format html
@@ -356,7 +356,7 @@ endif
 nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 
 " \sb = shebang for bash
-nnoremap <Leader>sb :normal 1GO<ESC>:.!which bash<CR>I#!<ESC>
+nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<CR>I#!<ESC>A bash<ESC>
 
 " Vgrep = Ack '^\s*".*<args>.*=' vimrc
 command! -nargs=1 Vgrep :execute ":Ack '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . "' " . g:_vimrc
