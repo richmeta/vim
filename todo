@@ -1,9 +1,12 @@
+removing trailing comma in visual
+
 look into CtrlX other options InsertCharPreInsertCharPre InsertCharPre     pastepaste
 
 
-paste insert mode with trailing space is being removed
-    -> copy relevant parts from mswin.vim
-    -> hook around paste, set var IsPasting
+PreciseTrimWhiteSpace has been disabled
+    paste insert mode with trailing space is being removed
+        -> copy relevant parts from mswin.vim
+        -> hook around paste, set var IsPasting
 
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement

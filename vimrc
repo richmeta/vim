@@ -94,7 +94,7 @@ set wildignore=*.sw*,*.pyc
 set shellslash
 set laststatus=2
 set keymodel=startsel
-set listchars=tab:\|\ ,trail:.,extends:❯,precedes:❮,nbsp:⍽,conceal:⋰
+set listchars=tab:→\ ,trail:•,extends:❯,precedes:❮,nbsp:⍽,conceal:~,eol:$
 set splitbelow
 set splitright
 set nojoinspaces
@@ -116,14 +116,6 @@ set dictionary=~/.vim/dict/dict.txt
 " bash alias expansion
 let $BASH_ENV='~/.bash_aliases'
 
-" colorscheme
-if &term is# 'win32'
-  " console vim, |lucius| doesn't support console
-  colorscheme torte
-else
-  " gvim
-  colorscheme oceandeep
-endif
 
 if has('autocmd')
     filetype plugin indent on
@@ -154,6 +146,7 @@ if has('autocmd')
         autocmd FileType javascript setlocal suffixesadd=.js,.jsx
         autocmd FileType python set ts=4 sw=4
         autocmd FileType vim set iskeyword+=:
+        autocmd FileType make set noexpandtab
 
         " 1 - kwargs and dict  {'key': 'value'} => {key='value'}
         " 2 - kwargs and dict  {key='value'}    => {'key': 'value'}
@@ -169,12 +162,27 @@ if has('autocmd')
             \   }
             \ ]
 
+        autocmd FileType erlang let b:switch_custom_definitions = 
+            \ [
+            \   {
+            \       '<<\(".*"\)>>': '\1',
+            \       '\(".*"\)': '<<\1>>',
+            \   }
+            \ ]
+
     augroup END
 
-    augroup PreciseTrimWhiteSpace
+    " # this is causing more problems than saving
+    " augroup PreciseTrimWhiteSpace
+    "     autocmd!
+    "     autocmd InsertLeave * call PreciseTrimWhiteSpace()
+    " augroup end
+
+    augroup HighlightListChars
+        " must be before any calls to colorscheme
         autocmd!
-        autocmd InsertLeave * call PreciseTrimWhiteSpace()
-    augroup end
+        autocmd ColorScheme * highlight Specialkey guibg=lightgreen
+    augroup END
 
     augroup vimrc     " Source vim configuration upon save
         autocmd!
@@ -185,6 +193,16 @@ if has('autocmd')
         autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
 endif
+
+" colorscheme
+if &term is# 'win32'
+  " console vim, |lucius| doesn't support console
+  colorscheme torte
+else
+  " gvim
+  colorscheme oceandeep
+endif
+
 
 function! PreciseTrimWhiteSpace()
   " We need to save the view because the substitute command might
@@ -392,6 +410,9 @@ imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 
 cabbrev cs colorscheme
+
+" F4 = :NERDTree (commandmode)
+cnoremap <F4> NERDTree 
 
 " OTHER MAPPINGS
 " --------------
