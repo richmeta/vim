@@ -34,6 +34,7 @@ Plug 'isRuslan/vim-es6'
 Plug 'davidhalter/jedi-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'lfv89/vim-interestingwords'
 
 " text objects
 Plug 'wellle/targets.vim'
