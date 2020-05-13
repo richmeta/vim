@@ -107,6 +107,7 @@ set ttyfast
 
 if has('gui_macvim')
     set macmeta
+    set vb t_vb= 
 endif
 
 
@@ -758,6 +759,7 @@ let g:Lf_MruMaxFiles = 1000
 let g:Lf_MruFileExclude = ['*/tmp/*']
 let g:Lf_FollowLinks = 1
 let g:Lf_HistoryNumber = &history
+let g:Lf_ShowDevIcons = 0
 let g:Lf_PythonVersion = 3
 let g:Lf_ShortcutF = ''
 let g:Lf_WildIgnore = {
