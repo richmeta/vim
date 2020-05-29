@@ -1,3 +1,14 @@
+mapping for delimiting " to \" (visual)
+
+new mappings for \cv, \cf, \cd to target register
+
+
+erlang comment -> %%  not  % 
+
+erlang auto indenting is really annoying 
+
+look at Dirvish over nerdtree
+
 removing trailing comma in visual
 
 look into CtrlX other options InsertCharPreInsertCharPre InsertCharPre     pastepaste

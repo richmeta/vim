@@ -165,8 +165,8 @@ if has('autocmd')
         autocmd FileType erlang let b:switch_custom_definitions = 
             \ [
             \   {
-            \       '<<\(".*"\)>>': '\1',
-            \       '\(".*"\)': '<<\1>>',
+            \       '<<\("[^"]*"\)>>': '\1',
+            \       '\("[^"]*"\)': '<<\1>>',
             \   }
             \ ]
 
@@ -482,7 +482,7 @@ if has('win32')
 elseif has('unix')
     nmap <Leader>cd :let @+=expand("%:p:h")<CR>
     nmap <Leader>cf :let @+=expand("%:p")<CR>
-    nmap <Leader>cv :let @+=expand("%")<CR>
+    nmap <Leader>cv :let @+=expand("%:t")<CR>
 endif
 
 " sudo write
