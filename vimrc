@@ -30,7 +30,6 @@ Plug 'Yggdroot/LeaderF'
 Plug 'mileszs/ack.vim'
 Plug 'dense-analysis/ale'
 Plug 'tmhedberg/matchit'
-Plug 'isRuslan/vim-es6'
 Plug 'davidhalter/jedi-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -137,9 +136,6 @@ if has('autocmd')
         autocmd BufWinEnter,BufRead * :call CheckSyncDir()
     augroup END
 
-    " for vim-es6
-    augroup filetype javascript syntax=javascript
-
     augroup myfiletypes
         autocmd!
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
@@ -169,14 +165,9 @@ if has('autocmd')
             \       '\("[^"]*"\)': '<<\1>>',
             \   }
             \ ]
+        autocmd FileType erlang set commentstring=%%%s
 
     augroup END
-
-    " # this is causing more problems than saving
-    " augroup PreciseTrimWhiteSpace
-    "     autocmd!
-    "     autocmd InsertLeave * call PreciseTrimWhiteSpace()
-    " augroup end
 
     augroup HighlightListChars
         " must be before any calls to colorscheme
@@ -196,27 +187,17 @@ endif
 
 " colorscheme
 if &term is# 'win32'
-  " console vim, |lucius| doesn't support console
-  colorscheme torte
+    " console vim, |lucius| doesn't support console
+    colorscheme torte
 else
-  " gvim
-  colorscheme oceandeep
+    " gvim
+    colorscheme iceberg
+    " if !&diff
+    "     colorscheme frozen
+    " else
+    "     colorscheme oceandeep
+    " endif
 endif
-
-
-function! PreciseTrimWhiteSpace()
-  " We need to save the view because the substitute command might
-  " or might not move the cursor, depending on whether it finds
-  " any whitespace.
-  let saved_view = winsaveview()
-
-  " Remove white space. Ignore "not found" errors. Don't change jumplist.
-  keepjumps '[,']s/\s\+$//e
-  keepjumps '[,']s/=$/= /e
-
-  " Move cursor back if necessary.
-  call winrestview(saved_view)
-endfunction
 
 
 if has('mac')
@@ -231,6 +212,7 @@ if has('mac')
 
     " for replace
     nnoremap r£ r#
+    nnoremap f£ f#
 endif
 
 " LEADER MAPPINGS
@@ -281,16 +263,23 @@ nnoremap <S-F1> :execute 'help ' . expand('<cword>')<CR>
 
 " Quoting
 
-" \qs = quote single
-vnoremap <Leader>qs :norm yss'<CR>
+" \qw = quote word (double)
+nnoremap <Leader>qw :norm ysiw"<CR>
 
-" \qd = quote double
-vnoremap <Leader>qd :norm yss"<CR>
+" \rq = unquote word
+nnoremap <Leader>rq :normal ds"<CR>
 
-" \s, = quote single with comma
+
+" \sq = visual surround quote single
+vnoremap <Leader>sq :norm yss'<CR>
+
+" \dq = visual surround quote double
+vnoremap <Leader>dq :norm yss"<CR>
+
+" \s, = visual surround quote single with comma
 vnoremap <Leader>s, :norm yss'A,<CR>
 
-" \d, = quote double with comma
+" \d, = visual surround quote double with comma
 vnoremap <Leader>d, :norm yss"A,<CR>
 
 " \dc = remove trailing comma
@@ -315,7 +304,7 @@ nnoremap <Leader>yp "*yip
 vnoremap <Leader>y "*y
 
 " \qf = Quick fix open
-noremap <Leader>qf :copen<CR>
+noremap <Leader>qf :botright copen<CR>
 
 " \qc = Quick fix close
 noremap <Leader>qc :cclose<CR>
@@ -343,7 +332,7 @@ nnoremap <Leader>v :vnew<CR>
 nnoremap <Leader>h :new<CR>
 
 " \rm = Remove file + confirm
-nnoremap <Leader>rm :!rm -i %<CR>
+nnoremap <Leader>rm :!rm -i "%"<CR>
 
 " \pw = Pwd
 nnoremap <Leader>pw :pwd<CR>
@@ -605,8 +594,19 @@ map <F3> :TagbarToggle<CR>
 
 " Fugitive
 " --------
+
+"  for when \cg wasn't working
+" function FugativeRelativeRoot() 
+"     let filename = FugitivePath(expand('%'), '')
+"     " removing .git
+"     let gitdir = fnamemodify(FugitiveExtractGitDir(filename), ':h') 
+"     let path = substitute(filename, gitdir . "/", "", "")
+"     echom(path)
+"     return path
+" endfunction
+
 " \cg = copy git path relative
-nnoremap <Leader>cg :let @+=(fugitive#extract_git_dir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
+nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
 
 " \gd = Gvdiff
 nnoremap <Leader>gd :Gvdiff<CR>
@@ -749,7 +749,7 @@ let g:switch_custom_definitions =
     \ [
     \   {
     \       '\(\d\+\)[/.-]\(\d\+\)[/.-]\(\d\+\)': '\3-\2-\1',
-    \       '\(\w\+\)\(\s\+\w\+\s\+\)\(\w\+\)': '\3\2\1'
+    \       '\(\w\+\)\(\s\+\w\+\s\+\)\(\w\+\)': '\3\2\1',
     \   }
     \ ]
 

@@ -1,23 +1,24 @@
-mapping for delimiting " to \" (visual)
+weird indenting issue
+
+slow man:
+    https://apple.stackexchange.com/questions/374025/errors-from-whatis-command-unable-to-rebuild-database-with-makewhatis
+
+ignore or removing files from vim history
+    which files ?
+
+erlang tags - plugin?
 
 new mappings for \cv, \cf, \cd to target register
 
 
-erlang comment -> %%  not  % 
-
 erlang auto indenting is really annoying 
-
-look at Dirvish over nerdtree
 
 removing trailing comma in visual
 
 look into CtrlX other options InsertCharPreInsertCharPre InsertCharPre     pastepaste
 
 
-PreciseTrimWhiteSpace has been disabled
-    paste insert mode with trailing space is being removed
-        -> copy relevant parts from mswin.vim
-        -> hook around paste, set var IsPasting
+
 
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
@@ -26,7 +27,7 @@ can i use motions for comma/quoting mappings
 plugins:
     https://github.com/jonmorehouse/vim-flow
     https://github.com/liuchengxu/vim-clap
-
+    https://github.com/justinmk/vim-dirvish
 
 python switch
         data = self.create(firstname='bob', lastname='smith', position='surgeon', email='bob.smith@vetsRus.com')
@@ -40,8 +41,6 @@ using ack
 
 mapping for expression in line, inserts to beginning of line
     + visual selection
-
-gf for javascript require
 
 can't paste into LeaderF line
 
