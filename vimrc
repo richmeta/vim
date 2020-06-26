@@ -26,7 +26,7 @@ Plug 'tpope/vim-commentary'
 Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
 Plug 'Yggdroot/LeaderF'
-Plug 'mileszs/ack.vim'
+Plug 'jremmen/vim-ripgrep'
 Plug 'dense-analysis/ale'
 Plug 'tmhedberg/matchit'
 Plug 'davidhalter/jedi-vim'
@@ -366,8 +366,8 @@ nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 " \sb = shebang for bash
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<CR>I#!<ESC>A bash<ESC>
 
-" Vgrep = Ack '^\s*".*<args>.*=' vimrc
-command! -nargs=1 Vgrep :execute ":Ack '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . "' " . g:_vimrc
+" Vgrep = Rg '^\s*".*<args>.*=' vimrc
+command! -nargs=1 Vgrep :execute ":Rg '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . "' " . g:_vimrc
 
 " ReadUrl = download + edit the url
 if executable('curl')
@@ -553,7 +553,7 @@ MapToggle <Leader>sr splitright
 
 " search Sync
 " Ngrep = search command wiki
-command! -nargs=1 Ngrep Ack "<args>" ~/sync/stuff/commands/*
+command! -nargs=1 Ngrep Rg "<args>" ~/sync/stuff/commands/*
 
 function! GlobCommandsDir(A,L,P)
     let l:pat = '^' . a:A
@@ -647,20 +647,15 @@ function! LightLineALEEnabled() abort
 endfunction
 
 
-" Ack
+" Rg
 " ---
-let g:ackprg = 'rg --vimgrep'
+let g:rg_derive_root = true
 
-let g:ack_mappings = {
-    \   'v':  '<C-W><CR><C-W>L<C-W>p<C-W>J<C-W>p',
-    \   'gv': '<C-W><CR><C-W>L<C-W>p<C-W>J' 
-    \ }
+" \rg = Rg
+map <leader>rg :Rg
 
-" \ak = Ack!
-map <leader>ak :Ack! 
-
-" \aK = Ack! from file directory
-map <leader>aK :execute ':Ack! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
+" " \rd = Rg from file directory
+" map <leader>rd :execute ':Rg! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
 
 
 " ALE

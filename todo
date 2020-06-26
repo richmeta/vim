@@ -1,7 +1,3 @@
-ack:
-    - on no results, don't show quickfix ? 
-	https://github.com/mileszs/ack.vim/issues/225
-
 erlang tags - plugin?
 
 new mappings for \cv, \cf, \cd to target register
@@ -10,6 +6,12 @@ look into CtrlX other options InsertCharPreInsertCharPre InsertCharPre     paste
 
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
+
+    bundle/vim-dirvish/
+    bundle/jedi-vim/
+
+    hello     bundle/vim-dirvish/
+
 
 
 plugins:
