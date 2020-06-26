@@ -1,24 +1,12 @@
-weird indenting issue
-
-slow man:
-    https://apple.stackexchange.com/questions/374025/errors-from-whatis-command-unable-to-rebuild-database-with-makewhatis
-
-ignore or removing files from vim history
-    which files ?
+ack:
+    - on no results, don't show quickfix ? 
+	https://github.com/mileszs/ack.vim/issues/225
 
 erlang tags - plugin?
 
 new mappings for \cv, \cf, \cd to target register
 
-
-erlang auto indenting is really annoying 
-
-removing trailing comma in visual
-
 look into CtrlX other options InsertCharPreInsertCharPre InsertCharPre     pastepaste
-
-
-
 
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
@@ -26,8 +14,13 @@ can i use motions for comma/quoting mappings
 
 plugins:
     https://github.com/jonmorehouse/vim-flow
+        -workflow by running shell commands
     https://github.com/liuchengxu/vim-clap
-    https://github.com/justinmk/vim-dirvish
+        -another fuzzy
+    https://github.com/AndrewRadev/sideways.vim
+        -moving arguments
+    https://github.com/justinmk/vim-gtfo
+        -open terminal/finder
 
 python switch
         data = self.create(firstname='bob', lastname='smith', position='surgeon', email='bob.smith@vetsRus.com')
@@ -42,10 +35,6 @@ using ack
 mapping for expression in line, inserts to beginning of line
     + visual selection
 
-can't paste into LeaderF line
-
-
-
 how to surround lines with try/catch (except) => Using VISUAL snippets
 
 how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
@@ -58,14 +47,6 @@ create snippets:
     bash script with args
 
 
-
-operator for javascript 'f' => function
-
-setup home/work/all plugins 
-    source plugins.vim (all)
-    source $PLUGINS (csv)
-    settings for each plugin could be added in these files
-    - there's only one work plugin (localrc), so not yet
 
 learn :help pattern-overview
 
@@ -82,13 +63,9 @@ Possible Plugins to install:
     vim-bumblebee (https://github.com/PeterRincker/vim-bumblebee)
         fuzzy buffer switching
 
-    vim-vinegar (https://www.youtube.com/watch?v=OgQW07saWb0)
-
     https://github.com/tpope/vim-projectionist
         projections (https://www.youtube.com/watch?v=3jDafvUESbs
 
-    https://github.com/AndrewRadev/sideways.vim
-        Move function arguments left or right
 
     https://github.com/dbakker/vim-projectroot
         Find out which project a file belongs to, easy to use in scripts/mappings
@@ -149,28 +126,4 @@ learn expand(), eg :e %:r.h
   
 renumber: http://www.vim.org/scripts/script.php?script_id=189 OR VisIncr: https://github.com/vim-scripts/VisIncr
 textobj-word-column: https://github.com/coderifous/textobj-word-column.vim
-
-
-
---------------------------------------------------------------------------------
-enable/disable autoread/autowrite modes: 
-eg:
-	
-
-" autoread and autowrite
-augroup save
-  au!
-  au FocusLost * wall
-augroup END
-set nohidden
-set nobackup
-set noswapfile
-set nowritebackup
-set autoread
-set autowrite
-set autowriteall
-
-" see help persistent-undo
-set undodir=~/.vim/undo
-set undofile
 

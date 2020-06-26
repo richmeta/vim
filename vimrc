@@ -1,6 +1,6 @@
 set nocompatible
 scriptencoding utf-8
-filetype off
+filetype on
 
 if has('win32')
     let g:_vimrc = '~/.vimfiles/vimrc'
@@ -10,7 +10,6 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/tlib'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'godlygeek/tabular'
@@ -34,6 +33,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'lfv89/vim-interestingwords'
+Plug 'justinmk/vim-dirvish'
 
 " text objects
 Plug 'wellle/targets.vim'
@@ -42,9 +42,6 @@ Plug 'coderifous/textobj-word-column.vim'
 
 " Toggle words/expressions
 Plug 'AndrewRadev/switch.vim'
-
-" VimSript Testing
-" Plug 'junegunn/vader.vim'
 
 call plug#end()
 
@@ -76,6 +73,8 @@ set history=10000
 set ruler
 set incsearch
 set autoindent
+set smartindent
+set cindent
 set smarttab
 set report=0
 set whichwrap=b,s,h,l,<,>,~,[,]
@@ -89,13 +88,12 @@ set showcmd
 set grepprg=ag
 set matchpairs+=<:>
 set iskeyword+=-
-set wildignore=*.sw*,*.pyc
+set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__
 set shellslash
 set laststatus=2
 set keymodel=startsel
 set listchars=tab:→\ ,trail:•,extends:❯,precedes:❮,nbsp:⍽,conceal:~,eol:$
 set splitbelow
-set splitright
 set nojoinspaces
 set viminfo='1000,<50,s10,h
 set tags=./tags;
@@ -400,8 +398,8 @@ imap <c-a> <c-o>^
 
 cabbrev cs colorscheme
 
-" F4 = :NERDTree (commandmode)
-cnoremap <F4> NERDTree 
+" F4 = :Dirvish (commandmode)
+cnoremap <F4> Dirvish 
 
 " OTHER MAPPINGS
 " --------------
@@ -549,6 +547,9 @@ endif
 " \cc = toggle cursorcolumn
 MapToggle <Leader>cc cursorcolumn
 
+" \sr = toggle splitright
+MapToggle <Leader>sr splitright
+
 
 " search Sync
 " Ngrep = search command wiki
@@ -569,7 +570,7 @@ endfunction
 
 " Open command wiki
 " Nopen = open command wiki
-command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :call NerdWrap() <bar> tabedit ~/sync/stuff/commands/<args>
+command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :tabedit ~/sync/stuff/commands/<args>
 
 " alt-N = switch to tab
 nnoremap <M-1> 1gt
@@ -614,45 +615,11 @@ nnoremap <Leader>gd :Gvdiff<CR>
 " \gs = Gstatus
 nnoremap <Leader>gs :Gstatus<CR>
 
-" NERDTree
-" --------
-let NERDTreeIgnore = ['\.pyc', '\.pyo', '^tags$', '__pycache__', 'node_modules']
-
-" delete buffers after delete from tree
-let NERDTreeAutoDeleteBuffer=1
-
-" s = split horizontally
-" v = split vertically
-let NERDTreeMapOpenVSplit='v'
-let NERDTreeMapOpenSplit='s'
-
-
-" F4 = nerdtree open/focus
-map <F4> :silent NERDTreeFocus<CR>
-
-" shift F4 = nerdtree open
-map <S-F4> :silent NERDTreeFind<CR>
-
-" \F4 = close NerdTree
-map <Leader><F4> :silent NERDTreeClose<CR>
-
-" \\F4 = nerdtree toggle
-map <Leader><Leader><F4> :silent NERDTreeToggle<CR>
-
-" \ng = Open NerdTree to git root
-map <Leader>ng :silent NERDTreeVCS<CR>
-
-
-" prevent opening files inside the nerdtree window
-function! NerdWrap() abort
-    if (g:NERDTree.ExistsForBuf())
-        if (winnr('$') == 1)
-            call g:NERDTreeOpener._newVSplit()
-        else
-            execute 'wincmd w'
-        endif
-    endif
-endfunction
+" Dirvish 
+" -------
+" more in ftplugin/dirvish.vim
+nmap <F4> <Plug>(dirvish_up)
+nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
 
 " Lightline
@@ -682,7 +649,7 @@ endfunction
 
 " Ack
 " ---
-let g:ackprg = 'ag --vimgrep'
+let g:ackprg = 'rg --vimgrep'
 
 let g:ack_mappings = {
     \   'v':  '<C-W><CR><C-W>L<C-W>p<C-W>J<C-W>p',
@@ -690,10 +657,10 @@ let g:ack_mappings = {
     \ }
 
 " \ak = Ack!
-map <leader>ak :call NerdWrap()<CR> <bar> :Ack! 
+map <leader>ak :Ack! 
 
 " \aK = Ack! from file directory
-map <leader>aK :call NerdWrap()<CR> <bar> :execute ':Ack! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
+map <leader>aK :execute ':Ack! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
 
 
 " ALE
@@ -790,10 +757,10 @@ let g:Lf_WildIgnore = {
 
 
 " \f = Fuzzy MRU
-nmap <Leader>f :call NerdWrap() <bar> LeaderfMru<CR>
+nmap <Leader>f :LeaderfMru<CR>
 
 " \p = Fuzzy files
-nmap <Leader>p :call NerdWrap() <bar> LeaderfFile<CR>
+nmap <Leader>p :LeaderfFile<CR>
 
 " Commentary
 " ----------
@@ -801,6 +768,8 @@ nmap <Leader>p :call NerdWrap() <bar> LeaderfFile<CR>
 " gcaf = comment whole file
 nmap gcaf gggcG
 
+" dcaf = delete whole file
+nmap dcaf ggdG
 
 " ===========
 " End Plugins
