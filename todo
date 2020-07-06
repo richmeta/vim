@@ -1,20 +1,23 @@
+rg from current buffer dir
+y to clipboard, in X-windows
+Q  cannot close last buffer
+ignoring sync, set to env var or local?
+mapping to set width of window, according to longest line
+expand Vgrep to search in .vim/ftplugin too
+
+erlang autocomplete
+
 erlang tags - plugin?
+    using ctags - but how to get fully qualified (get module:function)
 
 new mappings for \cv, \cf, \cd to target register
 
-look into CtrlX other options InsertCharPreInsertCharPre InsertCharPre     pastepaste
+look into CtrlX other options
 
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
-    bundle/vim-dirvish/
-    bundle/jedi-vim/
-
-    hello     bundle/vim-dirvish/
-
-
-
-plugins:
+new plugins to checkout:
     https://github.com/jonmorehouse/vim-flow
         -workflow by running shell commands
     https://github.com/liuchengxu/vim-clap
@@ -52,22 +55,11 @@ create snippets:
 
 learn :help pattern-overview
 
-Plugins to learn:
-    switch
-    fugitive
-    vim-signature
-    vim-speeddating
-    vim-localrc     - for work addons
-    targets
 
 
 Possible Plugins to install:
-    vim-bumblebee (https://github.com/PeterRincker/vim-bumblebee)
-        fuzzy buffer switching
-
     https://github.com/tpope/vim-projectionist
         projections (https://www.youtube.com/watch?v=3jDafvUESbs
-
 
     https://github.com/dbakker/vim-projectroot
         Find out which project a file belongs to, easy to use in scripts/mappings
@@ -84,12 +76,9 @@ Possible Plugins to install:
     https://github.com/coderifous/textobj-word-column.vim
         Adds text-objects for word-based columns
 
-    Plugin for numbering
-
-    Plugin for working with python
-
-
-
+    http://www.vim.org/scripts/script.php?script_id=189 OR 
+    https://github.com/vim-scripts/VisIncr
+        renumbering 
 --------------------------------------------------------------------------------
 
 
@@ -112,8 +101,6 @@ nnoremap <space>gps :Dispatch! git push<CR>
 nnoremap <space>gpl :Dispatch! git pull<CR>
 
 
-
-
 consider using localleader for commands specific to a buffer (usewith with autocmds?)
 Non greedy quantifiers
 using cdpath
@@ -126,6 +113,4 @@ learn expand(), eg :e %:r.h
 
 --------------------------------------------------------------------------------
   
-renumber: http://www.vim.org/scripts/script.php?script_id=189 OR VisIncr: https://github.com/vim-scripts/VisIncr
-textobj-word-column: https://github.com/coderifous/textobj-word-column.vim
 

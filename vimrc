@@ -101,6 +101,7 @@ set shortmess+=I
 set showmatch
 set matchtime=1
 set ttyfast
+set complete-=i
 
 if has('gui_macvim')
     set macmeta
@@ -115,6 +116,7 @@ let $BASH_ENV='~/.bash_aliases'
 
 
 if has('autocmd')
+    filetype plugin on
     filetype plugin indent on
 
     " Put these in an autocmd group, so that we can delete them easily.
@@ -146,7 +148,7 @@ if has('autocmd')
         " 2 - kwargs and dict  {key='value'}    => {'key': 'value'}
         " 3 - import \k+ => from \k import
         " 4 - from \k import => import \k+
-        autocmd FileType python let b:switch_custom_definitions = 
+        autocmd FileType python let b:switch_custom_definitions =
             \ [
             \   {
             \       '\(\k\+\)=\([^),]\+\)': '''\1'': \2',
@@ -156,7 +158,7 @@ if has('autocmd')
             \   }
             \ ]
 
-        autocmd FileType erlang let b:switch_custom_definitions = 
+        autocmd FileType erlang let b:switch_custom_definitions =
             \ [
             \   {
             \       '<<\("[^"]*"\)>>': '\1',
@@ -164,7 +166,6 @@ if has('autocmd')
             \   }
             \ ]
         autocmd FileType erlang set commentstring=%%%s
-
     augroup END
 
     augroup HighlightListChars
@@ -301,12 +302,6 @@ nnoremap <Leader>yp "*yip
 " \y = copy into clipboard
 vnoremap <Leader>y "*y
 
-" \qf = Quick fix open
-noremap <Leader>qf :botright copen<CR>
-
-" \qc = Quick fix close
-noremap <Leader>qc :cclose<CR>
-
 " \lf = Location open
 noremap <Leader>lf :lopen<CR>
 
@@ -397,9 +392,6 @@ imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 
 cabbrev cs colorscheme
-
-" F4 = :Dirvish (commandmode)
-cnoremap <F4> Dirvish 
 
 " OTHER MAPPINGS
 " --------------
@@ -499,6 +491,15 @@ function! CheckSyncDir()
     endif
 endfunction
 
+function! ToggleQuickfix()
+    let ids = getqflist({'winid' : 1})
+    if get(ids, "winid", 0) != 0
+        cclose
+    else
+        botright copen
+    endif
+endfunction
+
 " Display-altering option toggles
 " F2 = toggle spell
 MapToggle <F2> spell
@@ -530,9 +531,12 @@ MapToggle <F10> scrollbind
 " F11 = toggle ignorecase
 MapToggle <F11> ignorecase
 
-" F12 = toggle paste
-MapToggle <F12> paste
-set pastetoggle=<F12>
+" F12 = toggle quickfix
+map <F12> :call ToggleQuickfix()<CR>
+
+" \ps = toggle paste
+MapToggle <Leader>ps paste
+set pastetoggle=<Leader>ps
 
 if !&diff
     " \ac = toggle autochdir
@@ -595,17 +599,6 @@ map <F3> :TagbarToggle<CR>
 
 " Fugitive
 " --------
-
-"  for when \cg wasn't working
-" function FugativeRelativeRoot() 
-"     let filename = FugitivePath(expand('%'), '')
-"     " removing .git
-"     let gitdir = fnamemodify(FugitiveExtractGitDir(filename), ':h') 
-"     let path = substitute(filename, gitdir . "/", "", "")
-"     echom(path)
-"     return path
-" endfunction
-
 " \cg = copy git path relative
 nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
 
@@ -615,11 +608,14 @@ nnoremap <Leader>gd :Gvdiff<CR>
 " \gs = Gstatus
 nnoremap <Leader>gs :Gstatus<CR>
 
-" Dirvish 
+" Dirvish
 " -------
 " more in ftplugin/dirvish.vim
-nmap <F4> <Plug>(dirvish_up)
+nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<CR>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
+
+" F4 = :Dirvish (commandmode)
+cnoremap <F4> Dirvish 
 
 
 " Lightline
@@ -628,7 +624,7 @@ nmap <S-F4> <Plug>(dirvish_vsplit_up)
 let g:lightline = {
     \   'active': {
     \       'left': [ [ 'mode', 'paste' ],
-    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ], 
+    \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
     \       'right': [ [ 'percent', 'lineinfo' ],
     \                  [ 'fileformat', 'filetype', 'ALEenabled' ] ]
     \   },
@@ -643,7 +639,7 @@ function! LightLineALEEnabled() abort
         return 'lint'
     else
         return ''
-    endif 
+    endif
 endfunction
 
 
@@ -652,17 +648,18 @@ endfunction
 let g:rg_derive_root = 1
 
 " \rg = Rg
-map <leader>rg :Rg
+map <leader>rg :Rg 
 
 " " \rd = Rg from file directory
+"  TODO
 " map <leader>rd :execute ':Rg! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
 
 
 " ALE
 " ---
 " by default ALE is off, use F5 to toggle
-let g:ale_enabled = 0
-
+" enabled in diff
+let g:ale_enabled = str2nr(&diff)
 
 " python: needs flake8
 "   ignore errors/warnings:
@@ -679,7 +676,6 @@ let g:ale_linters = {
     \   'erlang': ['erlc'],
     \ }
 
-    
 let g:ale_fixers = {
     \   'python': ['black'],
     \   'javascript': ['eslint']
