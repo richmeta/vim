@@ -2,12 +2,6 @@ set nocompatible
 scriptencoding utf-8
 filetype on
 
-if has('win32')
-    let g:_vimrc = '~/.vimfiles/vimrc'
-else
-    let g:_vimrc = '~/.vim/vimrc'
-endif
-
 call plug#begin('~/.vim/bundle')
 
 Plug 'vim-scripts/tlib'
@@ -26,7 +20,6 @@ Plug 'tpope/vim-commentary'
 Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
 Plug 'Yggdroot/LeaderF'
-Plug 'jremmen/vim-ripgrep'
 Plug 'dense-analysis/ale'
 Plug 'tmhedberg/matchit'
 Plug 'davidhalter/jedi-vim'
@@ -85,7 +78,7 @@ set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 set winminheight=0
 set shiftround
 set showcmd
-set grepprg=ag
+set grepprg=rg\ --vimgrep\ --no-heading
 set matchpairs+=<:>
 set iskeyword+=-
 set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__
@@ -176,9 +169,6 @@ if has('autocmd')
 
     augroup vimrc     " Source vim configuration upon save
         autocmd!
-        autocmd! BufWritePost ~/.vim/vimrc source % | echom "Reloaded vimrc" | redraw
-        autocmd! BufWritePost ~/.vimfiles/vimrc source % | echom "Reloaded vimrc" | redraw
-        autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded vimrc" | redraw
         autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded vimrc" | redraw
         autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
@@ -186,7 +176,6 @@ endif
 
 " colorscheme
 if &term is# 'win32'
-    " console vim, |lucius| doesn't support console
     colorscheme torte
 else
     " gvim
@@ -268,7 +257,6 @@ nnoremap <Leader>qw :norm ysiw"<CR>
 " \rq = unquote word
 nnoremap <Leader>rq :normal ds"<CR>
 
-
 " \sq = visual surround quote single
 vnoremap <Leader>sq :norm yss'<CR>
 
@@ -337,23 +325,14 @@ nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<CR>
 nnoremap <Leader>ss :wa<CR>
 
 " \us = Unique sort whole file
-if has('mac')
-    nnoremap <Leader>us :%!gsort -u<CR>
-    vnoremap <Leader>us :'<,'>!gsort -u<CR>
-else
-    nnoremap <Leader>us :%!sort -u<CR>
-    vnoremap <Leader>us :'<,'>!sort -u<CR>
-endif
+nnoremap <Leader>us :%!sort -u<CR>
+vnoremap <Leader>us :'<,'>!sort -u<CR>
 
 " \vs = Visual sort
 vnoremap <Leader>vs :'<,'>sort<CR>
 
 " \vrc - open vimrc
-if has('unix')
-    nnoremap <Leader>vrc :tabedit ~/.vim/vimrc<CR>
-else
-    nnoremap <Leader>vrc :tabedit ~/.vimfiles/vimrc<CR>
-endif
+nnoremap <Leader>vrc :tabedit $MYVIMRC<CR>
 
 " \vso = reload vimrc manually
 nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
@@ -361,8 +340,11 @@ nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
 " \sb = shebang for bash
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<CR>I#!<ESC>A bash<ESC>
 
-" Vgrep = Rg '^\s*".*<args>.*=' vimrc
-command! -nargs=1 Vgrep :execute ":Rg '^\\s*\".*" . substitute('<args>', '\\', '\\\\', 'g') . "' " . g:_vimrc
+" Vgrep = '^\s*".*<args>.*=' vimrc
+"  (including for searching leader)
+command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" . 
+    \ substitute('<args>', '\\', '\\\\', 'g') .
+    \ "' " . fnamemodify(expand("$MYVIMRC"), ":p:h")  <Bar> cwindow
 
 " ReadUrl = download + edit the url
 if executable('curl')
@@ -484,10 +466,12 @@ endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 function! CheckSyncDir()
-    " TODO: set to env var
-    let buffDir = expand('%:p:h')
-    if match(buffDir, '\c\/sync\/') > -1
-        setlocal noswapfile
+    let sync_dir = expand('$MYSYNC')
+    if strlen(sync_dir)
+        let buff_dir = expand('%:p:h')
+        if match(buff_dir, sync_dir) > -1
+            setlocal noswapfile
+        endif
     endif
 endfunction
 
@@ -557,7 +541,7 @@ MapToggle <Leader>sr splitright
 
 " search Sync
 " Ngrep = search command wiki
-command! -nargs=1 Ngrep Rg "<args>" ~/sync/stuff/commands/*
+command! -nargs=1 Ngrep silent grep! "<args>" ~/sync/stuff/commands/*
 
 function! GlobCommandsDir(A,L,P)
     let l:pat = '^' . a:A
@@ -615,7 +599,7 @@ nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<CR>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
 " F4 = :Dirvish (commandmode)
-cnoremap <F4> Dirvish 
+cnoremap <F4> Dirvish<Space>
 
 
 " Lightline
@@ -641,18 +625,6 @@ function! LightLineALEEnabled() abort
         return ''
     endif
 endfunction
-
-
-" Rg
-" ---
-let g:rg_derive_root = 1
-
-" \rg = Rg
-map <leader>rg :Rg 
-
-" " \rd = Rg from file directory
-"  TODO
-" map <leader>rd :execute ':Rg! ' . input('Ack! ') . ' ' . expand('%:h')<CR>
 
 
 " ALE
@@ -732,6 +704,8 @@ let g:UltiSnipsUsePythonVersion = 3
 
 " LeaderF
 " -------
+"
+" (default mapping)
 " \b = Fuzzy Buffer
 "
 let g:Lf_MruMaxFiles = 1000
@@ -748,10 +722,17 @@ let g:Lf_WildIgnore = {
 
 
 " \f = Fuzzy MRU
-nmap <Leader>f :LeaderfMru<CR>
+nnoremap <Leader>f :LeaderfMru<CR>
 
 " \p = Fuzzy files
-nmap <Leader>p :LeaderfFile<CR>
+nnoremap <Leader>p :LeaderfFile<CR>
+
+" Leaderf rg -> ripgrep
+nmap <Leader>gw <Plug>LeaderfRgCwordLiteralNoBoundary<CR>
+nmap <Leader>gW <Plug>LeaderfRgCwordLiteralBoundary<CR>
+nmap <Leader>gr <Plug>LeaderfRgPrompt
+nnoremap <Leader>go :LeaderfRgRecall<CR>
+
 
 " Commentary
 " ----------

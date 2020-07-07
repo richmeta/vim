@@ -1,5 +1,5 @@
 " \F4 = close dirvish window
-nmap <buffer> <leader><F4> :close<CR>
+nmap <buffer> <LocalLeader><F4> :close<CR>
 
 " Esc close dirvish buffer
 nmap <buffer> <Esc> gq
@@ -18,9 +18,6 @@ nmap <buffer> mv :!mv "<cfile>"
 
 " rm = delete file under cursor (dirvish)
 nmap <buffer> rm :!rm -i "<cfile>" <CR>
-
-" pw = show directory 
-" nmap <buffer> pw :pwd<CR>
 
 " open file under cursor in new tab (dirvish)
 nnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<CR>

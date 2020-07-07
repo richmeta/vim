@@ -1,9 +1,6 @@
-rg from current buffer dir
 y to clipboard, in X-windows
-Q  cannot close last buffer
-ignoring sync, set to env var or local?
+Q cannot close last buffer
 mapping to set width of window, according to longest line
-expand Vgrep to search in .vim/ftplugin too
 
 erlang autocomplete
 
@@ -26,6 +23,10 @@ new plugins to checkout:
         -moving arguments
     https://github.com/justinmk/vim-gtfo
         -open terminal/finder
+    https://github.com/kana/vim-textobj-user
+        -define textobjects
+    https://github.com/kana/vim-submode
+        -define submodes
 
 python switch
         data = self.create(firstname='bob', lastname='smith', position='surgeon', email='bob.smith@vetsRus.com')
