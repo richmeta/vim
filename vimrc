@@ -466,10 +466,9 @@ endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
 function! CheckSyncDir()
-    let sync_dir = expand('$MYSYNC')
-    if strlen(sync_dir)
+    if strlen($MYSYNC)
         let buff_dir = expand('%:p:h')
-        if match(buff_dir, sync_dir) > -1
+        if match(buff_dir, $MYSYNC) > -1
             setlocal noswapfile
         endif
     endif
@@ -704,8 +703,6 @@ let g:UltiSnipsUsePythonVersion = 3
 
 " LeaderF
 " -------
-"
-" (default mapping)
 " \b = Fuzzy Buffer
 "
 let g:Lf_MruMaxFiles = 1000
