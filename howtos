@@ -3,6 +3,23 @@ Howtos
 # skips loading plugins.
 vim -u NONE 
 
+# put with indentation
+]p
+>i{  Increase inner block indent
+<i{  Decrease inner block indent
+=i{  Re-indent the 'inner block'
+
+# CtrlX ..
+CTRL-X CTRL-L           whole lines
+CTRL-X CTRL-F           file names
+CTRL-X CTRL-D           macro definitions (also in included files)
+CTRL-X CTRL-I           current and included files
+CTRL-X CTRL-K           words from a dictionary
+CTRL-X CTRL-]           tags
+CTRL-X CTRL-V           Vim command line
+
+more at :help ins-completion
+
 # search for a block of text (eg:)
 CalcCheckSum
 Applicability
@@ -71,6 +88,26 @@ autocmd BufNewFile,BufRead ~/Download/unpack/graphics/*.pdb set filetype=perl
 %:r = filename without extension
 %:p:s?doc?XXX? = full path, with substitute (need 3x ? )
 
+# expand()
+%               current file name
+#               alternate file name
+<cfile>         file name under the cursor
+<sfile>         sourced script file or function name
+<cword>         word under the cursor
+<cWORD>         WORD under the cursor
+$ENVVAR         Environment variable
+
+Modifiers:
+:p              expand to full path
+:h              head (last path component removed)
+:t              tail (last path component only)
+:r              root (one extension removed)
+:e              extension only
+:~              relative to $home
+:.              relative to cwd
+:s?pat?sub?     subsitute  (global :gs)
+
+more under :help filename-modifiers
 
 :exe "!echo %" to see
 
@@ -142,26 +179,6 @@ tags
 :set tags=./tags;
 
 
-ctrlp
---------------------------------------------------------------------------------
-open ctrlp
-    :CtrlP <dir> - std open
-    :CtrlPBuffer - searches buffer
-    :CtrlPMRU    - most recently used
-    :CtrlPMixed  - search files, buffers, mru all at same time
-    :CtrlPRoot   - reset root dir
-
-when inside ctrlp:
-    ctrl-d   - switches between fullpath and filename searching
-    ctrl-r   - switches between searching in regex mode
-    <F5>     - clean cache
-    <F7>     - wipe MRU
-    ctrl-y   - create new file [after typing name]
-
-root markers:
-    override default root_markers like .git 
-    if this file is found use this as root dir
-    let g:ctrlp_root_markers = ['.project_root']
 
 
 " vimrc - loading source files
@@ -215,6 +232,9 @@ leaderF:
 # delete buffer
 press Tab, then d to delete
 
+# quickfix
+press Tab, then Q
+
 
 --------------------------------------------------------------------------------
 Ultisnips:
@@ -238,16 +258,6 @@ Surround
 surround with function: 
 ys iw f
 
-
---------------------------------------------------------------------------------
-clear messages 
-:messages clear
-
-
---------------------------------------------------------------------------------
-call fugitive#detect(getcwd())
-
-
 --------------------------------------------------------------------------------
 
 xml folding
@@ -256,7 +266,7 @@ setlocal foldmethod=syntax
 syntax on
 
 --------------------------------------------------------------------------------
-compiling + make
+compiling vim
 
 :version -> :h features-list
 ./configure --disable-FEATURE

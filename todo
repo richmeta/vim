@@ -1,20 +1,64 @@
+leaderf rg 
+    macvim gui doesn't yield results
+    debug
+
+update mappings for \cv, \cf, \cd to target register
+    -> SO
+
 y to clipboard, in X-windows
 Q cannot close last buffer
-mapping to set width of window, according to longest line
 
-erlang autocomplete
+erlang 
+    snippets
+        -module(X) =>  mod
+        -spec
+        {error, Error}
+        
+        ct
+            -include_lib("common_test/include/ct.hrl").
 
-erlang tags - plugin?
-    using ctags - but how to get fully qualified (get module:function)
+        eunit
+            -include_lib("eunit/include/eunit.hrl").
+        
+    erlang autocomplete
 
-new mappings for \cv, \cf, \cd to target register
+    erlang tags - plugin?
+        using ctags - but how to get fully qualified (get module:function)
+        look at gtags too
 
-look into CtrlX other options
-
+    with ALE
+    
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
-new plugins to checkout:
+python switch
+        data = self.create(firstname='bob', lastname='smith', position='surgeon', email='bob.smith@vetsRus.com')
+        to {firstname:'bob', lastname:'smith', position:'surgeon', email:'bob.smith@vetsRus.com'}
+
+mapping for expression in line, inserts to beginning of line
+    + visual selection
+
+
+snippets:
+    how to surround lines with try/catch (except) => Using VISUAL snippets
+
+    how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
+
+    wrapper to take constructor params and set this/self
+
+    create snippets:
+        python class + init
+        borg pattern
+        bash script with args
+
+
+
+learn :help pattern-overview
+
+--------------------------------------------------------------------------------
+
+Plugins to checkout:
+
     https://github.com/jonmorehouse/vim-flow
         -workflow by running shell commands
     https://github.com/liuchengxu/vim-clap
@@ -27,43 +71,19 @@ new plugins to checkout:
         -define textobjects
     https://github.com/kana/vim-submode
         -define submodes
-
-python switch
-        data = self.create(firstname='bob', lastname='smith', position='surgeon', email='bob.smith@vetsRus.com')
-        to {firstname:'bob', lastname:'smith', position:'surgeon', email:'bob.smith@vetsRus.com'}
-
-using ack
-    mapping from 'project root' (no cr)
-    mapping from current search  (no cr)
-    mapping from current filetype (eg --py) (no cr)
+    https://github.com/ntpeters/vim-better-whitespace
+        -trailing whitespace
 
 
-mapping for expression in line, inserts to beginning of line
-    + visual selection
-
-how to surround lines with try/catch (except) => Using VISUAL snippets
-
-how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
-wrapper to take constructor params and set this/self.  - not sure which plugin
-
-
-create snippets:
-    python class + init
-    borg pattern
-    bash script with args
-
-
-
-learn :help pattern-overview
-
-
-
-Possible Plugins to install:
+Others:
     https://github.com/tpope/vim-projectionist
         projections (https://www.youtube.com/watch?v=3jDafvUESbs
 
     https://github.com/dbakker/vim-projectroot
         Find out which project a file belongs to, easy to use in scripts/mappings
+
+    https://github.com/tpope/vim-dispatch
+        Async runner
 
     https://github.com/kana/vim-textobj-indent OR https://github.com/michaeljsmith/vim-indent-object
         Text objects for indented blocks
@@ -102,16 +122,8 @@ nnoremap <space>gps :Dispatch! git push<CR>
 nnoremap <space>gpl :Dispatch! git pull<CR>
 
 
-consider using localleader for commands specific to a buffer (usewith with autocmds?)
 Non greedy quantifiers
 using cdpath
 cindenting
 folding 
-
--> move to howto
-learn expand(), eg :e %:r.h
-
-
---------------------------------------------------------------------------------
-  
 

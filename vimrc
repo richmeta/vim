@@ -437,6 +437,7 @@ nmap <silent> <c-l> :wincmd l<CR>
 " \cf = copy fullpath
 " \cv = copy filename only
 if has('win32')
+    " prefer with windows path backslash
     nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<CR>
     nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
     nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<CR>
@@ -557,7 +558,13 @@ endfunction
 
 " Open command wiki
 " Nopen = open command wiki
-command! -complete=customlist,GlobCommandsDir -nargs=1 Nopen :tabedit ~/sync/stuff/commands/<args>
+command! -complete=customlist,GlobCommandsDir -nargs=1 -bang Nopen 
+    \ :call NopenWindowOrTab("~/sync/stuff/commands/" . "<args>", "<bang>")
+
+function! NopenWindowOrTab(path, bang)
+    let cmd = a:bang == "!" ? 'edit' : 'tabedit'
+    execute cmd a:path
+endfunction
 
 " alt-N = switch to tab
 nnoremap <M-1> 1gt
@@ -591,6 +598,30 @@ nnoremap <Leader>gd :Gvdiff<CR>
 " \gs = Gstatus
 nnoremap <Leader>gs :Gstatus<CR>
 
+" \gp :Git pull
+nnoremap <Leader>gp :Git pull<CR>
+
+" \gu :Git push
+nnoremap <Leader>gu :Git push<CR>
+
+" \gB :Gblame<CR>
+nnoremap <Leader>gb :Gblame<CR>
+
+" \gR :Gread<CR>
+nnoremap <Leader>gR :Gread<CR>
+
+" \gS :Git stash save<CR>
+nnoremap <Leader>gS :Git stash save<CR>
+
+" \gP :Git stash pop
+nnoremap <Leader>gP :Git stash pop<CR>
+
+" \gL :Git stash save
+nnoremap <Leader>gL :Git stash list<CR>
+
+
+
+
 " Dirvish
 " -------
 " more in ftplugin/dirvish.vim
@@ -603,7 +634,6 @@ cnoremap <F4> Dirvish<Space>
 
 " Lightline
 " ---------
-
 let g:lightline = {
     \   'active': {
     \       'left': [ [ 'mode', 'paste' ],

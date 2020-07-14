@@ -19,6 +19,11 @@ nmap <buffer> mv :!mv "<cfile>"
 " rm = delete file under cursor (dirvish)
 nmap <buffer> rm :!rm -i "<cfile>" <CR>
 
+" v = vertical split (dirvish)
+" s = horiz split (dirvish)
+nmap <buffer> v a
+nmap <buffer> s o
+
 " open file under cursor in new tab (dirvish)
 nnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<CR>
 xnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<CR>
