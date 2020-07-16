@@ -1,0 +1,12 @@
+snippet ct "common test lib" b
+-include_lib("common_test/include/ct.hrl").
+endsnippet
+
+snippet err
+{error, Error}
+endsnippet
+
+snippet cerr
+{error, Error} ->
+	{error, Error}${0}
+endsnippet

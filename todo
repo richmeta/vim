@@ -2,23 +2,37 @@ leaderf rg
     macvim gui doesn't yield results
     debug
 
+leaderf rg switching --no-ignore
+    
+
+leaderf switching working directory mode
+    g:Lf_WorkingDirectoryMode                      
+        e.g., >
+        let g:Lf_WorkingDirectoryMode = 'Ac'
+
+        c - the directory of the current working directory.(default)
+        a - the nearest ancestor of current working directory that contains one of
+            directories or files defined in |g:Lf_RootMarkers|. Fall back to 'c' if
+            no such ancestor directory found.
+        A - the nearest ancestor of current file that contains one of directories
+            or files defined in |g:Lf_RootMarkers|. Fall back to 'c' if no such
+            ancestor directory found.
+        f - the directory of the current file.
+        F - if the current working directory is not the direct ancestor of current
+            file, use the directory of the current file as LeaderF's working
+            directory, otherwise, same as 'c'.
+        Note: if "f", "F" is included with "a" or "A", use the behavior of "f" or
+        "F"(as a fallback) when a root can't be found.
+
+
 update mappings for \cv, \cf, \cd to target register
-    -> SO
+    -> function + <register>
 
 y to clipboard, in X-windows
-Q cannot close last buffer
 
 erlang 
     snippets
-        -module(X) =>  mod
         -spec
-        {error, Error}
-        
-        ct
-            -include_lib("common_test/include/ct.hrl").
-
-        eunit
-            -include_lib("eunit/include/eunit.hrl").
         
     erlang autocomplete
 
@@ -31,26 +45,11 @@ erlang
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
-python switch
-        data = self.create(firstname='bob', lastname='smith', position='surgeon', email='bob.smith@vetsRus.com')
-        to {firstname:'bob', lastname:'smith', position:'surgeon', email:'bob.smith@vetsRus.com'}
-
-mapping for expression in line, inserts to beginning of line
-    + visual selection
-
 
 snippets:
-    how to surround lines with try/catch (except) => Using VISUAL snippets
 
     how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
-
-    wrapper to take constructor params and set this/self
-
-    create snippets:
-        python class + init
-        borg pattern
-        bash script with args
-
+        be nicer with regexp expansion, to omit trailing :  or # 
 
 
 learn :help pattern-overview
@@ -63,8 +62,6 @@ Plugins to checkout:
         -workflow by running shell commands
     https://github.com/liuchengxu/vim-clap
         -another fuzzy
-    https://github.com/AndrewRadev/sideways.vim
-        -moving arguments
     https://github.com/justinmk/vim-gtfo
         -open terminal/finder
     https://github.com/kana/vim-textobj-user
@@ -101,25 +98,6 @@ Others:
     https://github.com/vim-scripts/VisIncr
         renumbering 
 --------------------------------------------------------------------------------
-
-
-fugituve bindings:   EG: 
-" fugitive git bindings
-nnoremap <space>ga :Git add %:p<CR><CR>
-nnoremap <space>gs :Gstatus<CR>
-nnoremap <space>gc :Gcommit -v -q<CR>
-nnoremap <space>gt :Gcommit -v -q %:p<CR>
-nnoremap <space>gd :Gdiff<CR>
-nnoremap <space>ge :Gedit<CR>
-nnoremap <space>gr :Gread<CR>
-nnoremap <space>gw :Gwrite<CR><CR>
-nnoremap <space>gl :silent! Glog<CR>:bot copen<CR>
-nnoremap <space>gp :Ggrep<Space>
-nnoremap <space>gm :Gmove<Space>
-nnoremap <space>gb :Git branch<Space>
-nnoremap <space>go :Git checkout<Space>
-nnoremap <space>gps :Dispatch! git push<CR>
-nnoremap <space>gpl :Dispatch! git pull<CR>
 
 
 Non greedy quantifiers

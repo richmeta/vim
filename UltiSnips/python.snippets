@@ -1,4 +1,4 @@
-snippet main
+snippet main "std main" b
 def main():
 	pass
 
@@ -7,7 +7,7 @@ if __name__ == '__main__':
 	main()
 endsnippet
 
-snippet mainpa
+snippet mainpa "main + parse_args" b
 import argparse
 
 
@@ -34,10 +34,18 @@ snippet pa "Parethesize argument"
 $1(${0:${VISUAL}})
 endsnippet
 
-snippet parse_args "Parse Args"
+snippet parse_args "Parse Args" b
 def parse_args():
 	parser = argparse.ArgumentParser(description=$1)
 	parser.add_argument($2)
 
 	return parser.parse_args()
+endsnippet
+
+snippet borg "Borg Pattern" b
+class Borg:
+	_shared_state = {}
+
+	def __init__(self):
+		self.__dict__ = self._shared_state
 endsnippet

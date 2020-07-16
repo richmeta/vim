@@ -133,32 +133,8 @@ if has('autocmd')
         autocmd!
         autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
         autocmd FileType javascript setlocal suffixesadd=.js,.jsx
-        autocmd FileType python set ts=4 sw=4
         autocmd FileType vim set iskeyword+=:
         autocmd FileType make set noexpandtab
-
-        " 1 - kwargs and dict  {'key': 'value'} => {key='value'}
-        " 2 - kwargs and dict  {key='value'}    => {'key': 'value'}
-        " 3 - import \k+ => from \k import
-        " 4 - from \k import => import \k+
-        autocmd FileType python let b:switch_custom_definitions =
-            \ [
-            \   {
-            \       '\(\k\+\)=\([^),]\+\)': '''\1'': \2',
-            \       '[''"]\(\k\+\)[''"]:\s*\([^},]\+\)': '\1=\2',
-            \       'import\s\+\(\k\+\)': 'from \1 import ',
-            \       'from\s\+\(\k\+\)\s\+import\s.*$': 'import \1',
-            \   }
-            \ ]
-
-        autocmd FileType erlang let b:switch_custom_definitions =
-            \ [
-            \   {
-            \       '<<\("[^"]*"\)>>': '\1',
-            \       '\("[^"]*"\)': '<<\1>>',
-            \   }
-            \ ]
-        autocmd FileType erlang set commentstring=%%%s
     augroup END
 
     augroup HighlightListChars
@@ -215,11 +191,11 @@ noremap <Leader>T :tabclose<CR>
 " \O = only this tab
 noremap <Leader>O :tabonly<CR>
 
-" \w = split window search cword
-nnoremap <Leader>w :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
+" \wn = split window search cword
+nnoremap <Leader>wn :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
 
-" \W = split window search cword + boundary
-nnoremap <Leader>W :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
+" \wN = split window search cword + boundary
+nnoremap <Leader>wN :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
 
 " \xf = format xml
 if executable('xml_pp')
@@ -407,15 +383,14 @@ nmap L ]b
 nmap H [b
 
 " Buffer delete
-" TODO: don't close on error when not written
 " Q = delete buffer unless modified
-nmap <silent> Q :bp<CR>:bd #<CR>
+nmap <silent> Q :bd<CR>
 
 " alt-q = delete buffer unconditionally
-nmap <silent> <M-q> :bp<CR>:bd! #<CR>
+nmap <silent> <M-q> :bd!<CR>
 
 " ctrl-alt-q = delete buffer unconditionally + close tab
-nmap <silent> <C-M-q> :bd!<CR>:tabclose<CR>
+nmap <silent> <C-M-q> :bd!<bar>tabclose<CR>
 
 
 " Window switching
@@ -522,8 +497,11 @@ map <F12> :call ToggleQuickfix()<CR>
 MapToggle <Leader>ps paste
 set pastetoggle=<Leader>ps
 
-if !&diff
-    " \ac = toggle autochdir
+if &diff
+    set list
+else
+    " disabled in diff
+    " \ac = toggle autochdir 
     MapToggle <Leader>ac autochdir
 endif
 
@@ -599,16 +577,16 @@ nnoremap <Leader>gd :Gvdiff<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 
 " \gp :Git pull
-nnoremap <Leader>gp :Git pull<CR>
+nnoremap <Leader>gp :Git pull<bar>echo "pulled"<CR>
 
 " \gu :Git push
-nnoremap <Leader>gu :Git push<CR>
+nnoremap <Leader>gu :Git push<bar>echo "pushed"<CR>
 
-" \gB :Gblame<CR>
+" \gb :Gblame<CR>
 nnoremap <Leader>gb :Gblame<CR>
 
 " \gR :Gread<CR>
-nnoremap <Leader>gR :Gread<CR>
+nnoremap <Leader>gR :Gread<bar>echo "git checkout -f"<CR>
 
 " \gS :Git stash save<CR>
 nnoremap <Leader>gS :Git stash save<CR>
@@ -624,7 +602,6 @@ nnoremap <Leader>gL :Git stash list<CR>
 
 " Dirvish
 " -------
-" more in ftplugin/dirvish.vim
 nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<CR>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 

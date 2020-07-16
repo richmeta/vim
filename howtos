@@ -251,6 +251,11 @@ $ cat .local.vimrc
 autocmd Filetype html UltiSnipsAddFiletypes htmldjango
 autocmd Filetype python UltiSnipsAddFiletypes django
 
+# visual snippets
+visual select text, press tab
+type snippet and tab again
+eg : try in python
+
 
 --------------------------------------------------------------------------------
 Surround
