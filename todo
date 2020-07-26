@@ -1,3 +1,18 @@
+
+leaderfFile . (from dirvish too)
+
+Ctrl Tab doesn't work
+    ultisnips
+
+colder and cnewer
+
+dirvish
+    mapping to open file in this directory
+
+mapping to set scratch
+    :setlocal buftype=nofile
+
+
 leaderf rg 
     macvim gui doesn't yield results
     debug

@@ -264,6 +264,15 @@ surround with function:
 ys iw f
 
 --------------------------------------------------------------------------------
+vim-localrc
+
+overriding filetypes in project directories
+
+.local.vimrc
+au! BufNewFile,BufRead *.config setf erlang
+
+
+--------------------------------------------------------------------------------
 
 xml folding
 let g:xml_syntax_folding=1

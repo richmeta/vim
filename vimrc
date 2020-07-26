@@ -441,6 +441,22 @@ function! MapToggle(key, opt)
 endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
+" Toggle possible values for var
+function! LetToggle(var, possible)
+    let idx = 0
+    let length = len(a:possible)
+    while idx < length
+        if a:possible[idx] == a:var
+            let next = (idx == length-1) ? 0 : idx + 1
+            return a:possible[next]
+        endif
+        let idx += 1
+    endwhile
+
+    " var not in `possible`
+    return a:var
+endfunction
+
 function! CheckSyncDir()
     if strlen($MYSYNC)
         let buff_dir = expand('%:p:h')
@@ -519,7 +535,7 @@ MapToggle <Leader>sr splitright
 
 " search Sync
 " Ngrep = search command wiki
-command! -nargs=1 Ngrep silent grep! "<args>" ~/sync/stuff/commands/*
+command! -nargs=1 Ngrep silent grep! "<args>" ~/sync/stuff/commands/*  <Bar> cwindow
 
 function! GlobCommandsDir(A,L,P)
     let l:pat = '^' . a:A
@@ -719,6 +735,7 @@ let g:Lf_HistoryNumber = &history
 let g:Lf_ShowDevIcons = 0
 let g:Lf_PythonVersion = 3
 let g:Lf_ShortcutF = ''
+let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_WildIgnore = {
     \   'dir': ['.svn','.git','.hg', 'node_modules'],
     \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
@@ -731,12 +748,19 @@ nnoremap <Leader>f :LeaderfMru<CR>
 " \p = Fuzzy files
 nnoremap <Leader>p :LeaderfFile<CR>
 
+" \P = Fuzzy from current buffer dir
+nnoremap <Leader>P :execute('LeaderfFile ' . expand('%:p:h'))<CR>
+
 " Leaderf rg -> ripgrep
 nmap <Leader>gw <Plug>LeaderfRgCwordLiteralNoBoundary<CR>
 nmap <Leader>gW <Plug>LeaderfRgCwordLiteralBoundary<CR>
 nmap <Leader>gr <Plug>LeaderfRgPrompt
 nnoremap <Leader>go :LeaderfRgRecall<CR>
 
+" \ld = switch leaderf directory mode
+nmap <silent> <Leader>ld :let g:Lf_WorkingDirectoryMode =
+     \   LetToggle(g:Lf_WorkingDirectoryMode, ['Ac', 'F']) <bar>
+     \   :echo(g:Lf_WorkingDirectoryMode)<CR>
 
 " Commentary
 " ----------
