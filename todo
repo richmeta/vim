@@ -1,17 +1,14 @@
+map dirvish + newtab
 
-leaderfFile . (from dirvish too)
+mapping to un/quote all words within []
 
-Ctrl Tab doesn't work
-    ultisnips
+commentary - 
+    toggle linewise
 
-colder and cnewer
+ctrl-bs - delete backwards word in insert mode
 
 dirvish
-    mapping to open file in this directory
-
-mapping to set scratch
-    :setlocal buftype=nofile
-
+    mapping to new file in this directory
 
 leaderf rg 
     macvim gui doesn't yield results
@@ -75,8 +72,6 @@ Plugins to checkout:
 
     https://github.com/jonmorehouse/vim-flow
         -workflow by running shell commands
-    https://github.com/liuchengxu/vim-clap
-        -another fuzzy
     https://github.com/justinmk/vim-gtfo
         -open terminal/finder
     https://github.com/kana/vim-textobj-user

@@ -290,6 +290,8 @@ compiling vim
 Tabularize first comma
 :Tabularize /^[^,]*\zs,/
 
+'<,'>Tabularize /^[^:]*\zs:
+
 --------------------------------------------------------------------------------
 Format program:
 You can use 'equalprg' to run this with =:

@@ -1,6 +1,3 @@
-" \F4 = close dirvish window
-nmap <buffer> <LocalLeader><F4> :close<CR>
-
 " Esc close dirvish buffer
 nmap <buffer> <Esc> gq
 

@@ -333,6 +333,9 @@ nnoremap <Leader>ms :messages<CR>
 " \mc = messages clear
 nnoremap <Leader>mc :messages clear<CR>
 
+" \sc = scratch buffer
+nnoremap <Leader>sc :setlocal buftype=nofile<CR>
+
 
 " COMMAND MAPPINGS
 " ----------------
@@ -621,6 +624,8 @@ nnoremap <Leader>gL :Git stash list<CR>
 nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<CR>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
+nmap <Leader><F4> :tabnew <bar><F4><CR>
+
 " F4 = :Dirvish (commandmode)
 cnoremap <F4> Dirvish<Space>
 
@@ -737,10 +742,13 @@ let g:Lf_PythonVersion = 3
 let g:Lf_ShortcutF = ''
 let g:Lf_WorkingDirectoryMode = 'Ac'
 let g:Lf_WildIgnore = {
-    \   'dir': ['.svn','.git','.hg', 'node_modules'],
-    \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+    \   'dir': ['.svn','.git','.hg', 'node_modules', '_build'],
+    \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]', '*.beam']
     \ }
 
+let g:Lf_RgConfig = [
+    \ "--glob=!_build/*"
+\ ]
 
 " \f = Fuzzy MRU
 nnoremap <Leader>f :LeaderfMru<CR>
