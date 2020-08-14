@@ -1,46 +1,6 @@
-map dirvish + newtab
-
-mapping to un/quote all words within []
-
-commentary - 
-    toggle linewise
-
-ctrl-bs - delete backwards word in insert mode
-
-dirvish
-    mapping to new file in this directory
-
-leaderf rg 
-    macvim gui doesn't yield results
-    debug
-
-leaderf rg switching --no-ignore
-    
-
-leaderf switching working directory mode
-    g:Lf_WorkingDirectoryMode                      
-        e.g., >
-        let g:Lf_WorkingDirectoryMode = 'Ac'
-
-        c - the directory of the current working directory.(default)
-        a - the nearest ancestor of current working directory that contains one of
-            directories or files defined in |g:Lf_RootMarkers|. Fall back to 'c' if
-            no such ancestor directory found.
-        A - the nearest ancestor of current file that contains one of directories
-            or files defined in |g:Lf_RootMarkers|. Fall back to 'c' if no such
-            ancestor directory found.
-        f - the directory of the current file.
-        F - if the current working directory is not the direct ancestor of current
-            file, use the directory of the current file as LeaderF's working
-            directory, otherwise, same as 'c'.
-        Note: if "f", "F" is included with "a" or "A", use the behavior of "f" or
-        "F"(as a fallback) when a root can't be found.
-
 
 update mappings for \cv, \cf, \cd to target register
     -> function + <register>
-
-y to clipboard, in X-windows
 
 erlang 
     snippets

@@ -19,7 +19,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
 Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
-Plug 'Yggdroot/LeaderF'
+Plug 'junegunn/fzf.vim'
 Plug 'dense-analysis/ale'
 Plug 'tmhedberg/matchit'
 Plug 'davidhalter/jedi-vim'
@@ -395,6 +395,8 @@ nmap <silent> <M-q> :bd!<CR>
 " ctrl-alt-q = delete buffer unconditionally + close tab
 nmap <silent> <C-M-q> :bd!<bar>tabclose<CR>
 
+" ctrl-bs = delete word back
+imap <C-BS> <C-O>diw
 
 " Window switching
 
@@ -729,46 +731,22 @@ let g:jedi#use_splits_not_buffers = 'bottom'
 " ---------
 let g:UltiSnipsUsePythonVersion = 3
 
-" LeaderF
+
+" FZF
 " -------
-" \b = Fuzzy Buffer
-"
-let g:Lf_MruMaxFiles = 1000
-let g:Lf_MruFileExclude = ['*/tmp/*']
-let g:Lf_FollowLinks = 1
-let g:Lf_HistoryNumber = &history
-let g:Lf_ShowDevIcons = 0
-let g:Lf_PythonVersion = 3
-let g:Lf_ShortcutF = ''
-let g:Lf_WorkingDirectoryMode = 'Ac'
-let g:Lf_WildIgnore = {
-    \   'dir': ['.svn','.git','.hg', 'node_modules', '_build'],
-    \   'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]', '*.beam']
-    \ }
+nnoremap <Leader>p :Files<CR>
+nnoremap <Leader>P :execute('Files ' . expand('%:p:h'))<CR>
+nnoremap <Leader>f :History<CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>gr :Rg<Space>
+nnoremap <Leader>gw :Rg <cword><CR>
 
-let g:Lf_RgConfig = [
-    \ "--glob=!_build/*"
-\ ]
+let g:fzf_preview_window = ''
 
-" \f = Fuzzy MRU
-nnoremap <Leader>f :LeaderfMru<CR>
+if executable('fd')
+    let $FZF_DEFAULT_COMMAND='fd -t f --hidden --exclude .git --exclude node_modules --exclude _build --exclude "*.sw?" --exclude "*.pyc" --exclude="*.beam"'
+endif
 
-" \p = Fuzzy files
-nnoremap <Leader>p :LeaderfFile<CR>
-
-" \P = Fuzzy from current buffer dir
-nnoremap <Leader>P :execute('LeaderfFile ' . expand('%:p:h'))<CR>
-
-" Leaderf rg -> ripgrep
-nmap <Leader>gw <Plug>LeaderfRgCwordLiteralNoBoundary<CR>
-nmap <Leader>gW <Plug>LeaderfRgCwordLiteralBoundary<CR>
-nmap <Leader>gr <Plug>LeaderfRgPrompt
-nnoremap <Leader>go :LeaderfRgRecall<CR>
-
-" \ld = switch leaderf directory mode
-nmap <silent> <Leader>ld :let g:Lf_WorkingDirectoryMode =
-     \   LetToggle(g:Lf_WorkingDirectoryMode, ['Ac', 'F']) <bar>
-     \   :echo(g:Lf_WorkingDirectoryMode)<CR>
 
 " Commentary
 " ----------
