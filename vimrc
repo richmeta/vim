@@ -734,6 +734,12 @@ let g:UltiSnipsUsePythonVersion = 3
 
 " FZF
 " -------
+
+if has('mac')
+    " homebrew installation
+    set rtp+=/usr/local/opt/fzf
+endif
+
 nnoremap <Leader>p :Files<CR>
 nnoremap <Leader>P :execute('Files ' . expand('%:p:h'))<CR>
 nnoremap <Leader>f :History<CR>
