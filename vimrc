@@ -156,11 +156,6 @@ if &term is# 'win32'
 else
     " gvim
     colorscheme iceberg
-    " if !&diff
-    "     colorscheme frozen
-    " else
-    "     colorscheme oceandeep
-    " endif
 endif
 
 
@@ -185,8 +180,8 @@ endif
 " \t = new tab
 noremap <Leader>t :tabnew<CR>
 
-" \T = close tab
-noremap <Leader>T :tabclose<CR>
+" \T = new scratch
+noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<CR>
 
 " \O = only this tab
 noremap <Leader>O :tabonly<CR>
@@ -225,34 +220,35 @@ endif
 nnoremap <S-F1> :execute 'help ' . expand('<cword>')<CR>
 
 
-" Quoting
+" Quoting (plugin/quote.vim)
 
-" \qw = quote word (double)
-nnoremap <Leader>qw :norm ysiw"<CR>
+" \sq = single quote (motion/visual)
+nnoremap <Leader>sq :set opfunc=SingleQuote<cr>g@
+vnoremap <Leader>sq :<C-U> call SingleQuote('block')<cr>
 
-" \rq = unquote word
-nnoremap <Leader>rq :normal ds"<CR>
+" \dq = double quote (motion/visual)
+nnoremap <Leader>dq :set opfunc=DoubleQuote<cr>g@
+vnoremap <Leader>dq :<C-U> call DoubleQuote('block')<cr>
 
-" \sq = visual surround quote single
-vnoremap <Leader>sq :norm yss'<CR>
+" ,sq = single quote + comma (motion/visual)
+nnoremap ,sq :set opfunc=SingleQuoteComma<cr>g@
+vnoremap ,sq :<C-U> call SingleQuoteComma('block')<cr>
 
-" \dq = visual surround quote double
-vnoremap <Leader>dq :norm yss"<CR>
+" ,dq = double quote + comma (motion/visual)
+nnoremap ,dq :set opfunc=DoubleQuoteComma<cr>g@
+vnoremap ,dq :<C-U> call DoubleQuoteComma('block')<cr>
 
-" \s, = visual surround quote single with comma
-vnoremap <Leader>s, :norm yss'A,<CR>
+" \rq = remove quotes (motion/visual)
+nnoremap <Leader>rq :set opfunc=RemoveQuote<cr>g@
+vnoremap <Leader>rq :<C-U> call RemoveQuote('block')<cr>
 
-" \d, = visual surround quote double with comma
-vnoremap <Leader>d, :norm yss"A,<CR>
+" \a, = add comma
+nnoremap <Leader>a, :set opfunc=AddComma<cr>g@
+vnoremap <Leader>a, :<C-U> call AddComma('block')<cr>
 
-" \dc = remove trailing comma
-nnoremap <Leader>dc :.s/,\s*$//<CR>
-vnoremap <Leader>dc :s/,\s*$//<CR>
-
-" \, = comma separate
-vnoremap <Leader>, :normal A,<CR>
-
-"" TODO: check on X-windows, need to support primary/secondary?
+" \d, = remove comma
+nnoremap <Leader>d, :set opfunc=RemoveComma<cr>g@
+vnoremap <Leader>d, :<C-U> call RemoveComma('block')<cr>
 
 " \ye = copy EOL into clipboard
 nnoremap <Leader>ye "*y$
@@ -318,6 +314,7 @@ nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<CR>I#!<ESC>A bash<ESC>
 
 " Vgrep = '^\s*".*<args>.*=' vimrc
 "  (including for searching leader)
+"  recursively search using 'grepprg'
 command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" . 
     \ substitute('<args>', '\\', '\\\\', 'g') .
     \ "' " . fnamemodify(expand("$MYVIMRC"), ":p:h")  <Bar> cwindow
@@ -734,11 +731,6 @@ let g:UltiSnipsUsePythonVersion = 3
 
 " FZF
 " -------
-
-if has('mac')
-    " homebrew installation
-    set rtp+=/usr/local/opt/fzf
-endif
 
 nnoremap <Leader>p :Files<CR>
 nnoremap <Leader>P :execute('Files ' . expand('%:p:h'))<CR>

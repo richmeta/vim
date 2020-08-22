@@ -124,6 +124,11 @@ more under :help filename-modifiers
 :g/search/  s/search/replace/g | s/search2/replace2/g 
 
 
+non greedy regex:
+\{-}  = same as ?
+{-} with \v
+
+
 scripting
 ============
 
@@ -304,4 +309,15 @@ or 'autopep8'
 --------------------------------------------------------------------------------
 profile starting plugins:
 vim --startuptime timeCost.txt timeCost.txt
+
+--------------------------------------------------------------------------------
+# myextras.vim for macos
+if has('mac')
+    " use the right version of python3 
+    " vim comes bundles with py3.8
+    set pythonthreedll=/usr/local/Cellar/python/3.7.7/Frameworks/Python.framework/Versions/3.7/lib/libpython3.7.dylib
+
+    " homebrew installation FZF
+    set rtp+=/usr/local/opt/fzf
+endif
 
