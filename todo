@@ -1,3 +1,7 @@
+tagbar invalidated when file is reload
+
+* for Visual mode
+    https://vim.fandom.com/wiki/Search_for_visually_selected_text
 
 update mappings for \cv, \cf, \cd to target register
     -> function + <register>

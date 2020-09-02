@@ -1,6 +1,6 @@
 
-set tabstop=4
-set shiftwidth=4
+setlocal tabstop=4
+setlocal shiftwidth=4
 
 " 1 - kwargs and dict  {'key': 'value'} => {key='value'}
 " 2 - kwargs and dict  {key='value'}    => {'key': 'value'}

@@ -315,7 +315,7 @@ nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<CR>I#!<ESC>A bash<ESC>
 " Vgrep = '^\s*".*<args>.*=' vimrc
 "  (including for searching leader)
 "  recursively search using 'grepprg'
-command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" . 
+command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
     \ substitute('<args>', '\\', '\\\\', 'g') .
     \ "' " . fnamemodify(expand("$MYVIMRC"), ":p:h")  <Bar> cwindow
 
@@ -443,6 +443,26 @@ function! MapToggle(key, opt)
 endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
+" Toggle (+=|-=) value in `opt` list, in current buffer
+" eg: iskeyword, guioptions etc
+function! ToggleOptionList(opt, value)
+    let values = split(eval('&'.a:opt), ",")
+    let present = index(values, a:value) != -1
+    let op = (present) ? '-=' : '+='
+    exec 'setlocal ' . a:opt . op . a:value
+endfunction
+
+" prompt for the character to add/remove from opt
+function! ToggleOptionListPrompt(opt)
+    let c = getchar()
+    if c =~ '^\d\+$'
+        let c = nr2char(c)
+    endif
+    if match(c, '\e') != 0
+        call ToggleOptionList(a:opt, c)
+    endif
+endfunction
+
 " Toggle possible values for var
 function! LetToggle(var, possible)
     let idx = 0
@@ -519,7 +539,7 @@ if &diff
     set list
 else
     " disabled in diff
-    " \ac = toggle autochdir 
+    " \ac = toggle autochdir
     MapToggle <Leader>ac autochdir
 endif
 
@@ -533,6 +553,12 @@ MapToggle <Leader>cc cursorcolumn
 
 " \sr = toggle splitright
 MapToggle <Leader>sr splitright
+
+" \kd - toggle '.' in `iskeyword`
+map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
+
+" \kp - prompt for char to toggle in `iskeyword`
+map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 
 
 " search Sync
@@ -554,7 +580,7 @@ endfunction
 
 " Open command wiki
 " Nopen = open command wiki
-command! -complete=customlist,GlobCommandsDir -nargs=1 -bang Nopen 
+command! -complete=customlist,GlobCommandsDir -nargs=1 -bang Nopen
     \ :call NopenWindowOrTab("~/sync/stuff/commands/" . "<args>", "<bang>")
 
 function! NopenWindowOrTab(path, bang)
