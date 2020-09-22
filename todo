@@ -1,3 +1,5 @@
+way to list or view (all) snippets for language X (eg: erlang)
+
 tagbar invalidated when file is reload
 
 * for Visual mode
@@ -5,8 +7,6 @@ tagbar invalidated when file is reload
 
 update mappings for \cv, \cf, \cd to target register
     -> function + <register>
-
-dirvish ctrl-t -> tab
 
 erlang 
     snippets
@@ -80,6 +80,9 @@ Others:
 
     https://github.com/vimwiki/vimwiki
         Personal Wiki for Vim
+
+    https://github.com/jceb/vim-orgmode ?
+        Orgmode
 
     https://github.com/coderifous/textobj-word-column.vim
         Adds text-objects for word-based columns

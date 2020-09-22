@@ -23,6 +23,7 @@ nmap <buffer> ne :e %/
 " s = horiz split (dirvish)
 nmap <buffer> v a
 nmap <buffer> s o
+nmap <buffer> <C-T> t
 
 " open file under cursor in new tab (dirvish)
 nnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<CR>

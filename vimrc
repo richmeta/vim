@@ -7,7 +7,7 @@ call plug#begin('~/.vim/bundle')
 Plug 'vim-scripts/tlib'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'godlygeek/tabular'
-Plug 'majutsushi/tagbar'
+Plug 'preservim/tagbar'
 Plug 'vim-scripts/CmdlineComplete'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -67,7 +67,6 @@ set ruler
 set incsearch
 set autoindent
 set smartindent
-set cindent
 set smarttab
 set report=0
 set whichwrap=b,s,h,l,<,>,~,[,]
@@ -413,15 +412,18 @@ nmap <silent> <c-l> :wincmd l<CR>
 " \cd = copy directory/path
 " \cf = copy fullpath
 " \cv = copy filename only
+" \cs = copy stem
 if has('win32')
     " prefer with windows path backslash
     nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<CR>
     nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
     nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<CR>
+    nmap <Leader>cs :let @+=substitute(expand("%:t:r"), "/", "\\", "g")<CR>
 elseif has('unix')
     nmap <Leader>cd :let @+=expand("%:p:h")<CR>
     nmap <Leader>cf :let @+=expand("%:p")<CR>
     nmap <Leader>cv :let @+=expand("%:t")<CR>
+    nmap <Leader>cs :let @+=expand("%:t:r")<CR>
 endif
 
 " sudo write
@@ -543,11 +545,6 @@ else
     MapToggle <Leader>ac autochdir
 endif
 
-if has('mac')
-    " \F = toggle fullscreen
-    MapToggle <Leader>F fullscreen
-endif
-
 " \cc = toggle cursorcolumn
 MapToggle <Leader>cc cursorcolumn
 
@@ -620,25 +617,25 @@ nnoremap <Leader>gd :Gvdiff<CR>
 " \gs = Gstatus
 nnoremap <Leader>gs :Gstatus<CR>
 
-" \gp :Git pull
+" \gp = Git pull
 nnoremap <Leader>gp :Git pull<bar>echo "pulled"<CR>
 
-" \gu :Git push
+" \gu = Git push
 nnoremap <Leader>gu :Git push<bar>echo "pushed"<CR>
 
-" \gb :Gblame<CR>
+" \gb = Gblame<CR>
 nnoremap <Leader>gb :Gblame<CR>
 
-" \gR :Gread<CR>
+" \gR = Gread<CR>
 nnoremap <Leader>gR :Gread<bar>echo "git checkout -f"<CR>
 
-" \gS :Git stash save<CR>
+" \gS = Git stash save<CR>
 nnoremap <Leader>gS :Git stash save<CR>
 
-" \gP :Git stash pop
+" \gP = Git stash pop
 nnoremap <Leader>gP :Git stash pop<CR>
 
-" \gL :Git stash save
+" \gL = Git stash save
 nnoremap <Leader>gL :Git stash list<CR>
 
 
@@ -649,7 +646,8 @@ nnoremap <Leader>gL :Git stash list<CR>
 nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<CR>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
-nmap <Leader><F4> :tabnew <bar><F4><CR>
+" \F4 = dirvish from this directory or file
+nmap <Leader><F4> :let g:_dirvishfn = expand('%')<bar>tabnew <bar>execute 'Dirvish ' . g:_dirvishfn<CR>
 
 " F4 = :Dirvish (commandmode)
 cnoremap <F4> Dirvish<Space>
