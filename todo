@@ -1,17 +1,12 @@
-way to list or view (all) snippets for language X (eg: erlang)
+results to quicklist fzf
+    https://github.com/junegunn/fzf.vim/issues/185
 
-tagbar invalidated when file is reload
+learn python snippets
 
-* for Visual mode
-    https://vim.fandom.com/wiki/Search_for_visually_selected_text
-
-update mappings for \cv, \cf, \cd to target register
-    -> function + <register>
-
-erlang 
+erlang
     snippets
         -spec
-        
+
     erlang autocomplete
 
     erlang tags - plugin?
@@ -19,15 +14,21 @@ erlang
         look at gtags too
 
     with ALE
-    
+
+quote not working for full lines
+
+update mappings for \cv, \cf, \cd to target register
+    -> function + <register>
+
+
 can i use motions for comma/quoting mappings
     https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
 
 snippets:
-
     how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
-        be nicer with regexp expansion, to omit trailing :  or # 
+        be nicer with regexp expansion, to omit trailing :  or #
+
 
 
 learn :help pattern-overview

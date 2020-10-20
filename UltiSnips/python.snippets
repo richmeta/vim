@@ -1,32 +1,38 @@
 snippet main "std main" b
 def main():
-	pass
+    pass
 
 
 if __name__ == '__main__':
-	main()
+    main()
 endsnippet
 
 snippet mainpa "main + parse_args" b
 import argparse
+import logging
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger(__name__)
 
 
 def parse_args():
-	parser = argparse.ArgumentParser(description="$1")
-	parser.add_argument($2)
+    parser = argparse.ArgumentParser(description="$1")
+    parser.add_argument("--verbose", "-v", action="store_true", help="verbose output")
+    parser.add_argument($2)
 
-	return parser.parse_args()
+    return parser.parse_args()
 
 
 def main():
-	argv = parse_args()
+    argv = parse_args()
+    if argv.verbose:
+        logger.setLevel(logging.DEBUG)
 
 
 if __name__ == '__main__':
-	main()
+    main()
 endsnippet
 
-snippet #!3
+snippet #!
 #!/usr/bin/env python3
 endsnippet
 
@@ -36,16 +42,37 @@ endsnippet
 
 snippet parse_args "Parse Args" b
 def parse_args():
-	parser = argparse.ArgumentParser(description=$1)
-	parser.add_argument($2)
+    parser = argparse.ArgumentParser(description=$1)
+    parser.add_argument($2)
 
-	return parser.parse_args()
+    return parser.parse_args()
 endsnippet
 
 snippet borg "Borg Pattern" b
 class Borg:
-	_shared_state = {}
+    _shared_state = {}
 
-	def __init__(self):
-		self.__dict__ = self._shared_state
+    def __init__(self):
+        self.__dict__ = self._shared_state
+endsnippet
+
+# common imports
+snippet Path "import pathlib" b
+from pathlib import Path
+endsnippet
+
+snippet datetime "import datetime" b
+from datetime import datetime, timedelta
+endsnippet
+
+snippet logging "basic logging" b
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger(__name__)
+
+    # add to main
+    if argv.verbose:
+        logger.setLevel(logging.DEBUG)
+
 endsnippet

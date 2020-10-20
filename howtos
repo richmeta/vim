@@ -262,6 +262,12 @@ type snippet and tab again
 eg : try in python
 
 
+# edit snippets for filetypes
+UltiSnipsEdit
+
+# finding the snippet files (eg: erl)
+fd erl ~/.vim/bundle/vim-snippets/UltiSnips ~/.vim/Ultisnips
+
 --------------------------------------------------------------------------------
 Surround
 
@@ -321,3 +327,6 @@ if has('mac')
     set rtp+=/usr/local/opt/fzf
 endif
 
+--------------------------------------------------------------------------------
+# use patience algorthm
+set diffopt+=algorithm:patience

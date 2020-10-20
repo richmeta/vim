@@ -93,6 +93,7 @@ set shortmess+=I
 set showmatch
 set matchtime=1
 set ttyfast
+set diffopt+=algorithm:patience
 set complete-=i
 
 if has('gui_macvim')
@@ -163,6 +164,7 @@ if has('mac')
     inoremap £ #
     nnoremap £ #
     cnoremap £ #
+    onoremap £ #
 
     " alt-3
     inoremap <M-3> £
@@ -639,15 +641,13 @@ nnoremap <Leader>gP :Git stash pop<CR>
 nnoremap <Leader>gL :Git stash list<CR>
 
 
-
-
 " Dirvish
 " -------
 nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<CR>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
 " \F4 = dirvish from this directory or file
-nmap <Leader><F4> :let g:_dirvishfn = expand('%')<bar>tabnew <bar>execute 'Dirvish ' . g:_dirvishfn<CR>
+nmap <silent><Leader><F4> :<C-U>exe 'tabedit +Dirvish\ ' .expand('%:p')<CR>
 
 " F4 = :Dirvish (commandmode)
 cnoremap <F4> Dirvish<Space>
@@ -755,11 +755,10 @@ let g:UltiSnipsUsePythonVersion = 3
 
 " FZF
 " -------
-
-nnoremap <Leader>p :Files<CR>
-nnoremap <Leader>P :execute('Files ' . expand('%:p:h'))<CR>
-nnoremap <Leader>f :History<CR>
-nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>p :Files!<CR>
+nnoremap <Leader>P :execute 'Files! ' . expand('%:p:h')<CR>
+nnoremap <Leader>f :History!<CR>
+nnoremap <Leader>b :Buffers!<CR>
 nnoremap <Leader>gr :Rg<Space>
 nnoremap <Leader>gw :Rg <cword><CR>
 

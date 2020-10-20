@@ -1,8 +1,8 @@
 " Esc close dirvish buffer
 nmap <buffer> <Esc> gq
 
-" cd = cd (dirvish)
-nmap <buffer> cd :execute 'cd ' . expand('%')<bar>:pwd<CR>
+" wd = cd (dirvish)
+nmap <buffer> wd :execute 'cd ' . expand('%')<bar>:pwd<CR>
 
 " md = mkdir (dirvish)
 nmap <buffer> md :!mkdir %/
@@ -31,4 +31,4 @@ xnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<CR>
 
 nmap <buffer><nowait><silent> <CR> :<C-U>call dirvish#open("edit", 0)<CR>:echo(expand('%'))<CR>
 
-nnoremap <buffer> <Leader>P :execute('Files ' . expand('%:p'))<CR>
+nnoremap <buffer> <Leader>P :execute 'Files! ' . expand('%:p')<CR>

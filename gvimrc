@@ -12,12 +12,6 @@ else
     endif
 endif
 
-if has('mac')
-    let g:NERDTreeDirArrowExpandable = '.'
-    let g:NERDTreeDirArrowCollapsible = '↓'
-endif
-
-
 set columns=150
 set lines=50
 set guicursor=n:blinkon0
