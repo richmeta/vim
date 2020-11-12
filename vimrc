@@ -27,6 +27,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'lfv89/vim-interestingwords'
 Plug 'justinmk/vim-dirvish'
+Plug 'vim-erlang/vim-erlang-omnicomplete'
 
 " text objects
 Plug 'wellle/targets.vim'

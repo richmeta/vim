@@ -1,7 +1,36 @@
+test for local_plugins.vim and source (inside plug#begin)
+
+
+shortcut for diffthis
+
+function to 
+    prompt input for filetype + set filetype
+
+snippets
+    set g:UltiSnipsSnippetDirectories=[ <full path to my snippets> ]
+    and copy existing snippet files, then i can update to suite my needs
+
+
+
+dirvish for cd <dir> + dirvish
+
+snippet for bash with getopts
+
+improvements to quote, quote full lines,  removing quotes
+
+better support in terminal,  F1 to F4 doesn't work
+alt workflow with ctrl-v?  do we need all of behave mswin.
+
+dirvish
+    \cX -> copying of filenames
+
+
 results to quicklist fzf
     https://github.com/junegunn/fzf.vim/issues/185
 
 learn python snippets
+
+helper for finding snippets
 
 erlang
     snippets
@@ -14,8 +43,6 @@ erlang
         look at gtags too
 
     with ALE
-
-quote not working for full lines
 
 update mappings for \cv, \cf, \cd to target register
     -> function + <register>
