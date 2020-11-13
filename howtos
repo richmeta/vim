@@ -330,3 +330,10 @@ endif
 --------------------------------------------------------------------------------
 # use patience algorthm
 set diffopt+=algorithm:patience
+--------------------------------------------------------------------------------
+
+modelines
+leading "vim: " required
+trailing colon required
+
+# vim: set option=value:opt2=val2:

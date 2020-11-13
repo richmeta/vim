@@ -37,6 +37,10 @@ Plug 'coderifous/textobj-word-column.vim'
 " Toggle words/expressions
 Plug 'AndrewRadev/switch.vim'
 
+if filereadable(glob('~/.vim/localplugins.vim'))
+    :source ~/.vim/localplugins.vim
+endif
+
 call plug#end()
 
 " enable ctrl-c, ctrl-v, ctrl-a
@@ -130,14 +134,6 @@ if has('autocmd')
         autocmd BufWinEnter,BufRead * :call CheckSyncDir()
     augroup END
 
-    augroup myfiletypes
-        autocmd!
-        autocmd FileType javascript,html,yaml setlocal ai sw=2 ts=2
-        autocmd FileType javascript setlocal suffixesadd=.js,.jsx
-        autocmd FileType vim set iskeyword+=:
-        autocmd FileType make set noexpandtab
-    augroup END
-
     augroup HighlightListChars
         " must be before any calls to colorscheme
         autocmd!
@@ -189,10 +185,10 @@ noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<CR>
 noremap <Leader>O :tabonly<CR>
 
 " \wn = split window search cword
-nnoremap <Leader>wn :let @/=expand("<cword>")<Bar>split<Bar>normal n<CR>
+nnoremap <Leader>wn :let @/=expand("<cword>")<bar>split<bar>normal n<CR>
 
 " \wN = split window search cword + boundary
-nnoremap <Leader>wN :let @/='\<'.expand("<cword>").'\>'<Bar>split<Bar>normal n<CR>
+nnoremap <Leader>wN :let @/='\<'.expand("<cword>").'\>'<bar>split<bar>normal n<CR>
 
 " \xf = format xml
 if executable('xml_pp')
@@ -306,7 +302,7 @@ vnoremap <Leader>us :'<,'>!sort -u<CR>
 vnoremap <Leader>vs :'<,'>sort<CR>
 
 " \vrc - open vimrc
-nnoremap <Leader>vrc :tabedit $MYVIMRC<CR>
+nnoremap <Leader>vrc :tabedit resolve($MYVIMRC)<CR>
 
 " \vso = reload vimrc manually
 nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
@@ -319,7 +315,7 @@ nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<CR>I#!<ESC>A bash<ESC>
 "  recursively search using 'grepprg'
 command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
     \ substitute('<args>', '\\', '\\\\', 'g') .
-    \ "' " . fnamemodify(expand("$MYVIMRC"), ":p:h")  <Bar> cwindow
+    \ "' " . fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")  <bar> cwindow
 
 " ReadUrl = download + edit the url
 if executable('curl')
@@ -510,7 +506,7 @@ MapToggle <F2> spell
 MapToggle <Leader>ws wrapscan
 
 " F6 = syntax on/off
-map <F6> :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
+map <F6> :if exists("syntax_on") <bar> syntax off <bar> else <bar> syntax enable <bar> endif <CR>
 
 " F7 = toggle hlsearch
 MapToggle <F7> hlsearch
@@ -560,10 +556,13 @@ map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
 " \kp - prompt for char to toggle in `iskeyword`
 map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 
+" \dt - diffthis
+map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<CR>
+
 
 " search Sync
 " Ngrep = search command wiki
-command! -nargs=1 Ngrep silent grep! "<args>" ~/sync/stuff/commands/*  <Bar> cwindow
+command! -nargs=1 Ngrep silent grep! "<args>" ~/sync/stuff/commands/*  <bar> cwindow
 
 function! GlobCommandsDir(A,L,P)
     let l:pat = '^' . a:A
@@ -786,6 +785,5 @@ nmap dcaf ggdG
 syntax enable
 
 if filereadable(glob('~/.vim/myextras.vim'))
-    " put work stuff in here
-    :source ~/.vim/myextras.vim
+    :source ~/.vim/local.vim
 endif

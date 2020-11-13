@@ -1,8 +1,11 @@
 .netrwhist
 tags
 *.swp
-myextras.vim
 bundle/
 
 # local font
 font.vim
+
+# overrides, not checked in
+local.vim
+localplugins.vim
