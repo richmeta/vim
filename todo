@@ -1,15 +1,7 @@
-function to 
-    prompt input for filetype + set filetype
-
 snippets
     set g:UltiSnipsSnippetDirectories=[ <full path to my snippets> ]
     and copy existing snippet files, then i can update to suite my needs
     snippet for bash with getopts
-
-
-dirvish for cd <dir> + dirvish
-dirvish
-    \cX -> copying of filenames
 
 improvements to quote, quote full lines,  removing quotes
     use surround where possible

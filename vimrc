@@ -27,7 +27,6 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'lfv89/vim-interestingwords'
 Plug 'justinmk/vim-dirvish'
-Plug 'vim-erlang/vim-erlang-omnicomplete'
 
 " text objects
 Plug 'wellle/targets.vim'
@@ -176,46 +175,46 @@ endif
 " ---------------
 "
 " \t = new tab
-noremap <Leader>t :tabnew<CR>
+noremap <Leader>t :tabnew<cr>
 
 " \T = new scratch
-noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<CR>
+noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<cr>
 
 " \O = only this tab
-noremap <Leader>O :tabonly<CR>
+noremap <Leader>O :tabonly<cr>
 
 " \wn = split window search cword
-nnoremap <Leader>wn :let @/=expand("<cword>")<bar>split<bar>normal n<CR>
+nnoremap <Leader>wn :let @/=expand("<cword>")<bar>split<bar>normal n<cr>
 
 " \wN = split window search cword + boundary
-nnoremap <Leader>wN :let @/='\<'.expand("<cword>").'\>'<bar>split<bar>normal n<CR>
+nnoremap <Leader>wN :let @/='\<'.expand("<cword>").'\>'<bar>split<bar>normal n<cr>
 
 " \xf = format xml
 if executable('xml_pp')
     " xml_pp = xml pretty print from XML::Twig
-    map <Leader>xf :silent %!xml_pp - <CR>
-    vmap <Leader>xf :!xml_pp - <CR>
+    map <Leader>xf :silent %!xml_pp - <cr>
+    vmap <Leader>xf :!xml_pp - <cr>
 endif
 
 " \hf = format html
 if executable('html_pp')
     " html_pp = html pretty print using Beautiful Soup
-    map <Leader>hf :silent %!html_pp - <CR>
-    vmap <Leader>hf :!html_pp - <CR>
+    map <Leader>hf :silent %!html_pp - <cr>
+    vmap <Leader>hf :!html_pp - <cr>
 endif
 
 if executable('python')
     " \jf = format json
-    map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>:setf json<CR>
-    vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <CR><CR>
+    map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <cr><cr>:setf json<cr>
+    vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <cr><cr>
 
     " \pf = format json
-    map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <CR><CR>
-    vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <CR><CR>
+    map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <cr><cr>
+    vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <cr><cr>
 endif
 
 " shift-F1 - help current word
-nnoremap <S-F1> :execute 'help ' . expand('<cword>')<CR>
+nnoremap <S-F1> :execute 'help ' . expand('<cword>')<cr>
 
 
 " Quoting (plugin/quote.vim)
@@ -261,14 +260,14 @@ nnoremap <Leader>yp "*yip
 vnoremap <Leader>y "*y
 
 " \lf = Location open
-noremap <Leader>lf :lopen<CR>
+noremap <Leader>lf :lopen<cr>
 
 " \lc = Location close
-noremap <Leader>lc :lclose<CR>
+noremap <Leader>lc :lclose<cr>
 
 " \dw = remove trailing whitespace
-nnoremap <Leader>dw :%s/\s\+$//g<CR>
-vnoremap <Leader>dw :s/\s\+$//g<CR>
+nnoremap <Leader>dw :%s/\s\+$//g<cr>
+vnoremap <Leader>dw :s/\s\+$//g<cr>
 
 " \- = ruler
 nnoremap <Leader>- o<Esc>80a-<Esc>
@@ -277,45 +276,48 @@ nnoremap <Leader>- o<Esc>80a-<Esc>
 nnoremap <Leader>= o<Esc>80a=<Esc>
 
 " \v = new vertical split
-nnoremap <Leader>v :vnew<CR>
+nnoremap <Leader>v :vnew<cr>
 
 " \h = new horizontal split
-nnoremap <Leader>h :new<CR>
+nnoremap <Leader>h :new<cr>
 
 " \rm = Remove file + confirm
-nnoremap <Leader>rm :!rm -i "%"<CR>
+nnoremap <Leader>rm :!rm -i "%"<cr>
 
 " \pw = Pwd
-nnoremap <Leader>pw :pwd<CR>
+nnoremap <Leader>pw :pwd<cr>
 
 " \wd = change working directory to current buffer
-nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<CR>
+nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<cr>
 
 " \ss - save all
-nnoremap <Leader>ss :wa<CR>
+nnoremap <Leader>ss :wa<cr>
 
 " \us = Unique sort whole file
-nnoremap <Leader>us :%!sort -u<CR>
-vnoremap <Leader>us :'<,'>!sort -u<CR>
+nnoremap <Leader>us :%!sort -u<cr>
+vnoremap <Leader>us :'<,'>!sort -u<cr>
 
 " \vs = Visual sort
-vnoremap <Leader>vs :'<,'>sort<CR>
+vnoremap <Leader>vs :'<,'>sort<cr>
 
 " \vrc - open vimrc
-nnoremap <Leader>vrc :tabedit resolve($MYVIMRC)<CR>
+nnoremap <Leader>vrc :tabedit resolve($MYVIMRC)<cr>
 
 " \vso = reload vimrc manually
-nnoremap <Leader>vso :so $MYVIMRC<CR>:echo "sourced $MYVIMRC"<CR>
+nnoremap <Leader>vso :so $MYVIMRC<cr>:echo "sourced $MYVIMRC"<cr>
 
 " \sb = shebang for bash
-nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<CR>I#!<ESC>A bash<ESC>
+nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<cr>I#!<ESC>A bash<ESC>
 
 " Vgrep = '^\s*".*<args>.*=' vimrc
 "  (including for searching leader)
 "  recursively search using 'grepprg'
 command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
     \ substitute('<args>', '\\', '\\\\', 'g') .
-    \ "' " . fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")  <bar> cwindow
+    \ "' " . 
+    \ resolve(expand("$MYVIMRC")) . " " . 
+    \ fnamemodify(resolve(expand("$MYVIMRC")), ":p:h") . "/ftplugin/*" 
+    \ <bar> cwindow
 
 " ReadUrl = download + edit the url
 if executable('curl')
@@ -323,13 +325,13 @@ if executable('curl')
 endif
 
 " \ms = messages
-nnoremap <Leader>ms :messages<CR>
+nnoremap <Leader>ms :messages<cr>
 
 " \mc = messages clear
-nnoremap <Leader>mc :messages clear<CR>
+nnoremap <Leader>mc :messages clear<cr>
 
 " \sc = scratch buffer
-nnoremap <Leader>sc :setlocal buftype=nofile<CR>
+nnoremap <Leader>sc :setlocal buftype=nofile<cr>
 
 
 " COMMAND MAPPINGS
@@ -342,7 +344,7 @@ cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 
 " ctrl-k = delete to eol (emacs)
-cnoremap <c-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<CR>
+cnoremap <c-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<cr>
 
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
@@ -371,10 +373,10 @@ inoremap <C-U> <C-G>u<C-U>
 
 " Next/Previous file
 " ctrl-n = next file
-nnoremap <C-N> :next<CR>
+nnoremap <C-N> :next<cr>
 
 " ctrl-p = prev file
-nnoremap <C-P> :prev<CR>
+nnoremap <C-P> :prev<cr>
 
 " Buffer switching
 nmap L ]b
@@ -382,13 +384,13 @@ nmap H [b
 
 " Buffer delete
 " Q = delete buffer unless modified
-nmap <silent> Q :bd<CR>
+nmap <silent> Q :bd<cr>
 
 " alt-q = delete buffer unconditionally
-nmap <silent> <M-q> :bd!<CR>
+nmap <silent> <M-q> :bd!<cr>
 
 " ctrl-alt-q = delete buffer unconditionally + close tab
-nmap <silent> <C-M-q> :bd!<bar>tabclose<CR>
+nmap <silent> <C-M-q> :bd!<bar>tabclose<cr>
 
 " ctrl-bs = delete word back
 imap <C-BS> <C-O>diw
@@ -396,16 +398,16 @@ imap <C-BS> <C-O>diw
 " Window switching
 
 " ctrl-k = up window
-nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-k> :wincmd k<cr>
 
 " ctrl-k = up window
-nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-j> :wincmd j<cr>
 
 " ctrl-k = up window
-nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-h> :wincmd h<cr>
 
 " ctrl-k = up window
-nmap <silent> <c-l> :wincmd l<CR>
+nmap <silent> <c-l> :wincmd l<cr>
 
 " copypath
 " \cd = copy directory/path
@@ -414,15 +416,15 @@ nmap <silent> <c-l> :wincmd l<CR>
 " \cs = copy stem
 if has('win32')
     " prefer with windows path backslash
-    nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<CR>
-    nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<CR>
-    nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<CR>
-    nmap <Leader>cs :let @+=substitute(expand("%:t:r"), "/", "\\", "g")<CR>
+    nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<cr>
+    nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<cr>
+    nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<cr>
+    nmap <Leader>cs :let @+=substitute(expand("%:t:r"), "/", "\\", "g")<cr>
 elseif has('unix')
-    nmap <Leader>cd :let @+=expand("%:p:h")<CR>
-    nmap <Leader>cf :let @+=expand("%:p")<CR>
-    nmap <Leader>cv :let @+=expand("%:t")<CR>
-    nmap <Leader>cs :let @+=expand("%:t:r")<CR>
+    nmap <Leader>cd :let @+=expand("%:p:h")<cr>
+    nmap <Leader>cf :let @+=expand("%:p")<cr>
+    nmap <Leader>cv :let @+=expand("%:t")<cr>
+    nmap <Leader>cs :let @+=expand("%:t:r")<cr>
 endif
 
 " sudo write
@@ -438,7 +440,7 @@ endif
 
 " Map key to toggle opt (normal/insert)
 function! MapToggle(key, opt)
-    let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+    let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<cr>"
     exec 'nnoremap '.a:key.' '.cmd
     exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
@@ -506,7 +508,7 @@ MapToggle <F2> spell
 MapToggle <Leader>ws wrapscan
 
 " F6 = syntax on/off
-map <F6> :if exists("syntax_on") <bar> syntax off <bar> else <bar> syntax enable <bar> endif <CR>
+map <F6> :if exists("syntax_on") <bar> syntax off <bar> else <bar> syntax enable <bar> endif <cr>
 
 " F7 = toggle hlsearch
 MapToggle <F7> hlsearch
@@ -530,7 +532,7 @@ MapToggle <F10> scrollbind
 MapToggle <F11> ignorecase
 
 " F12 = toggle quickfix
-map <F12> :call ToggleQuickfix()<CR>
+map <F12> :call ToggleQuickfix()<cr>
 
 " \ps = toggle paste
 MapToggle <Leader>ps paste
@@ -557,7 +559,7 @@ map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
 map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 
 " \dt - diffthis
-map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<CR>
+map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
 
 
 " search Sync
@@ -606,48 +608,48 @@ nnoremap <M-9> 9gt
 " Tagbar
 " ------
 " F3 = toggle tagbar
-map <F3> :TagbarToggle<CR>
+map <F3> :TagbarToggle<cr>
 
 " Fugitive
 " --------
 " \cg = copy git path relative
-nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%, '') : '')<CR>
+nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%, '') : '')<cr>
 
 " \gd = Gvdiff
-nnoremap <Leader>gd :Gvdiff<CR>
+nnoremap <Leader>gd :Gvdiff<cr>
 
 " \gs = Gstatus
-nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gs :Gstatus<cr>
 
 " \gp = Git pull
-nnoremap <Leader>gp :Git pull<bar>echo "pulled"<CR>
+nnoremap <Leader>gp :Git pull<bar>echo "pulled"<cr>
 
 " \gu = Git push
-nnoremap <Leader>gu :Git push<bar>echo "pushed"<CR>
+nnoremap <Leader>gu :Git push<bar>echo "pushed"<cr>
 
-" \gb = Gblame<CR>
-nnoremap <Leader>gb :Gblame<CR>
+" \gb = Gblame<cr>
+nnoremap <Leader>gb :Gblame<cr>
 
-" \gR = Gread<CR>
-nnoremap <Leader>gR :Gread<bar>echo "git checkout -f"<CR>
+" \gR = Gread<cr>
+nnoremap <Leader>gR :Gread<bar>echo "git checkout -f"<cr>
 
-" \gS = Git stash save<CR>
-nnoremap <Leader>gS :Git stash save<CR>
+" \gS = Git stash save<cr>
+nnoremap <Leader>gS :Git stash save<cr>
 
 " \gP = Git stash pop
-nnoremap <Leader>gP :Git stash pop<CR>
+nnoremap <Leader>gP :Git stash pop<cr>
 
 " \gL = Git stash save
-nnoremap <Leader>gL :Git stash list<CR>
+nnoremap <Leader>gL :Git stash list<cr>
 
 
 " Dirvish
 " -------
-nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<CR>
+nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<cr>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
 " \F4 = dirvish from this directory or file
-nmap <silent><Leader><F4> :<C-U>exe 'tabedit +Dirvish\ ' .expand('%:p')<CR>
+nmap <silent><Leader><F4> :<C-U>exe 'tabedit +Dirvish\ ' .expand('%:p')<cr>
 
 " F4 = :Dirvish (commandmode)
 cnoremap <F4> Dirvish<Space>
@@ -704,19 +706,19 @@ let g:ale_fixers = {
     \ }
 
 " F5 = toggle ALE
-nmap <F5> :ALEToggle<CR>
-nmap <S-F5> :ALEToggleBuffer<CR>
-imap <F5> <C-o>:ALEToggle<CR>
-vmap <F5> :ALEToggle<CR>
+nmap <F5> :ALEToggle<cr>
+nmap <S-F5> :ALEToggleBuffer<cr>
+imap <F5> <C-o>:ALEToggle<cr>
+vmap <F5> :ALEToggle<cr>
 
 " ctrl-F5 = ALEFix
-nmap <C-F5> :ALEFix<CR>
+nmap <C-F5> :ALEFix<cr>
 
 " ]g = next ALE issue
-nnoremap ]g :ALENext<CR>
+nnoremap ]g :ALENext<cr>
 
 " [g = prev ALE issue
-nnoremap [g :ALEPrevious<CR>
+nnoremap [g :ALEPrevious<cr>
 
 
 " Switch
@@ -755,12 +757,12 @@ let g:UltiSnipsUsePythonVersion = 3
 
 " FZF
 " -------
-nnoremap <Leader>p :Files!<CR>
-nnoremap <Leader>P :execute 'Files! ' . expand('%:p:h')<CR>
-nnoremap <Leader>f :History!<CR>
-nnoremap <Leader>b :Buffers!<CR>
+nnoremap <Leader>p :Files!<cr>
+nnoremap <Leader>P :execute 'Files! ' . expand('%:p:h')<cr>
+nnoremap <Leader>f :History!<cr>
+nnoremap <Leader>b :Buffers!<cr>
 nnoremap <Leader>gr :Rg<Space>
-nnoremap <Leader>gw :Rg <cword><CR>
+nnoremap <Leader>gw :Rg <cword><cr>
 
 let g:fzf_preview_window = ''
 
@@ -784,6 +786,6 @@ nmap dcaf ggdG
 
 syntax enable
 
-if filereadable(glob('~/.vim/myextras.vim'))
+if filereadable(glob('~/.vim/local.vim'))
     :source ~/.vim/local.vim
 endif
