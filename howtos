@@ -336,4 +336,4 @@ modelines
 leading "vim: " required
 trailing colon required
 
-# vim: set option=value:opt2=val2:
+"" vim: set option=value:opt2=val2:

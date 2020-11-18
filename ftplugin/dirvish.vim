@@ -2,7 +2,10 @@
 nmap <buffer> <Esc> gq
 
 " wd = cd (dirvish)
-nmap <buffer> wd :execute 'cd ' . expand('%')<bar>:pwd<CR>
+nmap <buffer> wd :execute 'cd ' . expand('%')<bar>:pwd<cr>
+
+" pd = print directory name
+nmap <buffer> pd :echo expand('%')<cr>
 
 " md = mkdir (dirvish)
 nmap <buffer> md :!mkdir %/
@@ -14,7 +17,7 @@ nmap <buffer> cp :!cp "<cfile>"
 nmap <buffer> mv :!mv "<cfile>" 
 
 " rm = delete file under cursor (dirvish)
-nmap <buffer> rm :!rm -i "<cfile>" <CR>
+nmap <buffer> rm :!rm -i "<cfile>" <cr>
 
 " ne = new file
 nmap <buffer> ne :e %/
@@ -26,12 +29,12 @@ nmap <buffer> s o
 nmap <buffer> <C-T> t
 
 " open file under cursor in new tab (dirvish)
-nnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<CR>
-xnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<CR>
+nnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<cr>
+xnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<cr>
 
-nmap <buffer><nowait><silent> <CR> :<C-U>call dirvish#open("edit", 0)<CR>:echo(expand('%'))<CR>
+nmap <buffer><nowait><silent> <cr> :<C-U>call dirvish#open("edit", 0)<cr>:echo(expand('%'))<cr>
 
-nnoremap <buffer> <Leader>P :execute 'Files! ' . expand('%:p')<CR>
+nnoremap <buffer> <Leader>P :execute 'Files! ' . expand('%:p')<cr>
 
 " copypath
 " \cd = copy directory/path

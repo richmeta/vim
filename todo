@@ -1,14 +1,10 @@
-snippets
-    set g:UltiSnipsSnippetDirectories=[ <full path to my snippets> ]
-    and copy existing snippet files, then i can update to suite my needs
-    snippet for bash with getopts
-
 improvements to quote, quote full lines,  removing quotes
     use surround where possible
+    motions for comma/quoting mappings
+        https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
 better support in terminal,  F1 to F4 doesn't work
 alt workflow with ctrl-v?  do we need all of behave mswin.
-
 
 results to quicklist fzf
     https://github.com/junegunn/fzf.vim/issues/185
@@ -18,8 +14,6 @@ learn python snippets
 erlang
     snippets
         -spec
-
-    erlang autocomplete
 
     erlang tags - plugin?
         using ctags - but how to get fully qualified (get module:function)
@@ -31,17 +25,13 @@ update mappings for \cv, \cf, \cd to target register
     -> function + <register>
 
 
-can i use motions for comma/quoting mappings
-    https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
-
-
 snippets:
     how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
         be nicer with regexp expansion, to omit trailing :  or #
 
+using cdpath
 
 
-learn :help pattern-overview
 
 --------------------------------------------------------------------------------
 
@@ -104,8 +94,4 @@ Others:
 --------------------------------------------------------------------------------
 
 
-Non greedy quantifiers
-using cdpath
-cindenting
-folding 
 
