@@ -20,6 +20,10 @@ if __name__ == `!p snip.rv = get_quoting_style(snip)`__main__`!p snip.rv = get_q
 	${1:${VISUAL:main()}}
 endsnippet
 
+snippet from
+	from ${1:package} import ${0:module}
+endsnippet
+
 snippet with "with" b
 with ${1:expr}`!p snip.rv = " as " if t[2] else ""`${2:var}:
 	${3:${VISUAL:pass}}
@@ -41,12 +45,12 @@ endsnippet
 
 global !p
 
-NORMAL  = 0x1
+NORMAL	= 0x1
 DOXYGEN = 0x2
-SPHINX  = 0x3
-GOOGLE  = 0x4
-NUMPY   = 0x5
-JEDI    = 0x6
+SPHINX	= 0x3
+GOOGLE	= 0x4
+NUMPY	= 0x5
+JEDI	= 0x6
 
 SINGLE_QUOTES = "'"
 DOUBLE_QUOTES = '"'
@@ -122,7 +126,7 @@ def triple_quotes_handle_trailing(snip, quoting_style):
 def get_style(snip):
 	style = snip.opt("g:ultisnips_python_style", "normal")
 
-	if    style == "doxygen": return DOXYGEN
+	if	  style == "doxygen": return DOXYGEN
 	elif  style == "sphinx": return SPHINX
 	elif  style == "google": return GOOGLE
 	elif  style == "numpy": return NUMPY
@@ -264,6 +268,15 @@ endglobal
 ########################################
 # Class & Special Method Name Snippets #
 ########################################
+# New Class
+snippet cl
+	class ${1:ClassName}(${2:object}):
+		"""${3:docstring for $1}"""
+		def __init__(self, ${4:arg}):
+			${5:super($1, self).__init__()}
+			self.$4 = $4
+			${0}
+endsnippet
 
 snippet class "class with docstrings" b
 class ${1:MyClass}(${2:object}):
@@ -720,13 +733,99 @@ snippet pmdoc "pocoo style module doc string" b
 $0
 endsnippet
 
+# New Property
+snippet property
+	def ${1:foo}():
+		doc = "${2:The $1 property.}"
+		def fget(self):
+			${3:return self._$1}
+		def fset(self, value):
+			${4:self._$1 = value}
+		def fdel(self):
+			${0:del self._$1}
+		return locals()
+	$1 = property(**$1())
+endsnippet
+
+# Ifs
+snippet if
+if ${1:condition}:
+	${0:${VISUAL}}
+endsnippet
+
+snippet el
+else:
+	${0:${VISUAL}}
+endsnippet
+
+snippet ei
+elif ${1:condition}:
+	${0:${VISUAL}}
+endsnippet
+
+# Lambda 
+snippet lam
+${1:var} = lambda ${2:vars} : ${0:action}
+endsnippet
+
+snippet ret
+return ${0}
+endsnippet
+
+snippet pdb
+__import__('pdb').set_trace()
+endsnippet
+
+snippet nosetrace
+__import__('nose').tools.set_trace()
+endsnippet
+
+snippet a=
+self.assertEqual(${0}, ${1})
+endsnippet
+
+snippet addarg
+parser.add_argument("${0:short_arg}", "${1:long_arg}", default=${2:None}, help="${3:Help text}")
+endsnippet
+
+# logging
+# glog = get log
+snippet glog
+import logging
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+logger = logging.getLogger(${0:__name__})
+endsnippet
+
+snippet le
+logger.error(${0:msg})
+endsnippet
+
+snippet ld
+logger.debug(${0:msg})
+endsnippet
+
+snippet lw
+logger.warning(${0:msg})
+endsnippet
+
+snippet lc
+logger.critical(${0:msg})
+endsnippet
+
+snippet li
+logger.info(${0:msg})
+endsnippet
+
+
+# --------------------------------------------------------------------------------
+
 snippet main "std main" b
 def main():
-    pass
+	pass
 
 
 if __name__ == '__main__':
-    main()
+	main()
 endsnippet
 
 snippet mainpa "main + parse_args" b
@@ -737,21 +836,25 @@ logger = logging.getLogger(__name__)
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="$1")
-    parser.add_argument("--verbose", "-v", action="store_true", help="verbose output")
-    parser.add_argument($2)
+	parser = argparse.ArgumentParser(description="$1")
+	parser.add_argument("--verbose", "-v", action="store_true", help="verbose output")
+	parser.add_argument($2)
 
-    return parser.parse_args()
+	return parser.parse_args()
 
 
 def main():
-    argv = parse_args()
-    if argv.verbose:
-        logger.setLevel(logging.DEBUG)
+	argv = parse_args()
+	if argv.verbose:
+		logger.setLevel(logging.DEBUG)
 
 
 if __name__ == '__main__':
-    main()
+	main()
+endsnippet
+
+snippet store_true
+action="store_true"
 endsnippet
 
 snippet #!
@@ -764,18 +867,18 @@ endsnippet
 
 snippet parse_args "Parse Args" b
 def parse_args():
-    parser = argparse.ArgumentParser(description=$1)
-    parser.add_argument($2)
+	parser = argparse.ArgumentParser(description=$1)
+	parser.add_argument($2)
 
-    return parser.parse_args()
+	return parser.parse_args()
 endsnippet
 
 snippet borg "Borg Pattern" b
 class Borg:
-    _shared_state = {}
+	_shared_state = {}
 
-    def __init__(self):
-        self.__dict__ = self._shared_state
+	def __init__(self):
+		self.__dict__ = self._shared_state
 endsnippet
 
 # common imports
@@ -793,9 +896,9 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(__name__)
 
-    # add to main
-    if argv.verbose:
-        logger.setLevel(logging.DEBUG)
+	# add to main
+	if argv.verbose:
+		logger.setLevel(logging.DEBUG)
 
 endsnippet
 
