@@ -24,8 +24,8 @@ Plug 'tmhedberg/matchit'
 Plug 'davidhalter/jedi-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'lfv89/vim-interestingwords'
 Plug 'justinmk/vim-dirvish'
+Plug 'vimwiki/vimwiki'
 
 " text objects
 Plug 'wellle/targets.vim'
@@ -159,7 +159,6 @@ if has('mac')
     inoremap £ #
     nnoremap £ #
     cnoremap £ #
-    onoremap £ #
 
     " alt-3
     inoremap <M-3> £
@@ -168,6 +167,8 @@ if has('mac')
     " for replace
     nnoremap r£ r#
     nnoremap f£ f#
+    nmap t£ t#
+    nmap f£ f#
 endif
 
 " LEADER MAPPINGS
@@ -181,6 +182,9 @@ noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<cr>
 
 " \O = only this tab
 noremap <Leader>O :tabonly<cr>
+
+" \o = tabedit file
+nnoremap <Leader>o :tabedit<space>
 
 " \wn = split window search cword
 nnoremap <Leader>wn :let @/=expand("<cword>")<bar>split<bar>normal n<cr>
@@ -300,23 +304,13 @@ vnoremap <Leader>us :'<,'>!sort -u<cr>
 vnoremap <Leader>vs :'<,'>sort<cr>
 
 " \vrc - open vimrc
-nnoremap <Leader>vrc :tabedit resolve($MYVIMRC)<cr>
+nnoremap <Leader>vrc :exec 'tabedit ' . resolve($MYVIMRC)<cr>
 
 " \vso = reload vimrc manually
 nnoremap <Leader>vso :so $MYVIMRC<cr>:echo "sourced $MYVIMRC"<cr>
 
 " \sb = shebang for bash
 nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<cr>I#!<ESC>A bash<ESC>
-
-" Vgrep = '^\s*".*<args>.*=' vimrc
-"  (including for searching leader)
-"  recursively search using 'grepprg'
-command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
-    \ substitute('<args>', '\\', '\\\\', 'g') .
-    \ "' " . 
-    \ resolve(expand("$MYVIMRC")) . " " . 
-    \ fnamemodify(resolve(expand("$MYVIMRC")), ":p:h") . "/ftplugin/*" 
-    \ <bar> cwindow
 
 " ReadUrl = download + edit the url
 if executable('curl')
@@ -348,7 +342,11 @@ cnoremap <c-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<cr>
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 
+" cs = colorscheme[c]
 cabbrev cs colorscheme
+
+" E = tabedit[c]
+cabbrev E tabedit
 
 " OTHER MAPPINGS
 " --------------
@@ -561,6 +559,20 @@ map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
 
 
+" CUSTOM COMMANDS
+" ---------------
+"
+" Vgrep = '^\s*".*<args>.*=' vimrc
+"  (including for searching leader)
+"  recursively search using 'grepprg'
+command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
+    \ substitute('<args>', '\\', '\\\\', 'g') .
+    \ "' " . 
+    \ resolve(expand("$MYVIMRC")) . " " . 
+    \ fnamemodify(resolve(expand("$MYVIMRC")), ":p:h") . "/ftplugin/*" 
+    \ <bar> cwindow
+
+
 " search Sync
 " Ngrep = search command wiki
 command! -nargs=1 Ngrep silent grep! "<args>" ~/sync/stuff/commands/*  <bar> cwindow
@@ -577,16 +589,16 @@ function! GlobCommandsDir(A,L,P)
     return l:result
 endfunction
 
+function! NopenWindowOrTab(path, bang)
+    let cmd = a:bang == "!" ? 'edit' : 'tabedit'
+    execute cmd a:path
+endfunction
 
 " Open command wiki
 " Nopen = open command wiki
 command! -complete=customlist,GlobCommandsDir -nargs=1 -bang Nopen
     \ :call NopenWindowOrTab("~/sync/stuff/commands/" . "<args>", "<bang>")
 
-function! NopenWindowOrTab(path, bang)
-    let cmd = a:bang == "!" ? 'edit' : 'tabedit'
-    execute cmd a:path
-endfunction
 
 " alt-N = switch to tab
 nnoremap <M-1> 1gt
@@ -753,6 +765,12 @@ let g:jedi#use_splits_not_buffers = 'bottom'
 " ---------
 let g:UltiSnipsUsePythonVersion = 3
 
+" \se = Edit Snippets for filetype
+nnoremap <Leader>se :call UltiSnipsEdit()<cr>
+
+" \sr = Reload Snippets for filetype
+nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
+
 
 " FZF
 " -------
@@ -778,6 +796,23 @@ nmap gcaf gggcG
 
 " dcaf = delete whole file
 nmap dcaf ggdG
+
+" VimWiki
+" -------
+let g:vimwiki_list = 
+    \ [
+    \  {'path': $COMMANDS, 'name': 'Commands'}
+    \ ]
+
+
+" Mark
+" ----
+nmap <Leader>km <plug>MarkSet
+vmap <Leader>km <plug>MarkSet
+nmap <Leader>kk <plug>MarkClear
+nmap <Leader>kr <plug>MarkRegex
+vmap <Leader>kr <plug>MarkRegex
+
 
 " ===========
 " End Plugins

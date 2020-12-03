@@ -242,7 +242,7 @@ press Tab, then Q
 
 
 --------------------------------------------------------------------------------
-Ultisnips:
+Ultisnips/Snippets:
 
 move to next/prev Ctrl-J, Ctrl-K
 
@@ -255,6 +255,7 @@ move to next/prev Ctrl-J, Ctrl-K
 $ cat .local.vimrc
 autocmd Filetype html UltiSnipsAddFiletypes htmldjango
 autocmd Filetype python UltiSnipsAddFiletypes django
+autocmd FileType javascript UltiSnipsAddFiletypes javascript-node
 
 # visual snippets
 visual select text, press tab
@@ -303,6 +304,9 @@ Tabularize first comma
 
 '<,'>Tabularize /^[^:]*\zs:
 
+Tabularize up to first whitespace
+'<,'>Tabularize /^\S*\zs\s/
+
 --------------------------------------------------------------------------------
 Format program:
 You can use 'equalprg' to run this with =:
@@ -336,4 +340,5 @@ modelines
 leading "vim: " required
 trailing colon required
 
-"" vim: set option=value:opt2=val2:
+" remove X
+"" X vim : set option=value:opt2=val2:

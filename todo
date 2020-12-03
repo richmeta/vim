@@ -1,3 +1,16 @@
+dirvish rename file in current directory
+
+can vim-sandwich be used in place of surround
+
+visually select and ultisnip
+    eg:  print("hello")
+    to   logger.info("hello")   
+    with snippet li
+
+vimwiki
+    add 2nd wiki for howto -> ~/.vim/wiki
+    add 3rd for ~/notes (work)
+
 improvements to quote, quote full lines,  removing quotes
     use surround where possible
     motions for comma/quoting mappings
@@ -36,6 +49,9 @@ using cdpath
 --------------------------------------------------------------------------------
 
 Plugins to checkout:
+    https://github.com/machakann/vim-sandwich
+        alternative surround
+
     https://github.com/kana/vim-textobj-user
         -define textobjects
         also:
