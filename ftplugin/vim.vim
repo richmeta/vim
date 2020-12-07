@@ -1,1 +1,3 @@
-        autocmd FileType vim set iskeyword+=:
+setlocal iskeyword+=:
+
+nnoremap <buffer> <Leader>so :source %<cr>

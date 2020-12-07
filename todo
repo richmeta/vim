@@ -1,10 +1,14 @@
-dirvish rename file in current directory
+fzf 
+    from different dir:
+        https://github.com/junegunn/fzf.vim/issues/837
+    deleting buffers
+        https://github.com/junegunn/fzf.vim/pull/733#issuecomment-559720813
 
 can vim-sandwich be used in place of surround
 
 visually select and ultisnip
     eg:  print("hello")
-    to   logger.info("hello")   
+    to   logger.info("hello")
     with snippet li
 
 vimwiki

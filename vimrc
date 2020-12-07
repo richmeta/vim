@@ -766,7 +766,7 @@ let g:jedi#use_splits_not_buffers = 'bottom'
 let g:UltiSnipsUsePythonVersion = 3
 
 " \se = Edit Snippets for filetype
-nnoremap <Leader>se :call UltiSnipsEdit()<cr>
+nnoremap <Leader>se :UltiSnipsEdit<cr>
 
 " \sr = Reload Snippets for filetype
 nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
