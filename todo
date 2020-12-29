@@ -1,50 +1,31 @@
-fzf 
-    from different dir:
+replace to eol with clipboard
+
+fzf
+    rg from different dir:
         https://github.com/junegunn/fzf.vim/issues/837
     deleting buffers
         https://github.com/junegunn/fzf.vim/pull/733#issuecomment-559720813
+    results to quicklist fzf
+        https://github.com/junegunn/fzf.vim/issues/185
 
-can vim-sandwich be used in place of surround
-
-visually select and ultisnip
-    eg:  print("hello")
-    to   logger.info("hello")
-    with snippet li
+stop python autoindenting when i type ":" in str
 
 vimwiki
-    add 2nd wiki for howto -> ~/.vim/wiki
-    add 3rd for ~/notes (work)
+    add 2nd for ~/notes (work)
 
-improvements to quote, quote full lines,  removing quotes
+improvements to quote, quote full lines, removing quotes
     use surround where possible
     motions for comma/quoting mappings
         https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
-better support in terminal,  F1 to F4 doesn't work
-alt workflow with ctrl-v?  do we need all of behave mswin.
-
-results to quicklist fzf
-    https://github.com/junegunn/fzf.vim/issues/185
-
-learn python snippets
+better support in terminal (linux),  F1 to F4 doesn't work (mac ok)
+    See :help xterm-function-keys and :help xterm-modifier-keys
 
 erlang
-    snippets
-        -spec
-
-    erlang tags - plugin?
-        using ctags - but how to get fully qualified (get module:function)
-        look at gtags too
-
     with ALE
 
 update mappings for \cv, \cf, \cd to target register
     -> function + <register>
-
-
-snippets:
-    how to surround argument(s) with function and parethesis => using snippet pa<TAB> ? 
-        be nicer with regexp expansion, to omit trailing :  or #
 
 using cdpath
 
@@ -53,8 +34,14 @@ using cdpath
 --------------------------------------------------------------------------------
 
 Plugins to checkout:
-    https://github.com/machakann/vim-sandwich
-        alternative surround
+    https://github.com/andymass/vim-matchup
+        alternative matchit
+
+    https://github.com/pbogut/fzf-mru.vim
+        improving fzf :History / MRU
+
+    https://github.com/dyng/ctrlsf.vim
+        searching with rg
 
     https://github.com/kana/vim-textobj-user
         -define textobjects

@@ -12,10 +12,11 @@ which does the following:
 
 # Windows manual setup
 Create the Symlinks:
-`cd C:\Program Files\Vim`
-`fsutil hardlink create _vimrc vimfiles\vimrc`
-`fsutil hardlink create _gvimrc vimfiles\gvimrc`
 
-Download plug.vim and put it in `vimfiles\autoload` directory.
+```
+cd C:\Program Files\Vim
+fsutil hardlink create _vimrc vimfiles\vimrc
+fsutil hardlink create _gvimrc vimfiles\gvimrc
+```
 
 Open vim and run :PlugInstall

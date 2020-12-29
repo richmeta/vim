@@ -15,3 +15,6 @@ endif
 set columns=150
 set lines=50
 set guicursor=n:blinkon0
+
+" only filename in tab title
+set guitablabel=%t

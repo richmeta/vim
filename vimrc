@@ -9,8 +9,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'godlygeek/tabular'
 Plug 'preservim/tagbar'
 Plug 'vim-scripts/CmdlineComplete'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
+Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'SirVer/ultisnips'
@@ -42,12 +41,42 @@ endif
 call plug#end()
 
 " enable ctrl-c, ctrl-v, ctrl-a
-source $VIMRUNTIME/mswin.vim
+behave mswin
 
-" don't want gui find
-if has('gui_running')
-    unmap <C-F>
+if has("clipboard")
+    " ctrl-x = Cut
+    vnoremap <C-X> "+x
+
+    " ctrl-c = Copy
+    vnoremap <C-C> "+y
+
+    " ctrl-v = Paste
+    map <C-V> "+gP
+    cmap <C-V> <C-R>+
 endif
+
+" Use CTRL-Q to do what CTRL-V used to do
+noremap <C-Q> <C-V>
+
+" Use CTRL-S for saving, also in Insert mode (<C-O> doesn't work well when
+" using completions).
+noremap <C-S> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+inoremap <C-S> <Esc>:update<CR>gi
+
+" For CTRL-V to work autoselect must be off.
+" On Unix we have two selections, autoselect can be used.
+if !has("unix")
+  set guioptions-=a
+endif
+
+" Ctrl-A=Select all
+noremap <C-A> gggH<C-O>G
+inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+cnoremap <C-A> <C-C>gggH<C-O>G
+onoremap <C-A> <C-C>gggH<C-O>G
+snoremap <C-A> <C-C>gggH<C-O>G
+xnoremap <C-A> <C-C>ggVG
 
 set hidden
 set nobackup
@@ -98,6 +127,9 @@ set matchtime=1
 set ttyfast
 set diffopt+=algorithm:patience
 set complete-=i
+
+
+let s:vim_home_dir = fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")
 
 if has('gui_macvim')
     set macmeta
@@ -342,6 +374,9 @@ cnoremap <c-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<cr>
 imap <c-e> <c-o>$
 imap <c-a> <c-o>^
 
+" w!! = sudo write
+cmap w!! w !sudo tee > /dev/null %
+
 " cs = colorscheme[c]
 cabbrev cs colorscheme
 
@@ -569,9 +604,10 @@ command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
     \ substitute('<args>', '\\', '\\\\', 'g') .
     \ "' " . 
     \ resolve(expand("$MYVIMRC")) . " " . 
-    \ fnamemodify(resolve(expand("$MYVIMRC")), ":p:h") . "/ftplugin/*" 
+    \ s:vim_home_dir . "/ftplugin/*" 
     \ <bar> cwindow
 
+    " \ fnamemodify(resolve(expand("$MYVIMRC")), ":p:h") . "/ftplugin/*" 
 
 " search Sync
 " Ngrep = search command wiki
@@ -804,6 +840,12 @@ let g:vimwiki_list =
     \  {'path': $COMMANDS, 'name': 'Commands'}
     \ ]
 
+" prevent link shortening
+let g:vimwiki_url_maxsave = 0
+
+" stop concealing special chars
+let g:vimwiki_conceallevel = 0
+
 
 " Mark
 " ----
@@ -820,6 +862,6 @@ vmap <Leader>kr <plug>MarkRegex
 
 syntax enable
 
-if filereadable(glob('~/.vim/local.vim'))
-    :source ~/.vim/local.vim
+if filereadable(glob(s:vim_home_dir . '/local.vim'))
+    execute ':source ' . s:vim_home_dir . '/local.vim'
 endif
