@@ -12,8 +12,11 @@ else
     endif
 endif
 
-set columns=150
-set lines=50
+if !has('unix')
+    set columns=150
+    set lines=50
+endif
+
 set guicursor=n:blinkon0
 
 " only filename in tab title

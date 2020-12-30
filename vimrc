@@ -2,7 +2,10 @@ set nocompatible
 scriptencoding utf-8
 filetype on
 
-call plug#begin('~/.vim/bundle')
+" ~/.vim or ~/vimfiles
+let s:vim_home_dir = fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")
+
+call plug#begin(s:vim_home_dir . '/bundle')
 
 Plug 'vim-scripts/tlib'
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -34,8 +37,8 @@ Plug 'coderifous/textobj-word-column.vim'
 " Toggle words/expressions
 Plug 'AndrewRadev/switch.vim'
 
-if filereadable(glob('~/.vim/localplugins.vim'))
-    :source ~/.vim/localplugins.vim
+if filereadable(glob(s:vim_home_dir . '/localplugins.vim'))
+    execute ':source ' . s:vim_home_dir . '/localplugins.vim'
 endif
 
 call plug#end()
@@ -53,6 +56,11 @@ if has("clipboard")
     " ctrl-v = Paste
     map <C-V> "+gP
     cmap <C-V> <C-R>+
+
+    if has('unix')
+        exe 'inoremap <script> <C-V> <C-G>u' . paste#paste_cmd['i']
+        exe 'vnoremap <script> <C-V> ' . paste#paste_cmd['v']
+    endif
 endif
 
 " Use CTRL-Q to do what CTRL-V used to do
@@ -129,7 +137,6 @@ set diffopt+=algorithm:patience
 set complete-=i
 
 
-let s:vim_home_dir = fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")
 
 if has('gui_macvim')
     set macmeta
@@ -172,8 +179,8 @@ if has('autocmd')
 
     augroup vimrc     " Source vim configuration upon save
         autocmd!
-        autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded vimrc" | redraw
-        autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
+        autocmd! BufWritePost vimrc source $MYVIMRC | echom "Reloaded " . $MYVIMRC | redraw
+        autocmd! BufWritePost gvimrc if has('gui_running') | source $MYGVIMRC | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
 endif
 
@@ -185,23 +192,21 @@ else
     colorscheme iceberg
 endif
 
+" hash instead of pound
+inoremap £ #
+nnoremap £ #
+cnoremap £ #
 
-if has('mac')
-    " hash instead of pound
-    inoremap £ #
-    nnoremap £ #
-    cnoremap £ #
+" alt-3
+inoremap <M-3> £
+cnoremap <M-3> £
 
-    " alt-3
-    inoremap <M-3> £
-    cnoremap <M-3> £
+" for replace
+nnoremap r£ r#
+nnoremap f£ f#
+nmap t£ t#
+nmap f£ f#
 
-    " for replace
-    nnoremap r£ r#
-    nnoremap f£ f#
-    nmap t£ t#
-    nmap f£ f#
-endif
 
 " LEADER MAPPINGS
 " ---------------
@@ -380,8 +385,8 @@ cmap w!! w !sudo tee > /dev/null %
 " cs = colorscheme[c]
 cabbrev cs colorscheme
 
-" E = tabedit[c]
-cabbrev E tabedit
+" T = tabedit[c]
+cabbrev T tabedit
 
 " OTHER MAPPINGS
 " --------------
