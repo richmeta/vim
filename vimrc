@@ -32,7 +32,52 @@ Plug 'vimwiki/vimwiki'
 " text objects
 Plug 'wellle/targets.vim'
 Plug 'jeetsukumaran/vim-pythonsense'
-Plug 'coderifous/textobj-word-column.vim'
+Plug 'kana/vim-textobj-user'
+
+" al = select whole line
+" il = select line without leading/trailing space
+Plug 'kana/vim-textobj-line'
+
+" a, = select parameter (inc comma)
+" i, = select parameter (without comma)
+Plug 'sgur/vim-textobj-parameter'
+
+" aq = select incl quote
+" iq = select excl quote 
+Plug 'beloglazov/vim-textobj-quotes'
+
+" au = select url incl trailing spaces
+" iu = select url excl trailing spaces
+Plug 'jceb/vim-textobj-uri'
+
+" ac = select around column, expanded to the largest iw
+" ic = select inner column, based on the iw
+" aC = select around COLUMN, expanded to the largest iW
+" iC = select inner COLUMN, based on iW
+Plug 'idbrii/textobj-word-column.vim'
+
+" ae = select entire buffer
+" ie = select buffer except leading/trailing empty lines
+Plug 'kana/vim-textobj-entire'
+
+" af = select function
+" if = select inner function
+" aF = select function with blank lines
+" iF = select inner function with blank lines
+Plug 'kana/vim-textobj-function'
+
+" ai = select block similarly indented lines
+" ii = select block similarly indented lines
+" aI = select block same level indented lines
+" iI = select block same level indented lines
+Plug 'kana/vim-textobj-indent'
+
+" ak = select key (in k/v pair) with quotes
+" ik = select key (in k/v pair)
+" av = select value (in k/v pair) with quotes
+" iv = select value (in k/v pair)
+Plug 'vimtaku/vim-textobj-keyvalue'
+
 
 " Toggle words/expressions
 Plug 'AndrewRadev/switch.vim'
@@ -179,8 +224,8 @@ if has('autocmd')
 
     augroup vimrc     " Source vim configuration upon save
         autocmd!
-        autocmd! BufWritePost vimrc source $MYVIMRC | echom "Reloaded " . $MYVIMRC | redraw
-        autocmd! BufWritePost gvimrc if has('gui_running') | source $MYGVIMRC | echom "Reloaded " . $MYGVIMRC | endif | redraw
+        autocmd! BufWritePost vimrc,.vimrc source $MYVIMRC | echom "Reloaded " . $MYVIMRC | redraw
+        autocmd! BufWritePost gvimrc,.gvimrc if has('gui_running') | source $MYGVIMRC | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
 endif
 
