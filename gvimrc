@@ -12,7 +12,7 @@ else
     endif
 endif
 
-if !has('unix')
+if !has('linux')
     set columns=150
     set lines=50
 endif

@@ -1,22 +1,33 @@
+insert mode mapping to insert filename + variants
+
 replace to eol with clipboard
+
+vimwiki
+    add 2nd for ~/notes (work)
+
+better clipboard interactions
+    \c<motion> -> clipboard
+    
+    update mappings for \cv, \cf, \cd to target register
+        -> function + <register>
+
+improvements to quote, quote full lines, removing quotes
+    use surround where possible
+    motions for comma/quoting mappings
+        https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
+
 
 fzf
     rg from different dir:
         https://github.com/junegunn/fzf.vim/issues/837
     deleting buffers
         https://github.com/junegunn/fzf.vim/pull/733#issuecomment-559720813
-    results to quicklist fzf
+    results to quicklist fzf (but 
         https://github.com/junegunn/fzf.vim/issues/185
 
+vim-pythonsense vs vim-textobj-python
+
 stop python autoindenting when i type ":" in str
-
-vimwiki
-    add 2nd for ~/notes (work)
-
-improvements to quote, quote full lines, removing quotes
-    use surround where possible
-    motions for comma/quoting mappings
-        https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
 better support in terminal (linux),  F1 to F4 doesn't work (mac ok)
     See :help xterm-function-keys and :help xterm-modifier-keys
@@ -24,8 +35,6 @@ better support in terminal (linux),  F1 to F4 doesn't work (mac ok)
 erlang
     with ALE
 
-update mappings for \cv, \cf, \cd to target register
-    -> function + <register>
 
 using cdpath
 
@@ -34,22 +43,8 @@ using cdpath
 --------------------------------------------------------------------------------
 
 Plugins to checkout:
-    https://github.com/andymass/vim-matchup
-        alternative matchit
-
-    https://github.com/pbogut/fzf-mru.vim
-        improving fzf :History / MRU
-
     https://github.com/dyng/ctrlsf.vim
         searching with rg
-
-    https://github.com/kana/vim-textobj-user
-        -define textobjects
-        also:
-            https://github.com/bps/vim-textobj-python
-            https://github.com/mattn/vim-textobj-url
-            https://github.com/sgur/vim-textobj-parameter
-
 
     https://github.com/t9md/vim-transform
     https://github.com/inkarkat/vim-TextTransform
@@ -62,8 +57,6 @@ Plugins to checkout:
 
     https://github.com/jonmorehouse/vim-flow
         -workflow by running shell commands
-    https://github.com/justinmk/vim-gtfo
-        -open terminal/finder
     https://github.com/kana/vim-submode
         -define submodes
     https://github.com/ntpeters/vim-better-whitespace

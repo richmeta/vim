@@ -21,16 +21,18 @@ Plug 'tpope/vim-commentary'
 Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
 Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
 Plug 'dense-analysis/ale'
-Plug 'tmhedberg/matchit'
+Plug 'andymass/vim-matchup'
 Plug 'davidhalter/jedi-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'justinmk/vim-dirvish'
 Plug 'vimwiki/vimwiki'
+Plug 't9md/vim-quickhl'
 
 " text objects
-Plug 'wellle/targets.vim'
+" Plug 'wellle/targets.vim'
 Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'kana/vim-textobj-user'
 
@@ -862,12 +864,14 @@ nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
 " -------
 nnoremap <Leader>p :Files!<cr>
 nnoremap <Leader>P :execute 'Files! ' . expand('%:p:h')<cr>
-nnoremap <Leader>f :History!<cr>
+nnoremap <Leader>f :FZFMru<cr>
 nnoremap <Leader>b :Buffers!<cr>
 nnoremap <Leader>gr :Rg<Space>
 nnoremap <Leader>gw :Rg <cword><cr>
 
 let g:fzf_preview_window = ''
+
+let g:fzf_mru_exclude = "/var/folders"
 
 if executable('fd')
     let $FZF_DEFAULT_COMMAND='fd -t f --hidden --exclude .git --exclude node_modules --exclude _build --exclude "*.sw?" --exclude "*.pyc" --exclude="*.beam"'
@@ -885,10 +889,7 @@ nmap dcaf ggdG
 
 " VimWiki
 " -------
-let g:vimwiki_list = 
-    \ [
-    \  {'path': $COMMANDS, 'name': 'Commands'}
-    \ ]
+" note: 'g:vimwiki_list' set in local.vim
 
 " prevent link shortening
 let g:vimwiki_url_maxsave = 0
@@ -899,11 +900,12 @@ let g:vimwiki_conceallevel = 0
 
 " Mark
 " ----
-nmap <Leader>km <plug>MarkSet
-vmap <Leader>km <plug>MarkSet
-nmap <Leader>kk <plug>MarkClear
-nmap <Leader>kr <plug>MarkRegex
-vmap <Leader>kr <plug>MarkRegex
+nmap <Leader>km <Plug>(quickhl-manual-this)
+xmap <Leader>km <Plug>(quickhl-manual-this)
+nmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
+xmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
+nmap <Leader>kk <Plug>(quickhl-manual-reset)
+xmap <Leader>kk <Plug>(quickhl-manual-reset)
 
 
 " ===========
