@@ -167,7 +167,7 @@ set showcmd
 set grepprg=rg\ --vimgrep\ --no-heading
 set matchpairs+=<:>
 set iskeyword+=-
-set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__
+set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__,.DS_Store
 set shellslash
 set laststatus=2
 set keymodel=startsel
@@ -423,7 +423,10 @@ cnoremap <C-E> <End>
 " ctrl-k = delete to eol (emacs)
 cnoremap <c-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<cr>
 
+" ctrl-e = eol (ins)
 imap <c-e> <c-o>$
+
+" ctrl-a = home (ins)
 imap <c-a> <c-o>^
 
 " w!! = sudo write
@@ -476,7 +479,7 @@ nmap <silent> <M-q> :bd!<cr>
 " ctrl-alt-q = delete buffer unconditionally + close tab
 nmap <silent> <C-M-q> :bd!<bar>tabclose<cr>
 
-" ctrl-bs = delete word back
+" ctrl-bs (ins) = delete word back
 imap <C-BS> <C-O>diw
 
 " Window switching
@@ -510,6 +513,16 @@ elseif has('unix')
     nmap <Leader>cv :let @+=expand("%:t")<cr>
     nmap <Leader>cs :let @+=expand("%:t:r")<cr>
 endif
+
+" <ctrl-c><ctrl-d> (ins) = insert directory/path
+" <ctrl-c><ctrl-f> (ins) = insert fullpath
+" <ctrl-c><ctrl-d> (ins) = insert filename only
+" <ctrl-c><ctrl-d> (ins) = insert stem
+imap <C-C><C-D> <C-O>:let @x=expand("%:p:h")<cr><C-R>x
+imap <C-C><C-F> <C-O>:let @x=expand("%:p")<cr><C-R>x
+imap <C-C><C-V> <C-O>:let @x=expand("%:t")<cr><C-R>x
+imap <C-C><C-S> <C-O>:let @x=expand("%:t:r")<cr><C-R>x
+
 
 " sudo write
 if has('unix')
@@ -677,15 +690,22 @@ function! GlobCommandsDir(A,L,P)
     return l:result
 endfunction
 
-function! NopenWindowOrTab(path, bang)
+function! NopenWindowOrTab(dir, filename, bang)
     let cmd = a:bang == "!" ? 'edit' : 'tabedit'
-    execute cmd a:path
+    let path = a:dir . "/" . a:filename
+    if a:filename !~ "\.wiki$"
+        let altpath = globpath(a:dir, a:filename . ".wiki")
+        if !empty(altpath)
+            let path = altpath
+        endif
+    endif
+    execute cmd path
 endfunction
 
 " Open command wiki
 " Nopen = open command wiki
 command! -complete=customlist,GlobCommandsDir -nargs=1 -bang Nopen
-    \ :call NopenWindowOrTab("~/sync/stuff/commands/" . "<args>", "<bang>")
+    \ :call NopenWindowOrTab("~/sync/stuff/commands/", "<args>", "<bang>")
 
 
 " alt-N = switch to tab
@@ -712,7 +732,7 @@ map <F3> :TagbarToggle<cr>
 " Fugitive
 " --------
 " \cg = copy git path relative
-nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%, '') : '')<cr>
+nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%, '') : expand('%'))<cr>
 
 " \gd = Gvdiff
 nnoremap <Leader>gd :Gvdiff<cr>
@@ -745,6 +765,7 @@ nnoremap <Leader>gL :Git stash list<cr>
 " Dirvish
 " -------
 nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<cr>
+nmap g<F4> :execute 'Dirvish ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
 " \F4 = dirvish from this directory or file
@@ -852,6 +873,7 @@ let g:jedi#use_splits_not_buffers = 'bottom'
 " UltiSnips
 " ---------
 let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsEditSplit = "tabdo"
 
 " \se = Edit Snippets for filetype
 nnoremap <Leader>se :UltiSnipsEdit<cr>
@@ -897,9 +919,18 @@ let g:vimwiki_url_maxsave = 0
 " stop concealing special chars
 let g:vimwiki_conceallevel = 0
 
+" alt-enter = follow wiki link
+nmap <m-CR> <Plug>VimwikiFollowLink
 
-" Mark
-" ----
+" alt-bs = go back from link
+nmap <m-Backspace> <Plug>VimwikiGoBackLink
+
+" \wl = list/select wiki 
+" overriding default \ws used in wrapscan 
+nmap <leader>wl <Plug>VimwikiUISelect
+
+" Quickhl
+" -------
 nmap <Leader>km <Plug>(quickhl-manual-this)
 xmap <Leader>km <Plug>(quickhl-manual-this)
 nmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
@@ -913,6 +944,7 @@ xmap <Leader>kk <Plug>(quickhl-manual-reset)
 " ===========
 
 syntax enable
+filetype indent on
 
 if filereadable(glob(s:vim_home_dir . '/local.vim'))
     execute ':source ' . s:vim_home_dir . '/local.vim'

@@ -1,11 +1,5 @@
-insert mode mapping to insert filename + variants
-
-replace to eol with clipboard
-
-vimwiki
-    add 2nd for ~/notes (work)
-
 better clipboard interactions
+    replace to eol with clipboard
     \c<motion> -> clipboard
     
     update mappings for \cv, \cf, \cd to target register
@@ -27,14 +21,11 @@ fzf
 
 vim-pythonsense vs vim-textobj-python
 
-stop python autoindenting when i type ":" in str
-
 better support in terminal (linux),  F1 to F4 doesn't work (mac ok)
     See :help xterm-function-keys and :help xterm-modifier-keys
 
 erlang
     with ALE
-
 
 using cdpath
 
@@ -79,18 +70,9 @@ Others:
     https://github.com/christoomey/vim-sort-motion
         Sort by lines, visual, indentation (requires vim-textobj-indent)
 
-    https://github.com/vimwiki/vimwiki
-        Personal Wiki for Vim
-
-    https://github.com/jceb/vim-orgmode ?
-        Orgmode
-
     https://github.com/coderifous/textobj-word-column.vim
         Adds text-objects for word-based columns
 
-    http://www.vim.org/scripts/script.php?script_id=189 OR 
-    https://github.com/vim-scripts/VisIncr
-        renumbering 
 --------------------------------------------------------------------------------
 
 
