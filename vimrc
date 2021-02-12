@@ -32,9 +32,15 @@ Plug 'vimwiki/vimwiki'
 Plug 't9md/vim-quickhl'
 
 " text objects
-" Plug 'wellle/targets.vim'
-Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'kana/vim-textobj-user'
+
+" af: a function
+" if: inner function
+" ac: a class
+" ic: inner class
+" [pf / ]pf: move to next/previous function
+" [pc / ]pc: move to next/previous class
+Plug 'bps/vim-textobj-python'
 
 " al = select whole line
 " il = select line without leading/trailing space
@@ -944,7 +950,7 @@ xmap <Leader>kk <Plug>(quickhl-manual-reset)
 " ===========
 
 syntax enable
-filetype indent on
+filetype indent plugin on
 
 if filereadable(glob(s:vim_home_dir . '/local.vim'))
     execute ':source ' . s:vim_home_dir . '/local.vim'
