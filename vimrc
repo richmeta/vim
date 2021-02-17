@@ -20,8 +20,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
 Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
-Plug 'junegunn/fzf.vim'
-Plug 'pbogut/fzf-mru.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'dense-analysis/ale'
 Plug 'andymass/vim-matchup'
 Plug 'davidhalter/jedi-vim'
@@ -170,7 +170,6 @@ set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 set winminheight=0
 set shiftround
 set showcmd
-set grepprg=rg\ --vimgrep\ --no-heading
 set matchpairs+=<:>
 set iskeyword+=-
 set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__,.DS_Store
@@ -189,13 +188,14 @@ set ttyfast
 set diffopt+=algorithm:patience
 set complete-=i
 
-
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --no-heading
+endif
 
 if has('gui_macvim')
     set macmeta
     set vb t_vb= 
 endif
-
 
 set dictionary=~/.vim/dict/dict.txt
 
@@ -664,6 +664,11 @@ map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 " \dt - diffthis
 map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
 
+" \gr = grep
+nnoremap <Leader>gr :grep<Space>
+
+" \gw = grep whole word
+nnoremap <silent><Leader>gw :grep <cword><cr>
 
 " CUSTOM COMMANDS
 " ---------------
@@ -888,22 +893,31 @@ nnoremap <Leader>se :UltiSnipsEdit<cr>
 nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
 
 
-" FZF
+" Ctrlp
 " -------
-nnoremap <Leader>p :Files!<cr>
-nnoremap <Leader>P :execute 'Files! ' . expand('%:p:h')<cr>
-nnoremap <Leader>f :FZFMru<cr>
-nnoremap <Leader>b :Buffers!<cr>
-nnoremap <Leader>gr :Rg<Space>
-nnoremap <Leader>gw :Rg <cword><cr>
-
-let g:fzf_preview_window = ''
-
-let g:fzf_mru_exclude = "/var/folders"
-
 if executable('fd')
-    let $FZF_DEFAULT_COMMAND='fd -t f --hidden --exclude .git --exclude node_modules --exclude _build --exclude "*.sw?" --exclude "*.pyc" --exclude="*.beam"'
+    " eg: fd "" '<full directory path>' -tf --color=never --glob
+    let g:ctrlp_user_command = 'fd "" %s -tf -c never --glob'
 endif
+
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_lazy_update = 350
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 0
+
+
+" \p = CtrlP (git root)
+nnoremap <Leader>p :CtrlP<cr>
+
+" \P = CtrlP (buffer dir)
+nnoremap <Leader>P :execute 'CtrlP ' . expand('%:p:h')<cr>
+
+" \f = CtrlPMRU
+nnoremap <Leader>f :CtrlPMRU<cr>
+
+" \b = :CtrlPBuffer
+nnoremap <Leader>b :CtrlPBuffer<cr>
+
 
 
 " Commentary

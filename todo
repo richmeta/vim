@@ -15,17 +15,6 @@ improvements to quote, quote full lines, removing quotes
     motions for comma/quoting mappings
         https://stackoverflow.com/questions/42438795/vim-create-custom-command-that-takes-a-movement
 
-
-fzf
-    rg from different dir:
-        https://github.com/junegunn/fzf.vim/issues/837
-    deleting buffers
-        https://github.com/junegunn/fzf.vim/pull/733#issuecomment-559720813
-    results to quicklist fzf (but 
-        https://github.com/junegunn/fzf.vim/issues/185
-
-vim-pythonsense vs vim-textobj-python
-
 better support in terminal (linux),  F1 to F4 doesn't work (mac ok)
     See :help xterm-function-keys and :help xterm-modifier-keys
 
