@@ -1,12 +1,17 @@
-local short cut for open ca/game dirs
+automate git conflict accept head
 
-check out: 
+ctrlp delete buffer
+
+map c-w c-], c-w T to open tag in new tab
+    https://stackoverflow.com/questions/6069279/vim-open-tag-in-new-tab
+
+check out:
     https://github.com/python-mode/python-mode
 
 better clipboard interactions
     replace to eol with clipboard
     \c<motion> -> clipboard
-    
+
     update mappings for \cv, \cf, \cd to target register
         -> function + <register>
 

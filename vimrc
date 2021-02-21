@@ -20,7 +20,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
 Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'dense-analysis/ale'
 Plug 'andymass/vim-matchup'
@@ -420,13 +420,13 @@ nnoremap <Leader>sc :setlocal buftype=nofile<cr>
 " COMMAND MAPPINGS
 " ----------------
 
-" ctrl-a = begin of line (emacs)
+" ctrl-a = emacs begin of line (commandmode)
 cnoremap <C-A> <Home>
 
-" ctrl-e = begin of line (emacs)
+" ctrl-e = emacs begin of line (commandmode)
 cnoremap <C-E> <End>
 
-" ctrl-k = delete to eol (emacs)
+" ctrl-k = emacs delete to eol (commandmode)
 cnoremap <c-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<cr>
 
 " ctrl-e = eol (ins)
@@ -775,11 +775,20 @@ nnoremap <Leader>gL :Git stash list<cr>
 
 " Dirvish
 " -------
+
+" <F4> = dirvish current dir
 nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<cr>
+
+" g<F4> = dirvish git root dir
 nmap g<F4> :execute 'Dirvish ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
+
+" <Ctrl-F4> = dirvish git root dir (tab)
+nmap <C-F4> :execute 'tabedit +Dirvish\ ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
+
+" Shift-<F4> = vsplit + dirvish current dir
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
 
-" \F4 = dirvish from this directory or file
+" \F4 = dirvish from this directory or file (tab)
 nmap <silent><Leader><F4> :<C-U>exe 'tabedit +Dirvish\ ' .expand('%:p')<cr>
 
 " F4 = :Dirvish (commandmode)
@@ -897,7 +906,7 @@ nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
 " -------
 if executable('fd')
     " eg: fd "" '<full directory path>' -tf --color=never --glob
-    let g:ctrlp_user_command = 'fd "" %s -tf -c never --glob'
+    let g:ctrlp_user_command = 'fd "" %s -tf -c never --glob '
 endif
 
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
@@ -905,9 +914,10 @@ let g:ctrlp_lazy_update = 350
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
 
-
 " \p = CtrlP (git root)
-nnoremap <Leader>p :CtrlP<cr>
+let g:ctrlp_map = '<Leader>p'
+
+" nnoremap <Leader>p :CtrlP<cr>
 
 " \P = CtrlP (buffer dir)
 nnoremap <Leader>P :execute 'CtrlP ' . expand('%:p:h')<cr>
@@ -933,6 +943,10 @@ nmap dcaf ggdG
 " -------
 " note: 'g:vimwiki_list' set in local.vim
 
+if exists("$MYSYNC")
+    let g:vimwiki_list = [{'path': "$MYSYNC/stuff/commands", 'name': 'Commands'}]
+endif
+
 " prevent link shortening
 let g:vimwiki_url_maxsave = 0
 
@@ -945,9 +959,9 @@ nmap <m-CR> <Plug>VimwikiFollowLink
 " alt-bs = go back from link
 nmap <m-Backspace> <Plug>VimwikiGoBackLink
 
-" \wl = list/select wiki 
-" overriding default \ws used in wrapscan 
-nmap <leader>wl <Plug>VimwikiUISelect
+" \wl = list/select wiki
+" overriding default \ws used in wrapscan
+nmap <Leader>wl <Plug>VimwikiUISelect
 
 " Quickhl
 " -------
@@ -957,6 +971,10 @@ nmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
 xmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
 nmap <Leader>kk <Plug>(quickhl-manual-reset)
 xmap <Leader>kk <Plug>(quickhl-manual-reset)
+nmap <Leader>kn <Plug>(quickhl-manual-go-to-next)
+nmap <Leader>kN <Plug>(quickhl-manual-go-to-prev)
+
+nmap <Leader>kq :QuickhlManualAdd<space>
 
 
 " ===========
