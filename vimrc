@@ -904,15 +904,28 @@ nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
 
 " Ctrlp
 " -------
-if executable('fd')
-    " eg: fd "" '<full directory path>' -tf --color=never --glob
-    let g:ctrlp_user_command = 'fd "" %s -tf -c never --glob '
+if has('win32')
+    let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'
+else
+    if executable('fd')
+        " eg: fd "" '<full directory path>' -tf --color=never --glob
+        let g:ctrlp_user_command = 'fd "" %s -tf -c never --glob '
+    else
+        let g:ctrlp_user_command = 'find %s -type f'
+    endif
 endif
 
+let g:ctrlp_by_filename = 1
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_lazy_update = 350
+let g:ctrlp_lazy_update = 200
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
+let g:ctrlp_mruf_max = &history
+let g:ctrlp_match_current_file = 0
+
+if has("mac")
+    let g:ctrlp_mruf_exclude = '/private/var/folders.*\|COMMIT_EDITMSG' 
+endif
 
 " \p = CtrlP (git root)
 let g:ctrlp_map = '<Leader>p'

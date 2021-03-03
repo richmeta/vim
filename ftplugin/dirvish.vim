@@ -39,6 +39,9 @@ nmap <buffer><nowait><silent> <cr> :<C-U>call dirvish#open("edit", 0)<cr>:echo(e
 
 nnoremap <buffer> <Leader>P :execute 'CtrlP ' . expand('%:p')<cr>
 
+nmap <buffer> <silent> h <Plug>(dirvish_up)
+nmap <buffer> <silent> l :<C-U>call dirvish#open("edit", 0)<cr>:echo(expand('%'))<cr>
+
 " copypath
 " \cd = copy directory/path
 " \cf = copy fullpath
