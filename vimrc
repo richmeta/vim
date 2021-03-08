@@ -22,6 +22,7 @@ Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'dense-analysis/ale'
 Plug 'andymass/vim-matchup'
 Plug 'davidhalter/jedi-vim'
@@ -176,7 +177,7 @@ set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__,.DS_Store
 set shellslash
 set laststatus=2
 set keymodel=startsel
-set listchars=tab:→\ ,trail:•,extends:❯,precedes:❮,nbsp:⍽,conceal:~,eol:$
+set listchars=tab:→\ ,trail:␣,extends:❯,precedes:❮,nbsp:⍽,conceal:~,eol:$
 set splitbelow
 set nojoinspaces
 set viminfo='1000,<50,s10,h
@@ -187,6 +188,7 @@ set matchtime=1
 set ttyfast
 set diffopt+=algorithm:patience
 set complete-=i
+set termguicolors
 
 if executable('rg')
     set grepprg=rg\ --vimgrep\ --no-heading
@@ -307,7 +309,7 @@ if executable('python')
 endif
 
 " shift-F1 - help current word
-nnoremap <S-F1> :execute 'help ' . expand('<cword>')<cr>
+nnoremap <S-F1> :execute 'help ' . expand('<cWORD>')<cr>
 
 
 " Quoting (plugin/quote.vim)
@@ -529,6 +531,26 @@ imap <C-C><C-F> <C-O>:let @x=expand("%:p")<cr><C-R>x
 imap <C-C><C-V> <C-O>:let @x=expand("%:t")<cr><C-R>x
 imap <C-C><C-S> <C-O>:let @x=expand("%:t:r")<cr><C-R>x
 
+" <esc> (terminal) exit insertmode
+tnoremap <Esc> <C-\><C-n>
+
+" \dt - diffthis
+map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
+
+" \gr = grep
+nnoremap <Leader>gr :grep<Space>
+
+" \gw = grep current word
+nnoremap <silent><Leader>gw :grep <cword><cr>
+
+" \gw = grep current WORD
+nnoremap <silent><Leader>gW :grep <cWORD><cr>
+
+" \Ctrl-] = open tag in new tab
+nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
+
+" FUNCTION BASED MAPS
+" ===================
 
 " sudo write
 if has('unix')
@@ -643,6 +665,7 @@ set pastetoggle=<Leader>ps
 
 if &diff
     set list
+    set guioptions+=b
 else
     " disabled in diff
     " \ac = toggle autochdir
@@ -661,14 +684,6 @@ map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
 " \kp - prompt for char to toggle in `iskeyword`
 map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 
-" \dt - diffthis
-map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
-
-" \gr = grep
-nnoremap <Leader>gr :grep<Space>
-
-" \gw = grep whole word
-nnoremap <silent><Leader>gw :grep <cword><cr>
 
 " CUSTOM COMMANDS
 " ---------------
@@ -915,7 +930,10 @@ else
     endif
 endif
 
-let g:ctrlp_by_filename = 1
+" ctrl-2 = delete buffer (ctrlp)
+" ctrl-z + ctrl-2 = mark many + delete buffer (ctrlp)
+call ctrlp_bdelete#init()
+
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_lazy_update = 200
 let g:ctrlp_clear_cache_on_exit = 0
@@ -930,10 +948,8 @@ endif
 " \p = CtrlP (git root)
 let g:ctrlp_map = '<Leader>p'
 
-" nnoremap <Leader>p :CtrlP<cr>
-
 " \P = CtrlP (buffer dir)
-nnoremap <Leader>P :execute 'CtrlP ' . expand('%:p:h')<cr>
+nnoremap <Leader>P :CtrlPCurFile<cr>
 
 " \f = CtrlPMRU
 nnoremap <Leader>f :CtrlPMRU<cr>
@@ -941,16 +957,10 @@ nnoremap <Leader>f :CtrlPMRU<cr>
 " \b = :CtrlPBuffer
 nnoremap <Leader>b :CtrlPBuffer<cr>
 
+" \Ctrl-t = :CtrlPTag
+nnoremap <Leader><c-t> :CtrlPBuffer<cr>
 
 
-" Commentary
-" ----------
-
-" gcaf = comment whole file
-nmap gcaf gggcG
-
-" dcaf = delete whole file
-nmap dcaf ggdG
 
 " VimWiki
 " -------
@@ -984,8 +994,8 @@ nmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
 xmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
 nmap <Leader>kk <Plug>(quickhl-manual-reset)
 xmap <Leader>kk <Plug>(quickhl-manual-reset)
-nmap <Leader>kn <Plug>(quickhl-manual-go-to-next)
-nmap <Leader>kN <Plug>(quickhl-manual-go-to-prev)
+nmap <m-n> <Plug>(quickhl-manual-go-to-next)
+nmap <m-N> <Plug>(quickhl-manual-go-to-prev)
 
 nmap <Leader>kq :QuickhlManualAdd<space>
 

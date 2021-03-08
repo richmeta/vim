@@ -26,9 +26,12 @@ nmap <buffer> rm :!rm -i "<cfile>" <cr>
 nmap <buffer> ne :e %/
 
 " v = vertical split (dirvish)
-" s = horiz split (dirvish)
 nmap <buffer> v a
+
+" s = horiz split (dirvish)
 nmap <buffer> s o
+
+" ctrl-t = open in tab (dirvish)
 nmap <buffer> <C-T> t
 
 " open file under cursor in new tab (dirvish)
