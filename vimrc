@@ -7,8 +7,8 @@ let s:vim_home_dir = fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")
 
 call plug#begin(s:vim_home_dir . '/bundle')
 
-Plug 'vim-scripts/tlib'
-Plug 'MarcWeber/vim-addon-mw-utils'
+" Plug 'vim-scripts/tlib'
+" Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'godlygeek/tabular'
 Plug 'preservim/tagbar'
 Plug 'vim-scripts/CmdlineComplete'
@@ -18,7 +18,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'SirVer/ultisnips'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
-Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
@@ -167,12 +167,14 @@ set whichwrap=b,s,h,l,<,>,~,[,]
 set nostartofline
 set sidescroll=5
 set sidescrolloff=10
+set scrolloff=2
 set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 set winminheight=0
 set shiftround
 set showcmd
 set matchpairs+=<:>
 set iskeyword+=-
+set wildmenu
 set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__,.DS_Store
 set shellslash
 set laststatus=2
@@ -181,7 +183,7 @@ set listchars=tab:→\ ,trail:␣,extends:❯,precedes:❮,nbsp:⍽,conceal:~,eo
 set splitbelow
 set nojoinspaces
 set viminfo='1000,<50,s10,h
-set tags=./tags;
+set tags=./tags,tags;
 set shortmess+=I
 set showmatch
 set matchtime=1
@@ -189,6 +191,10 @@ set ttyfast
 set diffopt+=algorithm:patience
 set complete-=i
 set termguicolors
+set isfname+=32  " allow space in filenames
+set formatoptions+=j " Delete comment character when joining commented lines
+set tabpagemax=50
+set tagbsearch
 
 if executable('rg')
     set grepprg=rg\ --vimgrep\ --no-heading
@@ -267,6 +273,20 @@ nmap f£ f#
 " ---------------
 "
 " \t = new tab
+function! Tabnew()
+    let found = buff#find_first_empty()
+    let tabnr = -1
+    if found != -1
+        let tabnr = buff#find_tab_for_buffer(found)
+    endif
+    if tabnr == -1
+        :tabnew
+    else
+        execute 'normal ' . tabnr . 'gt'
+    endif
+endfunction
+
+" noremap <Leader>t :call Tabnew()<cr>
 noremap <Leader>t :tabnew<cr>
 
 " \T = new scratch
@@ -308,8 +328,14 @@ if executable('python')
     vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <cr><cr>
 endif
 
+if executable('erlfmt')
+    map <Leader>ef :silent %!erlfmt - <cr><cr>
+    vmap <Leader>ef :!erlfmt - <cr><cr>
+endif
+
 " shift-F1 - help current word
-nnoremap <S-F1> :execute 'help ' . expand('<cWORD>')<cr>
+nnoremap <S-F1> :execute 'help ' . expand('<cword>')<cr>
+vnoremap <S-F1> :<C-U>execute 'help ' . getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-2]<cr>
 
 
 " Quoting (plugin/quote.vim)
@@ -531,10 +557,10 @@ imap <C-C><C-F> <C-O>:let @x=expand("%:p")<cr><C-R>x
 imap <C-C><C-V> <C-O>:let @x=expand("%:t")<cr><C-R>x
 imap <C-C><C-S> <C-O>:let @x=expand("%:t:r")<cr><C-R>x
 
-" <esc> (terminal) exit insertmode
-tnoremap <Esc> <C-\><C-n>
+" Ctrl-\ = (terminal) exit insertmode
+tnoremap <C-\> <C-\><C-n>
 
-" \dt - diffthis
+" \dt = diffthis
 map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
 
 " \gr = grep
@@ -678,10 +704,10 @@ MapToggle <Leader>cc cursorcolumn
 " \sr = toggle splitright
 MapToggle <Leader>sr splitright
 
-" \kd - toggle '.' in `iskeyword`
+" \kd = toggle '.' in `iskeyword`
 map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
 
-" \kp - prompt for char to toggle in `iskeyword`
+" \kp = prompt for char to toggle in `iskeyword`
 map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 
 
@@ -693,12 +719,11 @@ map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 "  recursively search using 'grepprg'
 command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
     \ substitute('<args>', '\\', '\\\\', 'g') .
-    \ "' " . 
-    \ resolve(expand("$MYVIMRC")) . " " . 
-    \ s:vim_home_dir . "/ftplugin/*" 
+    \ "' " .
+    \ resolve(expand("$MYVIMRC")) . " " .
+    \ s:vim_home_dir . "/ftplugin/*"
     \ <bar> cwindow
 
-    " \ fnamemodify(resolve(expand("$MYVIMRC")), ":p:h") . "/ftplugin/*" 
 
 " search Sync
 " Ngrep = search command wiki
@@ -797,8 +822,8 @@ nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<cr>
 " g<F4> = dirvish git root dir
 nmap g<F4> :execute 'Dirvish ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
 
-" <Ctrl-F4> = dirvish git root dir (tab)
-nmap <C-F4> :execute 'tabedit +Dirvish\ ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
+" <Ctrl-F4> = dirvish git root dir (newtab)
+nmap <silent><C-F4> :execute 'tabedit +Dirvish\ ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
 
 " Shift-<F4> = vsplit + dirvish current dir
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
@@ -859,6 +884,9 @@ let g:ale_fixers = {
     \   'python': ['black'],
     \   'javascript': ['eslint']
     \ }
+
+" disable virtualenv usage, flake8 globally installed
+let g:ale_virtualenv_dir_names = []
 
 " F5 = toggle ALE
 nmap <F5> :ALEToggle<cr>
@@ -924,7 +952,7 @@ if has('win32')
 else
     if executable('fd')
         " eg: fd "" '<full directory path>' -tf --color=never --glob
-        let g:ctrlp_user_command = 'fd "" %s -tf -c never --glob '
+        let g:ctrlp_user_command = 'fd "" %s -tf -c never '
     else
         let g:ctrlp_user_command = 'find %s -type f'
     endif
@@ -945,11 +973,17 @@ if has("mac")
     let g:ctrlp_mruf_exclude = '/private/var/folders.*\|COMMIT_EDITMSG' 
 endif
 
+" alt-p = ctrlp
+let g:ctrlp_map = '<m-p>'
+
 " \p = CtrlP (git root)
-let g:ctrlp_map = '<Leader>p'
+nnoremap <Leader>p :CtrlP<cr>
 
 " \P = CtrlP (buffer dir)
 nnoremap <Leader>P :CtrlPCurFile<cr>
+
+" \D = CtrlP (cwd)
+nnoremap <Leader>D :CtrlPCurWD<cr>
 
 " \f = CtrlPMRU
 nnoremap <Leader>f :CtrlPMRU<cr>

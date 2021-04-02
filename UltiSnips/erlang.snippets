@@ -34,4 +34,115 @@ snippet gen "Generator Expression"
 ${1:X} <- ${2:List}${3:, gen}
 endsnippet
 
+snippet beh "Behaviours"
+-behaviour(${0}).
+endsnippet
+
+snippet def
+	-define(${1:macro}, ${2:body}).
+endsnippet
+
+snippet fun
+	fun (${1:Parameters}) ->
+		${2:body}
+	end
+endsnippet
+
+snippet try
+	try
+		${1:${VISUAL}}
+	catch
+		${2:_:_} -> ${0:got_some_exception}
+	end
+endsnippet
+
+snippet todo
+	%% TODO: ${0}
+endsnippet
+
+snippet supervisor
+-module(${1:`!p snip.rv = snip.basename or "module"`}).
+
+-behaviour(supervisor).
+
+-define(CHILD(I, Type), {I, {I, start_link, []}, transient, 5000, Type, [I]}).
+
+%% API
+-export([start_link/0]).
+
+%% Supervisor callbacks
+-export([init/1]).
+
+-define(SERVER, ?MODULE).
+
+start_link() ->
+	supervisor:start_link({local, ?SERVER}, ?MODULE, []).
+
+init([]) ->
+	{ok, {{one_for_all, 0, 1}, []}}.
+endsnippet
+
+snippet gen_server
+-module(${1:`!p snip.rv = snip.basename or "module"`}).
+
+-behaviour(gen_server).
+
+%% API
+-export([start_link/0]).
+
+%% gen_server callbacks
+-export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
+
+-define(SERVER, ?MODULE).
+
+-record(state, {}).
+
+%%%===================================================================
+%%% API
+%%%===================================================================
+
+start_link() ->
+	gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+
+%%%===================================================================
+%%% gen_server callbacks
+%%%===================================================================
+
+init([]) ->
+	{ok, #state{}}.
+
+handle_call(_Request, _From, State) ->
+	Reply = ok,
+	{reply, Reply, State}.
+
+handle_cast(_Msg, State) ->
+	{noreply, State}.
+
+handle_info(_Info, State) ->
+	{noreply, State}.
+
+terminate(_Reason, _State) ->
+	ok.
+
+code_change(_OldVsn, State, _Extra) ->
+	{ok, State}.
+
+%%%===================================================================
+%%% Internal functions
+%%%===================================================================
+endsnippet
+
+snippet eunit
+-module(${1:`vim_snippets#Filename()`}).
+-include_lib("eunit/include/eunit.hrl").
+
+${0}
+endsnippet
+
+snippet test
+${1}_test() ->
+	${0}
+endsnippet
+
+
 # vim:ft=snippets:

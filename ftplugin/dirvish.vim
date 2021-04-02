@@ -19,6 +19,8 @@ nmap <buffer> mv :!mv "<cfile>"<space>
 " rn = rename file
 nmap <buffer> rn :call file#prompt_rename(expand("<cfile>"))<cr>
 
+nmap <buffer> <Leader>rm rm
+
 " rm = delete file under cursor (dirvish)
 nmap <buffer> rm :!rm -i "<cfile>" <cr>
 
