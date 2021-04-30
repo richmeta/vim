@@ -7,8 +7,6 @@ let s:vim_home_dir = fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")
 
 call plug#begin(s:vim_home_dir . '/bundle')
 
-" Plug 'vim-scripts/tlib'
-" Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'godlygeek/tabular'
 Plug 'preservim/tagbar'
 Plug 'vim-scripts/CmdlineComplete'
@@ -18,10 +16,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'SirVer/ultisnips'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
-" Plug 'xolox/vim-misc'
 Plug 'thinca/vim-localrc'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
 Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'dense-analysis/ale'
 Plug 'andymass/vim-matchup'
@@ -175,7 +172,7 @@ set showcmd
 set matchpairs+=<:>
 set iskeyword+=-
 set wildmenu
-set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__,.DS_Store
+set wildignore=*.sw*,*.pyc,node_modules,tags,__pycache__,.DS_Store,*/\.git/*
 set shellslash
 set laststatus=2
 set keymodel=startsel
@@ -329,8 +326,9 @@ if executable('python')
 endif
 
 if executable('erlfmt')
-    map <Leader>ef :silent %!erlfmt - <cr><cr>
-    vmap <Leader>ef :!erlfmt - <cr><cr>
+    " \ef = format with erlfmt
+    map <Leader>ef :silent %!erlfmt --print-width 120 - <cr><cr>
+    vmap <Leader>ef :!erlfmt --print-width 120 - <cr><cr>
 endif
 
 " shift-F1 - help current word
@@ -410,6 +408,9 @@ nnoremap <Leader>pw :pwd<cr>
 
 " \wd = change working directory to current buffer
 nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<cr>
+
+" \wg = change working directory to git root
+nnoremap <Leader>wg :execute 'cd ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
 
 " \ss - save all
 nnoremap <Leader>ss :wa<cr>
@@ -550,8 +551,8 @@ endif
 
 " <ctrl-c><ctrl-d> (ins) = insert directory/path
 " <ctrl-c><ctrl-f> (ins) = insert fullpath
-" <ctrl-c><ctrl-d> (ins) = insert filename only
-" <ctrl-c><ctrl-d> (ins) = insert stem
+" <ctrl-c><ctrl-v> (ins) = insert filename only
+" <ctrl-c><ctrl-s> (ins) = insert stem
 imap <C-C><C-D> <C-O>:let @x=expand("%:p:h")<cr><C-R>x
 imap <C-C><C-F> <C-O>:let @x=expand("%:p")<cr><C-R>x
 imap <C-C><C-V> <C-O>:let @x=expand("%:t")<cr><C-R>x
@@ -865,7 +866,7 @@ endfunction
 " enabled in diff
 let g:ale_enabled = str2nr(&diff)
 
-" python: needs flake8
+" python: needs flake8 (pref globally installed)
 "   ignore errors/warnings:
 "    E501 line too long
 "    W391 blank line at end of file
@@ -884,9 +885,6 @@ let g:ale_fixers = {
     \   'python': ['black'],
     \   'javascript': ['eslint']
     \ }
-
-" disable virtualenv usage, flake8 globally installed
-let g:ale_virtualenv_dir_names = []
 
 " F5 = toggle ALE
 nmap <F5> :ALEToggle<cr>
@@ -962,16 +960,14 @@ endif
 " ctrl-z + ctrl-2 = mark many + delete buffer (ctrlp)
 call ctrlp_bdelete#init()
 
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_lazy_update = 200
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
 let g:ctrlp_mruf_max = &history
 let g:ctrlp_match_current_file = 0
+let g:ctrlp_clear_cache_on_exit = 0
 
-if has("mac")
-    let g:ctrlp_mruf_exclude = '/private/var/folders.*\|COMMIT_EDITMSG' 
-endif
 
 " alt-p = ctrlp
 let g:ctrlp_map = '<m-p>'

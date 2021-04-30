@@ -1,5 +1,8 @@
 priority -50
 
+# TODO:  beginning of ct suite
+#        ct:pal("X = ~p", [Y]),
+
 snippet ct "common test lib" b
 -include_lib("common_test/include/ct.hrl").
 endsnippet
@@ -139,9 +142,12 @@ snippet eunit
 ${0}
 endsnippet
 
-snippet test
-${1}_test() ->
-	${0}
+snippet palv
+ct:pal("${VISUAL} = ~p", [${VISUAL}]),
+endsnippet
+
+snippet pal
+ct:pal("$1 = ~p", [$1]),
 endsnippet
 
 
