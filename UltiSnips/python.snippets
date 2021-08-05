@@ -844,6 +844,28 @@ if __name__ == '__main__':
 	asyncio.run(main())
 endsnippet
 
+snippet climain "cli main" b
+def main():
+	argv = parse_args()
+	kv = vars(argv)
+	verbose = kv.pop('verbose')
+	if verbose:
+		logger.setLevel(logging.DEBUG)
+
+	try:
+		# cmd = ...
+		print(cmd.run())
+		return 0
+
+	except (ErrorClass) as ex:
+		logger.error(ex)
+		return 1
+
+
+if __name__ == "__main__":
+	sys.exit(main())
+endsnippet
+
 snippet mainpa "main + parse_args" b
 import argparse
 import logging
