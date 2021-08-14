@@ -240,6 +240,7 @@ if has('autocmd')
         autocmd! BufWritePost vimrc,.vimrc source $MYVIMRC | echom "Reloaded " . $MYVIMRC | redraw
         autocmd! BufWritePost gvimrc,.gvimrc if has('gui_running') | source $MYGVIMRC | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
+
 endif
 
 " colorscheme
@@ -564,14 +565,55 @@ tnoremap <C-\> <C-\><C-n>
 " \dt = diffthis
 map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
 
+function! RunGrep(expr, dir)
+    " expr - cword/cWORD or prompt if empty
+    " dir - use this dir, # prompt, or cwd if empty
+    let expr = a:expr
+    if len(expr) == 0
+        let expr = input('grep: ')
+        if len(expr) == 0
+            throw "grep expression required"
+        else
+            let expr = "'" . expr . "'"
+        end
+    elseif expr ==? '<cword>' 
+        let expr = expand(expr)
+    end
+    
+    let dir = a:dir
+    if dir == "#"
+        let dir = input('grep(dir): ')
+    end
+
+    let cmd = 'silent grep! ' . expr
+    if len(dir) > 0
+        let cmd .= ' ' . dir
+    end
+    execute cmd
+    if len(getqflist()) > 0 
+        copen
+    else
+        echo "not found"
+    end
+endfunction
+
 " \gr = grep
-nnoremap <Leader>gr :grep<Space>
+nnoremap <Leader>gr :call RunGrep('', '')<cr>
 
 " \gw = grep current word
-nnoremap <silent><Leader>gw :grep <cword><cr>
+nnoremap <silent><Leader>gw :call RunGrep('<cword>', '')<cr>
 
-" \gw = grep current WORD
-nnoremap <silent><Leader>gW :grep <cWORD><cr>
+" \gW = grep current WORD
+nnoremap <silent><Leader>gw :call RunGrep('<cWORD>', '')<cr>
+
+" \Gr = grep with dir prompt
+nnoremap <Leader>Gr :call RunGrep('', '#')<cr>
+
+" \Gw = grep current word with dir prompt
+nnoremap <silent><Leader>gw :call RunGrep('<cword>', '#')<cr>
+
+" \GW = grep current WORD with dir prompt
+nnoremap <silent><Leader>gw :call RunGrep('<cWORD>', '#')<cr>
 
 " \Ctrl-] = open tag in new tab
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T

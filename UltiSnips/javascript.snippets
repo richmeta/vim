@@ -31,7 +31,7 @@ snippet #! "#!/usr/bin/env node" b
 endsnippet
 
 snippet ex "module.exports"
-module.exports = $1;
+module.exports = {$1};
 endsnippet
 
 snippet get "Get Elements"
@@ -436,7 +436,7 @@ debugger;
 endsnippet
 
 snippet cl "console.log"
-console.log(${0});
+console.log(${0:${VISUAL}});
 endsnippet
 
 snippet cd "console.debug"
