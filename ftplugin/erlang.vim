@@ -14,7 +14,7 @@ let b:switch_custom_definitions =
 map <buffer> <Leader>kd :call ToggleOptionList('iskeyword', ':')<cr>
 
 " \kc - search for handle_call under cursor
-nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_call(\s*{' . expand("<cword>")<cr>
+nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_call(.*{' . expand("<cword>")<cr>
 
 " \ka - search for handle_cast under cursor
-nnoremap <buffer> <Leader>ka :keepjumps execute '/handle_cast(\s*{' . expand("<cword>")<cr>
+nnoremap <buffer> <Leader>ka :keepjumps execute '/handle_cast(.*{' . expand("<cword>")<cr>

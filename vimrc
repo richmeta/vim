@@ -192,6 +192,7 @@ set isfname+=32  " allow space in filenames
 set formatoptions+=j " Delete comment character when joining commented lines
 set tabpagemax=50
 set tagbsearch
+set nofixendofline
 
 if executable('rg')
     set grepprg=rg\ --vimgrep\ --no-heading
@@ -290,6 +291,9 @@ noremap <Leader>t :tabnew<cr>
 " \T = new scratch
 noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<cr>
 
+" alt-t = tabclose
+noremap <m-t> :tabclose<cr>
+
 " \O = only this tab
 noremap <Leader>O :tabonly<cr>
 
@@ -318,8 +322,8 @@ endif
 
 if executable('python')
     " \jf = format json
-    map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <cr><cr>:setf json<cr>
-    vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=True,indent=4))' - <cr><cr>
+    map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=False,indent=4))' - <cr><cr>:setf json<cr>
+    vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=False,indent=4))' - <cr><cr>
 
     " \pf = format json
     map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <cr><cr>
@@ -473,6 +477,11 @@ cabbrev cs colorscheme
 
 " T = tabedit[c]
 cabbrev T tabedit
+
+
+cabbrev _config ~/.config
+cabbrev _sshconfig ~/.ssh/config
+
 
 " OTHER MAPPINGS
 " --------------
@@ -823,6 +832,35 @@ nnoremap <M-9> 9gt
 " F3 = toggle tagbar
 map <F3> :TagbarToggle<cr>
 
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'p:protocols',
+        \ 'm:modules',
+        \ 'e:exceptions',
+        \ 'y:types',
+        \ 'd:delegates',
+        \ 'f:functions',
+        \ 'c:callbacks',
+        \ 'a:macros',
+        \ 't:tests',
+        \ 'i:implementations',
+        \ 'o:operators',
+        \ 'r:records'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 'p' : 'protocol',
+        \ 'm' : 'module'
+    \ },
+    \ 'scope2kind' : {
+        \ 'protocol' : 'p',
+        \ 'module' : 'm'
+    \ },
+    \ 'sort' : 0
+\ }
+
+
 " Fugitive
 " --------
 " \cg = copy git path relative
@@ -841,7 +879,7 @@ nnoremap <Leader>gp :Git pull<bar>echo "pulled"<cr>
 nnoremap <Leader>gu :Git push<bar>echo "pushed"<cr>
 
 " \gb = Gblame<cr>
-nnoremap <Leader>gb :Gblame<cr>
+nnoremap <Leader>gb :Git blame<cr>
 
 " \gR = Gread<cr>
 nnoremap <Leader>gR :Gread<bar>echo "git checkout -f"<cr>
@@ -1060,16 +1098,30 @@ nmap <Leader>wl <Plug>VimwikiUISelect
 
 " Quickhl
 " -------
+
+" \km = mark the word
 nmap <Leader>km <Plug>(quickhl-manual-this)
 xmap <Leader>km <Plug>(quickhl-manual-this)
+
+" \kM = mark the WORD
 nmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
 xmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
+
+" \kk = clear all marks
 nmap <Leader>kk <Plug>(quickhl-manual-reset)
 xmap <Leader>kk <Plug>(quickhl-manual-reset)
+
+" \kv = mark visual selection
+vmap <Leader>kv y:QuickhlManualAdd<space><C-R>"<cr>
+
+" \kq = prompt for what to select
+nmap <Leader>kq :QuickhlManualAdd<space>
+
+" alt-n = next mark
+" alt-N = prev mark
 nmap <m-n> <Plug>(quickhl-manual-go-to-next)
 nmap <m-N> <Plug>(quickhl-manual-go-to-prev)
 
-nmap <Leader>kq :QuickhlManualAdd<space>
 
 
 " ===========

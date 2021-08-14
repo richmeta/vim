@@ -146,9 +146,25 @@ snippet palv
 ct:pal("${VISUAL} = ~p", [${VISUAL}]),
 endsnippet
 
+# TODO: 
+#  pal(Var1, Var2, Var3, ...) 
+#  
+#  variant with module_name + ?FUNCTION_NAME
+
 snippet pal
-ct:pal("$1 = ~p", [$1]),
+ct:pal("$1 = ~p", [$1])
 endsnippet
+
+
+snippet escript "add escript shbang" b
+#!/usr/bin/env escript -c
+
+-export([main/1]).
+
+main(Args) ->
+	ok.
+endsnippet
+
 
 
 # vim:ft=snippets:

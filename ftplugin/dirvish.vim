@@ -10,16 +10,18 @@ nmap <buffer> pd :echo expand('%')<cr>
 " md = mkdir (dirvish)
 nmap <buffer> md :!mkdir %/
 
+" rd = rmdir (dirvish)
+nmap <buffer> rd :execute '!rmdir ' . expand("<cfile>")<cr>
+
 " cp = copy file under cursor (dirvish)
 nmap <buffer> cp :!cp "<cfile>"<space>
 
 " mv = move file under cursor (dirvish)
 nmap <buffer> mv :!mv "<cfile>"<space>
 
-" rn = rename file
-nmap <buffer> rn :call file#prompt_rename(expand("<cfile>"))<cr>
-
-nmap <buffer> <Leader>rm rm
+" cw = rename file
+nmap <buffer> cw :call file#prompt_rename(expand("<cfile>"))<cr>
+nmap <buffer> rn cw
 
 " rm = delete file under cursor (dirvish)
 nmap <buffer> rm :!rm -i "<cfile>" <cr>
