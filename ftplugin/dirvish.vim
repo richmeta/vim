@@ -25,6 +25,7 @@ nmap <buffer> rn cw
 
 " rm = delete file under cursor (dirvish)
 nmap <buffer> rm :!rm -i "<cfile>" <cr>
+nmap <buffer> <Leader>rm rm
 
 " ne = new file
 nmap <buffer> ne :e %/
@@ -50,20 +51,20 @@ nmap <buffer> <silent> h <Plug>(dirvish_up)
 nmap <buffer> <silent> l :<C-U>call dirvish#open("edit", 0)<cr>:echo(expand('%'))<cr>
 
 " copypath
-" \cd = copy directory/path
-" \cf = copy fullpath
-" \cv = copy filename only
-" \cs = copy stem
+" \cd = copy directory/path (and "f)
+" \cf = copy fullpath (and "f)
+" \cv = copy filename only (and "f)
+" \cs = copy stem (and "f)
 if has('win32')
     " prefer with windows path backslash
-    nmap <buffer> <Leader>cd :let @+=substitute(expand("%"), "/", "\\", "g")<cr>
-    nmap <buffer> <Leader>cf :let @+=substitute(expand("<cfile>"), "/", "\\", "g")<cr>
-    nmap <buffer> <Leader>cv :let @+=substitute(fnamemodify(expand("<cfile>"), ":t"), "/", "\\", "g")<cr>
-    nmap <buffer> <Leader>cs :let @+=substitute(fnamemodify(expand("<cfile>"), ":t:r"), "/", "\\", "g")<cr>
+    nmap <buffer> <Leader>cd :let @+=substitute(expand("%"), "/", "\\", "g")<bar>let @f=@+<cr>
+    nmap <buffer> <Leader>cf :let @+=substitute(expand("<cfile>"), "/", "\\", "g")<bar>let @f=@+<cr>
+    nmap <buffer> <Leader>cv :let @+=substitute(fnamemodify(expand("<cfile>"), ":t"), "/", "\\", "g")<bar>let @f=@+<cr>
+    nmap <buffer> <Leader>cs :let @+=substitute(fnamemodify(expand("<cfile>"), ":t:r"), "/", "\\", "g")<bar>let @f=@+<cr>
 elseif has('unix')
-    nmap <buffer> <Leader>cd :let @+=expand("%")<cr>
-    nmap <buffer> <Leader>cf :let @+=expand("<cfile>")<cr>
-    nmap <buffer> <Leader>cv :let @+=fnamemodify(expand("<cfile>"), ":t")<cr>
-    nmap <buffer> <Leader>cs :let @+=fnamemodify(expand("<cfile>"), ":t:r")<cr>
+    nmap <buffer> <Leader>cd :let @+=expand("%:~")<bar>let @f=@+<cr>                              " directory
+    nmap <buffer> <Leader>cf :let @+=expand("<cfile>:~")<bar>let @f=@+<cr>                        " fullpath
+    nmap <buffer> <Leader>cv :let @+=fnamemodify(expand("<cfile>"), ":t")<bar>let @f=@+<cr>       " filename only
+    nmap <buffer> <Leader>cs :let @+=fnamemodify(expand("<cfile>"), ":t:r")<bar>let @f=@+<cr>     " stem only
 endif
 

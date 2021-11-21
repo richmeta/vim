@@ -319,7 +319,7 @@ if executable('html_pp')
     vmap <Leader>hf :!html_pp - <cr>
 endif
 
-if executable('python')
+if executable('python3')
     " \jf = format json
     map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=False,indent=4))' - <cr><cr>:setf json<cr>
     vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=False,indent=4))' - <cr><cr>
@@ -526,6 +526,11 @@ nmap <silent> <C-M-q> :bd!<bar>tabclose<cr>
 " ctrl-bs (ins) = delete word back
 imap <C-BS> <C-O>diw
 
+" ctrl-p (ins) put from " register
+" alt-p (ins) PUT from " register
+inoremap <m-p> <C-O>P
+inoremap <C-P> <C-O>p
+
 " Window switching
 
 " ctrl-k = up window
@@ -541,21 +546,21 @@ nmap <silent> <c-h> :wincmd h<cr>
 nmap <silent> <c-l> :wincmd l<cr>
 
 " copypath
-" \cd = copy directory/path
-" \cf = copy fullpath
-" \cv = copy filename only
-" \cs = copy stem
+" \cd = copy directory/path (and "f)
+" \cf = copy fullpath (and "f)
+" \cv = copy filename only (and "f)
+" \cs = copy stem (and "f)
 if has('win32')
     " prefer with windows path backslash
-    nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", "g")<cr>
-    nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<cr>
-    nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<cr>
-    nmap <Leader>cs :let @+=substitute(expand("%:t:r"), "/", "\\", "g")<cr>
+    nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", g")<bar>let@f=@+<cr>
+    nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<bar>let@f=@+<cr>
+    nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<bar>let@f=@+<cr>
+    nmap <Leader>cs :let @+=substitute(expand("%:t:r"), "/", "\\", "g")<bar>let@f=@+<cr>
 elseif has('unix')
-    nmap <Leader>cd :let @+=expand("%:p:h")<cr>
-    nmap <Leader>cf :let @+=expand("%:p")<cr>
-    nmap <Leader>cv :let @+=expand("%:t")<cr>
-    nmap <Leader>cs :let @+=expand("%:t:r")<cr>
+    nmap <Leader>cd :let @+=expand("%:~:h")<bar>let @f=@+<cr>     " directory
+    nmap <Leader>cf :let @+=expand("%:~")<bar>let @f=@+<cr>       " full path
+    nmap <Leader>cv :let @+=expand("%:t")<bar>let @f=@+<cr>       " filename only
+    nmap <Leader>cs :let @+=expand("%:t:r")<bar>let @f=@+<cr>     " stem only
 endif
 
 " <ctrl-c><ctrl-d> (ins) = insert directory/path
@@ -569,6 +574,12 @@ imap <C-C><C-S> <C-O>:let @x=expand("%:t:r")<cr><C-R>x
 
 " Ctrl-\ = (terminal) exit insertmode
 tnoremap <C-\> <C-\><C-n>
+
+" prevent Ctrl-S freeze
+tmap <C-S> <Nop>
+
+" \mt = open terminal at this dir
+map <Leader>mt :let $VIM_DIR=expand('%:p:h')<cr>:terminal<cr>cd $VIM_DIR<cr>
 
 " \dt = diffthis
 map <Leader>dt :if &diff <bar> diffoff <bar> else <bar> diffthis <bar>endif<cr>
@@ -644,6 +655,7 @@ function! LetToggle(var, possible)
 endfunction
 
 function! CheckSyncDir()
+    " todo: support multiple dirs
     if strlen($MYSYNC)
         let buff_dir = expand('%:p:h')
         if match(buff_dir, $MYSYNC) > -1
@@ -828,7 +840,7 @@ nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%
 nnoremap <Leader>gd :Gvdiff<cr>
 
 " \gs = Gstatus
-nnoremap <Leader>gs :Gstatus<cr>
+nnoremap <Leader>gs :Git<cr>
 
 " \gp = Git pull
 nnoremap <Leader>gp :Git pull<bar>echo "pulled"<cr>
@@ -1057,13 +1069,14 @@ nmap <Leader>wl <Plug>VimwikiUISelect
 " Quickhl
 " -------
 
-" \km = mark the word
-nmap <Leader>km <Plug>(quickhl-manual-this)
-xmap <Leader>km <Plug>(quickhl-manual-this)
+" \km = mark the WORD
+nmap <Leader>km <Plug>(quickhl-manual-this-whole-word)
+xmap <Leader>km <Plug>(quickhl-manual-this-whole-word)
 
-" \kM = mark the WORD
-nmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
-xmap <Leader>kM <Plug>(quickhl-manual-this-whole-word)
+" \kM = mark the word
+nmap <Leader>kM <Plug>(quickhl-manual-this)
+xmap <Leader>kM <Plug>(quickhl-manual-this)
+
 
 " \kk = clear all marks
 nmap <Leader>kk <Plug>(quickhl-manual-reset)
