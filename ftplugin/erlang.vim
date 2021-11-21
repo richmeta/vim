@@ -10,11 +10,17 @@ let b:switch_custom_definitions =
     \   }
     \ ]
 
-" \kd - toggle ':' in iskeyword
+" \kd = toggle ':' in iskeyword
 map <buffer> <Leader>kd :call ToggleOptionList('iskeyword', ':')<cr>
 
-" \kc - search for handle_call under cursor
-nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_call(.*{' . expand("<cword>")<cr>
+" \kc = search for handle_call under cursor
+nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_call(.*' . expand("<cword>")<cr>
 
-" \ka - search for handle_cast under cursor
-nnoremap <buffer> <Leader>ka :keepjumps execute '/handle_cast(.*{' . expand("<cword>")<cr>
+" \ka = search for handle_cast under cursor
+nnoremap <buffer> <Leader>ka :keepjumps execute '/handle_cast(.*' . expand("<cword>")<cr>
+
+" Ctrl \] = goto tag (overrides global for vim_erlang_tags)
+nnoremap <buffer> <Leader><C-]> :call vim_erlang_tags#VimErlangTagsSelect(1)<cr><c-]><C-w>T
+
+" \dp = delete ct:pal
+nnoremap <buffer> <Leader>dp :%g/ct:pal\(\)/d<cr>
