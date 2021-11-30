@@ -1,10 +1,16 @@
 priority -50
 
-# TODO:  beginning of ct suite
-#        ct:pal("X = ~p", [Y]),
+# TODO:
+#  beginning of ct suite
+#  pal variant with module_name + ?FUNCTION_NAME
+#  nice that pal/format variants detect trailing comma or not
 
 snippet ct "common test lib" b
 -include_lib("common_test/include/ct.hrl").
+endsnippet
+
+snippet eunit "eunit test lib" b
+-include_lib("eunit/include/eunit.hrl").
 endsnippet
 
 snippet err
@@ -135,25 +141,55 @@ code_change(_OldVsn, State, _Extra) ->
 %%%===================================================================
 endsnippet
 
-snippet eunit
--module(${1:`vim_snippets#Filename()`}).
--include_lib("eunit/include/eunit.hrl").
+global !p
+import re
 
-${0}
+# Var = ~p
+reg_format = re.compile(r'\b([A-Z]\w*)\b,?')
+
+def erlformat(spec, newline=False):
+	# A, B, C to
+	# A = ~p, B = ~p, C = ~p
+	if not spec:
+		return ""
+
+	ret = ""
+	for m in reg_format.finditer(spec):
+		ret += f"{m.group(1)} = ~p, "
+
+	# without trailing comma
+	ret = ret[:-2]
+	if newline:
+		ret += "~n"
+
+	return ret
+
+endglobal
+
+snippet pal
+%% $1
+ct:pal("`!p snip.rv = erlformat(t[1])`", [$1])
+endsnippet
+
+snippet iof
+%% $1
+io:format("`!p snip.rv = erlformat(t[1], True)`", [$1])
 endsnippet
 
 snippet palv
 ct:pal("${VISUAL} = ~p", [${VISUAL}]),
 endsnippet
 
-# TODO: 
-#  pal(Var1, Var2, Var3, ...) 
-#  
-#  variant with module_name + ?FUNCTION_NAME
 
-snippet pal
+# TODO: deprecate, "old way"
+snippet pal2
 ct:pal("$1 = ~p", [$1])
 endsnippet
+
+snippet iof2
+io:format("$1 = ~p~n", [$1])
+endsnippet
+
 
 
 snippet escript "add escript shbang" b
@@ -165,6 +201,10 @@ main(Args) ->
 	ok.
 endsnippet
 
+snippet ctest "create ct test func" b
+${1}_test(_Config) ->
+	${0}.
+endsnippet
 
 
 # vim:ft=snippets:

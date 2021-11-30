@@ -1,0 +1,60 @@
+global !p
+
+import os
+import json
+
+def get_config(key=None):
+	try:
+		path = os.path.expanduser("~/.config/scripts/vim/vim.json")
+		with open(path) as fp:
+			data = json.load(fp)
+			if key is None:
+				return data
+			return data[key]
+	except FileNotFoundError:
+		return "config not found"
+
+endglobal
+
+snippet uuid
+`!p from uuid import uuid4
+if not snip.c:
+	snip.rv = str(uuid4())`
+endsnippet
+
+snippet now "now dd/mm/yyyy hh24:mi:ss" b
+`!p from datetime import datetime
+if not snip.c:
+	snip.rv = datetime.now().strftime("%d/%m/%Y %H:%M:%S")`
+endsnippet
+
+snippet date "todays date" b
+`!p from datetime import datetime
+if not snip.c:
+	snip.rv = datetime.now().strftime("%d/%m/%Y")`
+endsnippet
+
+snippet time "now time" b
+`!p from datetime import datetime
+if not snip.c:
+	snip.rv = datetime.now().strftime("%H:%M:%S")`
+endsnippet
+
+snippet isonow "now isoformat" b
+`!p from datetime import datetime, timezone
+if not snip.c:
+	snip.rv = datetime.now(timezone.utc).replace(microsecond=0).isoformat()`
+endsnippet
+
+snippet email "personal email" b
+`!p
+if not snip.c:
+	snip.rv = get_config("email")`
+endsnippet
+
+snippet wemail "work email" b
+`!p
+if not snip.c:
+	snip.rv = get_config("work_email")`
+endsnippet
+

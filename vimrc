@@ -415,7 +415,7 @@ nnoremap <Leader>pw :pwd<cr>
 nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<cr>
 
 " \wg = change working directory to git root
-nnoremap <Leader>wg :execute 'cd ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
+nnoremap <Leader>wg :execute 'cd ' . fnamemodify(FugitiveGitDir(), ':h')<bar>:pwd<cr>
 
 " \ss - save all
 nnoremap <Leader>ss :wa<cr>
@@ -697,12 +697,14 @@ function! LetToggle(var, possible)
 endfunction
 
 function! CheckSyncDir()
-    " todo: support multiple dirs
     if strlen($MYSYNC)
-        let buff_dir = expand('%:p:h')
-        if match(buff_dir, $MYSYNC) > -1
-            setlocal noswapfile
-        endif
+        let buff_dir = fnamemodify(expand('%:p:h'), ":p") " with trailing slash
+        let dirs = map(split($MYSYNC, ","), {_, fnam -> fnamemodify(fnam, ":p")})
+        for d in dirs
+            if buff_dir == d
+                setlocal noswapfile
+            endif
+        endfor
     endif
 endfunction
 
@@ -809,7 +811,7 @@ function! NopenWindowOrTab(dir, filename, bang)
     let cmd = a:bang == "!" ? 'edit' : 'tabedit'
     let path = a:dir . "/" . a:filename
     if a:filename !~ "\.wiki$"
-        let altpath = globpath(a:dir, a:filename . ".wiki")
+        let altpath = globpath(a:dir, trim(a:filename) . ".wiki")
         if !empty(altpath)
             let path = altpath
         endif
@@ -876,7 +878,7 @@ let g:tagbar_type_elixir = {
 " Fugitive
 " --------
 " \cg = copy git path relative
-nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') !=# '' ? FugitivePath(@%, '') : expand('%'))<cr>
+nnoremap <Leader>cg :let @+=(FugitiveExtractGitDir('.') != '' ? FugitivePath(@%, '') : expand('%'))<cr>
 
 " \gd = Gvdiff
 nnoremap <Leader>gd :Gvdiff<cr>
@@ -1025,6 +1027,10 @@ let g:jedi#use_splits_not_buffers = 'bottom'
 
 " UltiSnips
 " ---------
+
+" set to 1 for remote debubbing
+let g:UltiSnipsDebugServerEnable = 0
+
 let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsEditSplit = "tabdo"
 
