@@ -701,7 +701,7 @@ function! CheckSyncDir()
         let buff_dir = fnamemodify(expand('%:p:h'), ":p") " with trailing slash
         let dirs = map(split($MYSYNC, ","), {_, fnam -> fnamemodify(fnam, ":p")})
         for d in dirs
-            if buff_dir == d
+            if match(buff_dir, d) > -1
                 setlocal noswapfile
             endif
         endfor

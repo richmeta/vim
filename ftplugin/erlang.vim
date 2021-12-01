@@ -1,14 +1,28 @@
 setlocal commentstring=%%%s
 
+" order:
+" 1 - binary to string
+" 2 - string to binary
+" 3 - underscore Variable
+" 4 - remove underscore Variable
+"
+" notes:  \@<! is positive lookbehind,
+"         so #3 or 4 only matches when not preceded with quotes
+"
 let b:switch_custom_definitions =
     \ [
     \   {
-    \       '<<\("[^"]*"\)>>': '\1',
-    \       '\("[^"]*"\)': '<<\1>>',
-    \       '\<\(\u\w\+\)\>': '_\1',
-    \       '\<_\(\u\w\+\)\>': '\1',
+    \       '<<"[^"]*">>': {
+    \          '[<>]': ''
+    \       },
+    \       '"[^"]*"': {
+    \          '\("[^"]*"\)': '<<\1>>'
+    \       },
+    \       '"\@<!\<\(\u\w\+\)\>': '_\1',
+    \       '"\@<!\<_\(\u\w\+\)\>': '\1',
     \   }
     \ ]
+
 
 " \kd = toggle ':' in iskeyword
 map <buffer> <Leader>kd :call ToggleOptionList('iskeyword', ':')<cr>
