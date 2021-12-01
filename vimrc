@@ -330,10 +330,10 @@ if executable('python3')
     vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <cr><cr>
 endif
 
-if executable('erlfmt')
+if executable('erlfmtx')
     " \ef = format with erlfmt
-    map <Leader>ef :silent %!erlfmt --print-width 120 - <cr><cr>
-    vmap <Leader>ef :!erlfmt --print-width 120 - <cr><cr>
+    map <Leader>ef :silent %!erlfmtx --print-width 120 - <cr><cr>
+    vmap <Leader>ef :!erlfmtx --print-width 120 - <cr><cr>
 endif
 
 " shift-F1 - help current word
