@@ -19,7 +19,6 @@ Plug 'tpope/vim-commentary'
 Plug 'thinca/vim-localrc'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
-Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'dense-analysis/ale'
 Plug 'andymass/vim-matchup'
 Plug 'davidhalter/jedi-vim'
@@ -28,6 +27,8 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'justinmk/vim-dirvish'
 Plug 'vimwiki/vimwiki'
 Plug 't9md/vim-quickhl'
+Plug 'preservim/vim-markdown'
+Plug 'dyng/ctrlsf.vim'
 
 " text objects
 Plug 'kana/vim-textobj-user'
@@ -273,6 +274,7 @@ nmap f£ f#
 "
 " \t = new tab
 function! Tabnew()
+    " TODO: WIP
     let found = buff#find_first_empty()
     let tabnr = -1
     if found != -1
@@ -325,7 +327,7 @@ if executable('python3')
     map <Leader>jf :silent %!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=False,indent=4))' - <cr><cr>:setf json<cr>
     vmap <Leader>jf :!python3 -c 'import sys,json;print(json.dumps(json.loads(sys.stdin.read()),sort_keys=False,indent=4))' - <cr><cr>
 
-    " \pf = format json
+    " \pf = format pprint
     map <Leader>pf :silent %!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2, compact=True).pprint(eval(sys.stdin.read()))' - <cr><cr>
     vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <cr><cr>
 endif
@@ -351,13 +353,13 @@ vnoremap <Leader>sq :<C-U> call SingleQuote('block')<cr>
 nnoremap <Leader>dq :set opfunc=DoubleQuote<cr>g@
 vnoremap <Leader>dq :<C-U> call DoubleQuote('block')<cr>
 
-" ,sq = single quote + comma (motion/visual)
-nnoremap ,sq :set opfunc=SingleQuoteComma<cr>g@
-vnoremap ,sq :<C-U> call SingleQuoteComma('block')<cr>
+" \Sq = single quote with comma (motion/visual)
+nnoremap <Leader>Sq :set opfunc=SingleQuoteComma<cr>g@
+vnoremap <Leader>Sq :<C-U> call SingleQuoteComma('block')<cr>
 
-" ,dq = double quote + comma (motion/visual)
-nnoremap ,dq :set opfunc=DoubleQuoteComma<cr>g@
-vnoremap ,dq :<C-U> call DoubleQuoteComma('block')<cr>
+" \Dq = double quote with comma (motion/visual)
+nnoremap <Leader>Dq :set opfunc=DoubleQuoteComma<cr>g@
+vnoremap <Leader>Dq :<C-U> call DoubleQuoteComma('block')<cr>
 
 " \rq = remove quotes (motion/visual)
 nnoremap <Leader>rq :set opfunc=RemoveQuote<cr>g@
@@ -425,7 +427,7 @@ nnoremap <Leader>us :%!sort -u<cr>
 vnoremap <Leader>us :'<,'>!sort -u<cr>
 
 " \vs = Visual sort
-vnoremap <Leader>vs :'<,'>sort<cr>
+vnoremap <Leader>vs :sort<cr>
 
 " \vrc - open vimrc
 nnoremap <Leader>vrc :exec 'tabedit ' . resolve($MYVIMRC)<cr>
@@ -449,6 +451,12 @@ nnoremap <Leader>mc :messages clear<cr>
 
 " \sc = scratch buffer
 nnoremap <Leader>sc :setlocal buftype=nofile<cr>
+
+" operator i/ and a/ around slashes
+onoremap <silent> i/ :<C-U>normal! T/vt/<cr>
+onoremap <silent> a/ :<C-U>normal! F/vf/<cr>
+xnoremap <silent> i/ :<C-U>normal! T/vt/<cr>
+xnoremap <silent> a/ :<C-U>normal! F/vf/<cr>
 
 
 " COMMAND MAPPINGS
@@ -527,10 +535,10 @@ nmap <silent> <C-M-q> :bd!<bar>tabclose<cr>
 " ctrl-bs (ins) = delete word back
 imap <C-BS> <C-O>diw
 
-" ctrl-p (ins) put from " register
+" alt-p (ins) put from " register
 " alt-p (ins) PUT from " register
-inoremap <m-p> <C-O>P
-inoremap <C-P> <C-O>p
+inoremap <m-p> <C-R><C-R>"
+inoremap <m-P> <C-O>h<C-R><C-R>"
 
 " Window switching
 
@@ -572,6 +580,9 @@ imap <C-C><C-D> <C-O>:let @x=expand("%:p:h")<cr><C-R>x
 imap <C-C><C-F> <C-O>:let @x=expand("%:p")<cr><C-R>x
 imap <C-C><C-V> <C-O>:let @x=expand("%:t")<cr><C-R>x
 imap <C-C><C-S> <C-O>:let @x=expand("%:t:r")<cr><C-R>x
+
+" \cb = copy git branch name
+nnoremap <Leader>cb :let @+=fugitive#head()<bar>let@f=@+<cr>
 
 " Ctrl-\ = (terminal) exit insertmode
 tnoremap <C-\> <C-\><C-n>
@@ -620,20 +631,18 @@ endfunction
 " \gr = grep
 nnoremap <Leader>gr :call RunGrep('', '')<cr>
 
+" \Gr = grep with dir prompt
+nnoremap <Leader>Gr :call RunGrep('', '#')<cr>
+
+" \gR = grep from buffer dir
+nnoremap <Leader>gD :call RunGrep('', expand('%:p:h'))<cr>
+
 " \gw = grep current word
 nnoremap <silent><Leader>gw :call RunGrep('<cword>', '')<cr>
 
 " \gW = grep current WORD
 nnoremap <silent><Leader>gw :call RunGrep('<cWORD>', '')<cr>
 
-" \Gr = grep with dir prompt
-nnoremap <Leader>Gr :call RunGrep('', '#')<cr>
-
-" \Gw = grep current word with dir prompt
-nnoremap <silent><Leader>gw :call RunGrep('<cword>', '#')<cr>
-
-" \GW = grep current WORD with dir prompt
-nnoremap <silent><Leader>gw :call RunGrep('<cWORD>', '#')<cr>
 
 " \Ctrl-] = open tag in new tab
 nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
@@ -965,19 +974,29 @@ let g:ale_enabled = str2nr(&diff)
 "    E501 line too long
 "    W391 blank line at end of file
 "    F403 unabled to detect undefined names
-let g:ale_python_flake8_executable = 'python3'
-let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403'
+
+" use global flake8
+if executable("flake8")
+    let g:ale_python_flake8_executable = 'flake8'
+    let g:ale_python_flake8_options = '--ignore=E501,E731,W391,F403'
+    let g:ale_python_flake8_use_global = 1
+else
+    let g:ale_python_flake8_executable = 'python3'
+    let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403'
+endif
+
 let g:ale_linters = {
     \   'javascript': ['eslint'],
     \   'python': ['flake8'],
     \   'c': ['gcc'],
     \   'go': ['gobuild'],
-    \   'erlang': ['erlc'],
+    \   'erlang': ['syntaxerl'],
     \ }
 
 let g:ale_fixers = {
     \   'python': ['black'],
-    \   'javascript': ['eslint']
+    \   'javascript': ['eslint'],
+    \   'erlang': ['erlfmt'],
     \ }
 
 " F5 = toggle ALE
@@ -1054,9 +1073,6 @@ else
     endif
 endif
 
-" ctrl-2 = delete buffer (ctrlp)
-" ctrl-z + ctrl-2 = mark many + delete buffer (ctrlp)
-call ctrlp_bdelete#init()
 
 let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_lazy_update = 200
@@ -1065,6 +1081,24 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_mruf_max = &history
 let g:ctrlp_match_current_file = 0
 let g:ctrlp_clear_cache_on_exit = 0
+
+" ctrl-q = delete buffer (ctrlp)
+" alt-q  = delete buffer force (ctrlp)
+function! CtrlPBufferFunc() abort
+    nnoremap <buffer> <c-q> :call CtrlPDeleteBuffer(0)<cr>
+    nnoremap <buffer> <m-q> :call CtrlPDeleteBuffer(1)<cr>
+endfunction
+
+function! CtrlPDeleteBuffer(force) abort
+    let line = getline('.')
+    let bufid = matchstr(line, '\d\+')
+    let bufnm = str2nr(bufid)
+    let cmd = a:force == 1 ? "bd!" : "bd"
+    exec cmd bufnm
+    exec "norm \<F5>"
+endfunction
+
+let g:ctrlp_buffer_func = { 'enter': 'CtrlPBufferFunc' }
 
 
 " alt-p = ctrlp
@@ -1103,6 +1137,9 @@ let g:vimwiki_url_maxsave = 0
 
 " stop concealing special chars
 let g:vimwiki_conceallevel = 0
+
+" allow tab (for ultisnips)
+let g:vimwiki_table_mappings = 0
 
 " alt-enter = follow wiki link
 nmap <m-CR> <Plug>VimwikiFollowLink

@@ -68,3 +68,5 @@ elseif has('unix')
     nmap <buffer> <Leader>cs :let @+=fnamemodify(expand("<cfile>"), ":t:r")<bar>let @f=@+<cr>     " stem only
 endif
 
+" override for grep buffer
+nmap <buffer> <Leader>gD :call RunGrep('', expand('%'))<cr>

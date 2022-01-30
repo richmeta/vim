@@ -1,9 +1,5 @@
 priority -50
 
-# TODO:
-#  beginning of ct suite
-#  pal variant with module_name + ?FUNCTION_NAME
-#  nice that pal/format variants detect trailing comma or not
 
 snippet ct "common test lib" b
 -include_lib("common_test/include/ct.hrl").
@@ -91,6 +87,48 @@ init([]) ->
 	{ok, {{one_for_all, 0, 1}, []}}.
 endsnippet
 
+snippet common_test
+-module(${1:`!p snip.rv = snip.basename or "module"`}).
+-compile(export_all).
+
+-include_lib("common_test/include/ct.hrl").
+-include_lib("eunit/include/eunit.hrl").
+
+all() -> 
+	[
+		standalone_test1,
+		{group, group1}
+	].
+
+groups() ->
+	[
+		{group1, [parallel, shuffle], [
+			test1
+		]}
+	].
+
+init_per_suite(Config) ->
+	Config.
+
+init_per_group(_Group, Config) ->
+	Config.
+
+init_per_testcase(_Test, Config) ->
+	Config.
+
+%%%===================================================================
+%%% Tests
+%%%===================================================================
+test1(_Config) ->
+	ok.
+
+%%%===================================================================
+%%% Helpers
+%%%===================================================================
+
+
+endsnippet
+
 snippet gen_server
 -module(${1:`!p snip.rv = snip.basename or "module"`}).
 
@@ -145,7 +183,7 @@ global !p
 import re
 
 # Var = ~p
-reg_format = re.compile(r'\b([A-Z]\w*)\b,?')
+reg_format = re.compile(r'\b([\w:]+)\b,?')
 
 def erlformat(spec, newline=False):
 	# A, B, C to
@@ -164,32 +202,35 @@ def erlformat(spec, newline=False):
 
 	return ret
 
+
+def quote_words(spec):
+	if not spec:
+		return ""
+
+	words = spec.split(",")
+	return ", ".join([f'"{word.strip()}"' for word in words])
+
 endglobal
+
 
 snippet pal
 %% $1
-ct:pal("`!p snip.rv = erlformat(t[1])`", [$1])
+ct:pal("${0}`!p snip.rv = erlformat(t[1])`", [$1]),
 endsnippet
 
 snippet iof
 %% $1
-io:format("`!p snip.rv = erlformat(t[1], True)`", [$1])
+io:format("${0}`!p snip.rv = erlformat(t[1], True)`", [$1]),
+endsnippet
+
+snippet rfdbg
+%% $1
+rfdbg:log(?MODULE, ?FUNCTION_NAME, [${0}`!p snip.rv = quote_words(t[1])`], [$1]),
 endsnippet
 
 snippet palv
 ct:pal("${VISUAL} = ~p", [${VISUAL}]),
 endsnippet
-
-
-# TODO: deprecate, "old way"
-snippet pal2
-ct:pal("$1 = ~p", [$1])
-endsnippet
-
-snippet iof2
-io:format("$1 = ~p~n", [$1])
-endsnippet
-
 
 
 snippet escript "add escript shbang" b

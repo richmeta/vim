@@ -38,3 +38,7 @@ nnoremap <buffer> <Leader><C-]> :call vim_erlang_tags#VimErlangTagsSelect(1)<cr>
 
 " \dp = delete ct:pal
 nnoremap <buffer> <Leader>dp :%g/ct:pal\(\)/d<cr>
+
+" \cp = copy module/function under cursor
+nmap <Leader>cp :let @+=expand("%:t:r") . ":" . expand("<cword>")<cr>
+

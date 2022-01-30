@@ -16,5 +16,5 @@ let b:switch_custom_definitions =
     \   }
     \ ]
 
-" remove pdb
+" \dp = remove pdb
 nnoremap <buffer> <Leader>dp :%g/set_trace\(\)/d<cr>
