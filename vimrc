@@ -13,7 +13,6 @@ Plug 'vim-scripts/CmdlineComplete'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
-Plug 'SirVer/ultisnips'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
 Plug 'thinca/vim-localrc'
@@ -29,6 +28,9 @@ Plug 'vimwiki/vimwiki'
 Plug 't9md/vim-quickhl'
 Plug 'preservim/vim-markdown'
 Plug 'dyng/ctrlsf.vim'
+if has('python3')
+    Plug 'SirVer/ultisnips'
+endif
 
 " text objects
 Plug 'kana/vim-textobj-user'
@@ -186,7 +188,6 @@ set shortmess+=I
 set showmatch
 set matchtime=1
 set ttyfast
-set diffopt+=algorithm:patience
 set complete-=i
 set termguicolors
 set isfname+=32  " allow space in filenames
@@ -194,6 +195,11 @@ set formatoptions+=j " Delete comment character when joining commented lines
 set tabpagemax=50
 set tagbsearch
 set nofixendofline
+
+if (!(has('mac') && $VIM == '/usr/share/vim'))
+    " not supported on apple vim
+    set diffopt+=algorithm:patience
+endif
 
 if executable('rg')
     set grepprg=rg\ --vimgrep\ --no-heading
@@ -644,9 +650,6 @@ nnoremap <silent><Leader>gw :call RunGrep('<cword>', '')<cr>
 nnoremap <silent><Leader>gw :call RunGrep('<cWORD>', '')<cr>
 
 
-" \Ctrl-] = open tag in new tab
-nnoremap <silent><Leader><C-]> <C-w><C-]><C-w>T
-
 " FUNCTION BASED MAPS
 " ===================
 
@@ -784,6 +787,16 @@ map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
 
 " \kp = prompt for char to toggle in `iskeyword`
 map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
+
+""" tags
+function! TagTab(tag)
+    execute 'tab tjump ' . a:tag
+endfunction
+
+" \Ctrl-] = open tag in new tab
+" alt-] = prompt open tag in new tab
+nnoremap <silent><Leader><C-]> :call TagTab(expand("<cWORD>"))<cr>
+nnoremap <m-]> :tab tjump 
 
 
 " CUSTOM COMMANDS
@@ -1047,17 +1060,19 @@ let g:jedi#use_splits_not_buffers = 'bottom'
 " UltiSnips
 " ---------
 
-" set to 1 for remote debubbing
-let g:UltiSnipsDebugServerEnable = 0
+if has('python3')
+    " set to 1 for remote debubbing
+    let g:UltiSnipsDebugServerEnable = 0
 
-let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsEditSplit = "tabdo"
+    " let g:UltiSnipsUsePythonVersion = 3
+    let g:UltiSnipsEditSplit = "tabdo"
 
-" \se = Edit Snippets for filetype
-nnoremap <Leader>se :UltiSnipsEdit<cr>
+    " \se = Edit Snippets for filetype
+    nnoremap <Leader>se :UltiSnipsEdit<cr>
 
-" \sr = Reload Snippets for filetype
-nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
+    " \sr = Reload Snippets for filetype
+    nnoremap <Leader>sr :call UltiSnips#RefreshSnippets()<cr>
+endif
 
 
 " Ctrlp
@@ -1081,25 +1096,6 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_mruf_max = &history
 let g:ctrlp_match_current_file = 0
 let g:ctrlp_clear_cache_on_exit = 0
-
-" ctrl-q = delete buffer (ctrlp)
-" alt-q  = delete buffer force (ctrlp)
-function! CtrlPBufferFunc() abort
-    nnoremap <buffer> <c-q> :call CtrlPDeleteBuffer(0)<cr>
-    nnoremap <buffer> <m-q> :call CtrlPDeleteBuffer(1)<cr>
-endfunction
-
-function! CtrlPDeleteBuffer(force) abort
-    let line = getline('.')
-    let bufid = matchstr(line, '\d\+')
-    let bufnm = str2nr(bufid)
-    let cmd = a:force == 1 ? "bd!" : "bd"
-    exec cmd bufnm
-    exec "norm \<F5>"
-endfunction
-
-let g:ctrlp_buffer_func = { 'enter': 'CtrlPBufferFunc' }
-
 
 " alt-p = ctrlp
 let g:ctrlp_map = '<m-p>'

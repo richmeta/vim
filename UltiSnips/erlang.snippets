@@ -31,16 +31,16 @@ snippet mod "Module Directive" b
 -module(${1:`!p snip.rv = snip.basename or "module"`}).
 endsnippet
 
+snippet beh "Behaviour" b
+-behaviour(${0}).
+endsnippet
+
 snippet || "List Comprehension"
 [${1:X} || ${2:X} <- ${3:List}${4:, gen}]
 endsnippet
 
 snippet gen "Generator Expression"
 ${1:X} <- ${2:List}${3:, gen}
-endsnippet
-
-snippet beh "Behaviours"
--behaviour(${0}).
 endsnippet
 
 snippet def
@@ -184,6 +184,7 @@ import re
 
 # Var = ~p
 reg_format = re.compile(r'\b([\w:]+)\b,?')
+reg_prefix = re.compile(r'(.*:)(.*)')
 
 def erlformat(spec, newline=False):
 	# A, B, C to
@@ -191,7 +192,15 @@ def erlformat(spec, newline=False):
 	if not spec:
 		return ""
 
-	ret = ""
+	# also allow prefix
+	# eg: debug info: A, B, C
+	m = reg_prefix.match(spec)
+	if m is not None:
+		ret = m.group(1)
+		spec = m.group(2)
+	else:
+		ret = ""
+
 	for m in reg_format.finditer(spec):
 		ret += f"{m.group(1)} = ~p, "
 
@@ -246,6 +255,8 @@ snippet ctest "create ct test func" b
 ${1}_test(_Config) ->
 	${0}.
 endsnippet
+
+# TODO snippet for "normal ct:pal"
 
 
 # vim:ft=snippets:

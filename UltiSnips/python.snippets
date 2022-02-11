@@ -878,38 +878,14 @@ def parse_args():
 	parser.add_argument("--verbose", "-v", action="store_true", help="verbose output")
 	parser.add_argument($2)
 
-	return parser.parse_args()
+	argv = parser.parse_args()
+	if argv.verbose:
+		logger.setLevel(logging.DEBUG)
+	return argv
 
 
 def main():
 	argv = parse_args()
-	if argv.verbose:
-		logger.setLevel(logging.DEBUG)
-
-
-if __name__ == '__main__':
-	main()
-endsnippet
-
-snippet mainsubpa "main + sub_parse_args" b
-import argparse
-import logging
-logging.basicConfig(level=logging.INFO, format='%(message)s')
-logger = logging.getLogger(__name__)
-
-
-def parse_args():
-	parser = argparse.ArgumentParser(description="$1")
-	parser.add_argument("--verbose", "-v", action="store_true", help="verbose output")
-	parser.add_argument($2)
-
-	return parser.parse_args()
-
-
-def main():
-	argv = parse_args()
-	if argv.verbose:
-		logger.setLevel(logging.DEBUG)
 
 
 if __name__ == '__main__':
@@ -931,14 +907,14 @@ def parse_args():
 	sub_parser = subparsers.add_parser("action", help="")
 	sub_parser.set_defaults(func=function_name)
 
-	return parser.parse_args()
+	argv = parser.parse_args()
+	if argv.verbose:
+		logger.setLevel(logging.DEBUG)
+	return argv
 
 def main():
 	argv = parse_args()
 	kv = vars(argv)
-	verbose = kv.pop('verbose')
-	if verbose:
-		logger.setLevel(logging.DEBUG)
 
 	try:
 		repo = get_repo()
