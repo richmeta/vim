@@ -4,8 +4,8 @@ nmap <buffer> <Esc> gq
 " wd = cd (dirvish)
 nmap <buffer> wd :execute 'cd ' . expand('%')<bar>:pwd<cr>
 
-" pd = print directory name
-nmap <buffer> pd :echo expand('%')<cr>
+" \pd = print directory name
+nmap <buffer> <leader>pd :echo expand('%')<cr>
 
 " md = mkdir (dirvish)
 nmap <buffer> md :!mkdir %/

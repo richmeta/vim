@@ -1,4 +1,5 @@
-priority -50
+# overrides all
+priority 1
 
 
 snippet ct "common test lib" b
@@ -22,13 +23,17 @@ snippet exall
 -compile(export_all).
 endsnippet
 
+snippet exp "export" b
+-export([${0}]).
+endsnippet
+
 snippet pat "Case:Receive:Try Clause"
 ${1:pattern}${2: when ${3:guard}} ->
 	${4:body}
 endsnippet
 
 snippet mod "Module Directive" b
--module(${1:`!p snip.rv = snip.basename or "module"`}).
+-module(`!p snip.rv = snip.basename or "module"`).
 endsnippet
 
 snippet beh "Behaviour" b
@@ -241,6 +246,9 @@ snippet palv
 ct:pal("${VISUAL} = ~p", [${VISUAL}]),
 endsnippet
 
+snippet palx
+ct:pal("${0}", []),
+endsnippet
 
 snippet escript "add escript shbang" b
 #!/usr/bin/env escript -c
@@ -254,6 +262,12 @@ endsnippet
 snippet ctest "create ct test func" b
 ${1}_test(_Config) ->
 	${0}.
+endsnippet
+
+snippet uuid
+<<"`!p from uuid import uuid4
+if not snip.c:
+	snip.rv = str(uuid4())`">>,
 endsnippet
 
 # TODO snippet for "normal ct:pal"

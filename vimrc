@@ -640,7 +640,7 @@ nnoremap <Leader>gr :call RunGrep('', '')<cr>
 " \Gr = grep with dir prompt
 nnoremap <Leader>Gr :call RunGrep('', '#')<cr>
 
-" \gR = grep from buffer dir
+" \gD = grep from buffer dir
 nnoremap <Leader>gD :call RunGrep('', expand('%:p:h'))<cr>
 
 " \gw = grep current word
@@ -1112,8 +1112,8 @@ nnoremap <Leader>D :CtrlPCurWD<cr>
 " \f = CtrlPMRU
 nnoremap <Leader>f :CtrlPMRU<cr>
 
-" \b = :CtrlPBuffer
-nnoremap <Leader>b :CtrlPBuffer<cr>
+" \z = :CtrlPBuffer
+nnoremap <Leader>z :CtrlPBuffer<cr>
 
 " \Ctrl-t = :CtrlPTag
 nnoremap <Leader><c-t> :CtrlPBuffer<cr>

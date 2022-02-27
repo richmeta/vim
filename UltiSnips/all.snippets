@@ -34,6 +34,12 @@ if not snip.c:
 	snip.rv = datetime.now().strftime("%d/%m/%Y")`
 endsnippet
 
+snippet diso "ISO format datetime" w
+`!p from datetime import datetime
+if not snip.c:
+	snip.rv = datetime.now().isoformat()`
+endsnippet
+
 snippet time "now time" b
 `!p from datetime import datetime
 if not snip.c:
