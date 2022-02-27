@@ -380,16 +380,16 @@ nnoremap <Leader>d, :set opfunc=RemoveComma<cr>g@
 vnoremap <Leader>d, :<C-U> call RemoveComma('block')<cr>
 
 " \ye = copy EOL into clipboard
-nnoremap <Leader>ye "*y$
+nnoremap <Leader>ye "+y$
 
-" \yy = copy EOL into clipboard
-nnoremap <Leader>yy m`^"*y$``
+" \yy = copy whole line into clipboard
+nnoremap <Leader>yy m`^"+y$``
 
 " \yp = copy inner paragraph into clipboard
-nnoremap <Leader>yp "*yip
+nnoremap <Leader>yp "+yip
 
 " \y = copy into clipboard
-vnoremap <Leader>y "*y
+vnoremap <Leader>y "+y
 
 " \lf = Location open
 noremap <Leader>lf :lopen<cr>

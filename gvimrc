@@ -21,3 +21,7 @@ set guicursor=n:blinkon0
 
 " only filename in tab title
 set guitablabel=%t
+
+if has('GUI_GTK')
+    set guioptions-=T
+endif
