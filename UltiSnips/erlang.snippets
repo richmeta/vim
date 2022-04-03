@@ -2,12 +2,16 @@
 priority 1
 
 
-snippet ct "common test lib" b
+snippet ct.hrl "common test lib" b
 -include_lib("common_test/include/ct.hrl").
 endsnippet
 
-snippet eunit "eunit test lib" b
+snippet eunit.hrl "eunit test lib" b
 -include_lib("eunit/include/eunit.hrl").
+endsnippet
+
+snippet assert.hrl "include asserts" b
+-include_lib("stdlib/include/assert.hrl").
 endsnippet
 
 snippet err
@@ -20,16 +24,25 @@ snippet cerr
 endsnippet
 
 snippet exall
+-compile(nowarn_export_all).
 -compile(export_all).
 endsnippet
 
 snippet exp "export" b
--export([${0}]).
+-export([${VISUAL}${0}]).
+endsnippet
+
+snippet doc "doc tag" b
+%% @doc ${0}
 endsnippet
 
 snippet pat "Case:Receive:Try Clause"
 ${1:pattern}${2: when ${3:guard}} ->
 	${4:body}
+endsnippet
+
+snippet casev
+${1} -> $1;${0}
 endsnippet
 
 snippet mod "Module Directive" b
@@ -75,7 +88,14 @@ snippet supervisor
 
 -behaviour(supervisor).
 
--define(CHILD(I, Type), {I, {I, start_link, []}, transient, 5000, Type, [I]}).
+-define(CHILD(I, Type), #{
+	id => I,
+	start => {I, start_link},
+	restart => permanent,
+	shutdown => 5000,
+	type => Type,
+	modules => [I]
+}).
 
 %% API
 -export([start_link/0]).
@@ -85,15 +105,29 @@ snippet supervisor
 
 -define(SERVER, ?MODULE).
 
+%%%===================================================================
+%% API
+%%%===================================================================
+
 start_link() ->
 	supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
+%%%===================================================================
+%% Supervisor callbacks
+%%%===================================================================
+
 init([]) ->
-	{ok, {{one_for_all, 0, 1}, []}}.
+	SupFlags = #{
+		strategy =>  one_for_one,
+		intensity => 1,
+		period => 5
+	},
+	{ok, {SupFlags, []}}.
 endsnippet
 
-snippet common_test
+snippet ct
 -module(${1:`!p snip.rv = snip.basename or "module"`}).
+-compile(nowarn_export_all).
 -compile(export_all).
 
 -include_lib("common_test/include/ct.hrl").
@@ -131,6 +165,52 @@ test1(_Config) ->
 %%% Helpers
 %%%===================================================================
 
+endsnippet
+
+snippet eunit
+-module(${1:`!p snip.rv = snip.basename or "module"`}).
+
+-include_lib("eunit/include/eunit.hrl").
+
+%%%===================================================================
+%%% Fixtures
+%%%===================================================================
+
+start() ->
+	{ok, Pid} = project:start_link(),
+	Pid.
+
+stop(Pid) ->
+	gen_server:stop(Pid).
+
+%%%===================================================================
+%%% Tests
+%%%===================================================================
+
+gen_foreach_test_() ->
+	{foreach, fun start/0, fun stop/1, [
+		fun run_thing1/1,
+		run_thing2/1
+	]}.
+
+gen_setup_test_() ->
+	{setup,
+		fun start/0, 
+		fun stop/1,
+		fun run_thing1/1
+	]}.
+
+normal_test() ->
+	?assert(true).
+
+test_gen_() -> 
+	[
+		?_assert(true)
+	].
+
+%%%===================================================================
+%%% Helpers
+%%%===================================================================
 
 endsnippet
 
@@ -143,11 +223,11 @@ snippet gen_server
 -export([start_link/0]).
 
 %% gen_server callbacks
--export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
+-export([init/1, handle_call/3, handle_cast/2, handle_info/2, handle_continue/2, terminate/2, code_change/3]).
 
 -define(SERVER, ?MODULE).
 
--record(state, {}).
+-type state() :: #{}.
 
 %%%===================================================================
 %%% API
@@ -160,18 +240,30 @@ start_link() ->
 %%% gen_server callbacks
 %%%===================================================================
 
+-spec init([]) -> state().
 init([]) ->
-	{ok, #state{}}.
+	{ok, #{}}.
 
-handle_call(_Request, _From, State) ->
+handle_call({a, Data}, _From, State) ->
 	Reply = ok,
-	{reply, Reply, State}.
+	{reply, Reply, State};
+handle_call(Request, _From, _State) ->
+	throw({unhandled_call, Request}).
 
-handle_cast(_Msg, State) ->
-	{noreply, State}.
+handle_cast({b, _Data}, State) ->
+	{noreply, State};
+handle_cast(Msg, _State) ->
+	throw({unhandled_cast, Msg}).
 
-handle_info(_Info, State) ->
+handle_info({c, _Data}, State) ->
+	{noreply, State};
+handle_info(Info, _State) ->
+	throw({unhandled_info, Info}).
+
+handle_continue({d, _Data}, State) ->
 	{noreply, State}.
+handle_continue(Continue, _State) ->
+	error({unhandled_continue, Continue}).
 
 terminate(_Reason, _State) ->
 	ok.
@@ -183,6 +275,39 @@ code_change(_OldVsn, State, _Extra) ->
 %%% Internal functions
 %%%===================================================================
 endsnippet
+
+snippet cast
+gen_server:cast(?SERVER, ${0}),
+endsnippet
+
+snippet call
+gen_server:call(?SERVER, ${0}),
+endsnippet
+
+snippet handle_cast
+handle_cast(${1}, ${2}State) ->
+	${0}{noreply, State};
+endsnippet
+
+snippet handle_call
+handle_call(${1}, _From, ${2}State) ->
+	${0}{reply, ok, State};
+endsnippet
+
+snippet handle_info
+handle_info(${1}, ${2}State) ->
+	${0}{noreply, State};
+endsnippet
+
+snippet handle_continue
+handle_continue(${1}, ${2}State) ->
+	${0}{noreply, State};
+endsnippet
+
+# TODO: pal
+#   name:Var Var 
+#   use . at end to put . not ,
+#   leading: Var1 
 
 global !p
 import re
@@ -260,8 +385,8 @@ main(Args) ->
 endsnippet
 
 snippet ctest "create ct test func" b
-${1}_test(_Config) ->
-	${0}.
+test_${1}(_Config) ->
+	${0:ok}.
 endsnippet
 
 snippet uuid

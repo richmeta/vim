@@ -22,7 +22,6 @@ Plug 'dense-analysis/ale'
 Plug 'andymass/vim-matchup'
 Plug 'davidhalter/jedi-vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'justinmk/vim-dirvish'
 Plug 'vimwiki/vimwiki'
 Plug 't9md/vim-quickhl'
@@ -52,7 +51,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'sgur/vim-textobj-parameter'
 
 " aq = select incl quote
-" iq = select excl quote 
+" iq = select excl quote
 Plug 'beloglazov/vim-textobj-quotes'
 
 " au = select url incl trailing spaces
@@ -277,30 +276,24 @@ nmap f£ f#
 
 " LEADER MAPPINGS
 " ---------------
-"
-" \t = new tab
-function! Tabnew()
-    " TODO: WIP
-    let found = buff#find_first_empty()
-    let tabnr = -1
-    if found != -1
-        let tabnr = buff#find_tab_for_buffer(found)
-    endif
-    if tabnr == -1
-        :tabnew
-    else
-        execute 'normal ' . tabnr . 'gt'
-    endif
-endfunction
 
-" noremap <Leader>t :call Tabnew()<cr>
+" \t = new tab
 noremap <Leader>t :tabnew<cr>
 
 " \T = new scratch
 noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<cr>
 
-" alt-t = tabclose
-noremap <m-t> :tabclose<cr>
+" alt-t = tabopen from buffer dir
+" alt-h = h split from buffer dir
+" alt-v = v split from buffer dir
+" alt-o = open from buffer dir
+nnoremap <m-t> :call buff#open_relative('t')<cr>
+nnoremap <m-h> :call buff#open_relative('h')<cr>
+nnoremap <m-v> :call buff#open_relative('v')<cr>
+nnoremap <m-o> :call buff#open_relative('o')<cr>
+
+" alt-x = tabclose
+noremap <m-x> :tabclose<cr>
 
 " \O = only this tab
 noremap <Leader>O :tabonly<cr>
@@ -565,27 +558,19 @@ nmap <silent> <c-l> :wincmd l<cr>
 " \cf = copy fullpath (and "f)
 " \cv = copy filename only (and "f)
 " \cs = copy stem (and "f)
-if has('win32')
-    " prefer with windows path backslash
-    nmap <Leader>cd :let @+=substitute(expand("%:p:h"), "/", "\\", g")<bar>let@f=@+<cr>
-    nmap <Leader>cf :let @+=substitute(expand("%:p"), "/", "\\", "g")<bar>let@f=@+<cr>
-    nmap <Leader>cv :let @+=substitute(expand("%"), "/", "\\", "g")<bar>let@f=@+<cr>
-    nmap <Leader>cs :let @+=substitute(expand("%:t:r"), "/", "\\", "g")<bar>let@f=@+<cr>
-elseif has('unix')
-    nmap <Leader>cd :let @+=expand("%:~:h")<bar>let @f=@+<cr>     " directory
-    nmap <Leader>cf :let @+=expand("%:~")<bar>let @f=@+<cr>       " full path
-    nmap <Leader>cv :let @+=expand("%:t")<bar>let @f=@+<cr>       " filename only
-    nmap <Leader>cs :let @+=expand("%:t:r")<bar>let @f=@+<cr>     " stem only
-endif
+nmap <silent> <Leader>cd :call file#clip(file#ex_dir(), 1)<cr>         " directory
+nmap <silent> <Leader>cf :call file#clip(file#ex_full(), 1)<cr>        " full path
+nmap <silent> <Leader>cv :call file#clip(file#ex_filename(), 1)<cr>    " filename only
+nmap <silent> <Leader>cs :call file#clip(file#ex_stem(), 1)<cr>        " stem only
 
 " <ctrl-c><ctrl-d> (ins) = insert directory/path
 " <ctrl-c><ctrl-f> (ins) = insert fullpath
 " <ctrl-c><ctrl-v> (ins) = insert filename only
 " <ctrl-c><ctrl-s> (ins) = insert stem
-imap <C-C><C-D> <C-O>:let @x=expand("%:p:h")<cr><C-R>x
-imap <C-C><C-F> <C-O>:let @x=expand("%:p")<cr><C-R>x
-imap <C-C><C-V> <C-O>:let @x=expand("%:t")<cr><C-R>x
-imap <C-C><C-S> <C-O>:let @x=expand("%:t:r")<cr><C-R>x
+imap <silent> <C-C><C-D> <C-O>:let @f=file#ex_dir()<cr><C-R>f
+imap <silent> <C-C><C-F> <C-O>:let @f=file#ex_full()<cr><C-R>f
+imap <silent> <C-C><C-V> <C-O>:let @f=file#ex_filename()<cr><C-R>f
+imap <silent> <C-C><C-S> <C-O>:let @f=file#ex_stem()<cr><C-R>f
 
 " \cb = copy git branch name
 nnoremap <Leader>cb :let @+=fugitive#head()<bar>let@f=@+<cr>
@@ -644,10 +629,10 @@ nnoremap <Leader>Gr :call RunGrep('', '#')<cr>
 nnoremap <Leader>gD :call RunGrep('', expand('%:p:h'))<cr>
 
 " \gw = grep current word
-nnoremap <silent><Leader>gw :call RunGrep('<cword>', '')<cr>
+nnoremap <Leader>gw :call RunGrep('<cword>', '')<cr>
 
 " \gW = grep current WORD
-nnoremap <silent><Leader>gw :call RunGrep('<cWORD>', '')<cr>
+nnoremap <Leader>gw :call RunGrep('<cWORD>', '')<cr>
 
 
 " FUNCTION BASED MAPS
@@ -846,6 +831,7 @@ endfunction
 command! -complete=customlist,GlobCommandsDir -nargs=1 -bang Nopen
     \ :call NopenWindowOrTab("~/sync/stuff/commands/", "<args>", "<bang>")
 
+nnoremap <leader>no :execute ':Nopen ' . &filetype<cr>
 
 " alt-N = switch to tab
 nnoremap <M-1> 1gt
@@ -894,6 +880,15 @@ let g:tagbar_type_elixir = {
         \ 'module' : 'm'
     \ },
     \ 'sort' : 0
+\ }
+
+let g:tagbar_type_vimwiki = {
+    \ 'ctagstype' : 'wiki',
+    \ 'kinds'     : [
+        \ 'd:definition',
+    \ ],
+    \ 'sort'    : 0,
+    \ 'deffile' : expand('$HOME/.config/ctags/wiki.ctags')
 \ }
 
 
@@ -1088,7 +1083,7 @@ else
     endif
 endif
 
-
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_lazy_update = 200
 let g:ctrlp_clear_cache_on_exit = 0
@@ -1174,6 +1169,27 @@ nmap <Leader>kq :QuickhlManualAdd<space>
 nmap <m-n> <Plug>(quickhl-manual-go-to-next)
 nmap <m-N> <Plug>(quickhl-manual-go-to-prev)
 
+
+" Sandwich
+" --------
+
+" override default mappings
+let g:operator_sandwich_no_default_key_mappings = 1
+
+" Sa[motion] = add
+silent! nmap <unique> Sa <Plug>(sandwich-add)
+silent! xmap <unique> Sa <Plug>(sandwich-add)
+silent! omap <unique> Sa <Plug>(sandwich-add)
+
+" Sd[motion] = delete
+silent! nmap <unique> Sd <Plug>(sandwich-delete)
+silent! xmap <unique> Sd <Plug>(sandwich-delete)
+silent! nmap <unique> Sdb <Plug>(sandwich-delete-auto)
+
+" Sr[motion] = replace
+silent! nmap <unique> Sr <Plug>(sandwich-replace)
+silent! xmap <unique> Sr <Plug>(sandwich-replace)
+silent! nmap <unique> Srb <Plug>(sandwich-replace-auto)
 
 
 " ===========

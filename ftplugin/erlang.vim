@@ -1,5 +1,4 @@
 setlocal commentstring=%%%s
-setlocal indentexpr=""
 
 " order:
 " 1 - binary to string
@@ -21,15 +20,14 @@ let b:switch_custom_definitions =
     \       },
     \       '"\@<!\<\(\u\w*\)\>': '_\1',
     \       '"\@<!\<_\(\u\w*\)\>': '\1',
+    \       '=>': ':=',
+    \       ':=': '=>',
     \   }
     \ ]
 
 
 " \kd = toggle ':' in iskeyword
 map <buffer> <Leader>kd :call ToggleOptionList('iskeyword', ':')<cr>
-
-" \kc = search for handle_call under cursor
-" nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_call(.*' . expand("<cword>")<cr>
 
 " \kc = search for handle_cast/call/info under cursor
 nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_[castlinfo]\{4}\s*(.*' . expand("<cword>")<cr>
