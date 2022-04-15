@@ -206,7 +206,7 @@ endif
 
 if has('gui_macvim')
     set macmeta
-    set vb t_vb= 
+    set vb t_vb=
 endif
 
 set dictionary=~/.vim/dict/dict.txt
@@ -233,7 +233,7 @@ if has('autocmd')
             \   exe "normal! g`\"" |
             \ endif
 
-        autocmd BufWinEnter,BufRead * :call CheckSyncDir()
+        autocmd BufWinEnter,BufRead * :call <SID>check_sync_dir()
     augroup END
 
     augroup HighlightListChars
@@ -257,22 +257,6 @@ else
     " gvim
     colorscheme iceberg
 endif
-
-" hash instead of pound
-inoremap £ #
-nnoremap £ #
-cnoremap £ #
-
-" alt-3
-inoremap <M-3> £
-cnoremap <M-3> £
-
-" for replace
-nnoremap r£ r#
-nnoremap f£ f#
-nmap t£ t#
-nmap f£ f#
-
 
 " LEADER MAPPINGS
 " ---------------
@@ -598,10 +582,10 @@ function! RunGrep(expr, dir)
         else
             let expr = "'" . expr . "'"
         end
-    elseif expr ==? '<cword>' 
+    elseif expr ==? '<cword>'
         let expr = expand(expr)
     end
-    
+ 
     let dir = a:dir
     if dir == "#"
         let dir = input('grep(dir): ')
@@ -612,7 +596,7 @@ function! RunGrep(expr, dir)
         let cmd .= ' ' . dir
     end
     execute cmd
-    if len(getqflist()) > 0 
+    if len(getqflist()) > 0
         copen
     else
         echo "not found"
@@ -650,12 +634,12 @@ elseif has('win32')
 endif
 
 " Map key to toggle opt (normal/insert)
-function! MapToggle(key, opt)
+function! s:map_toggle(key, opt)
     let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<cr>"
     exec 'nnoremap '.a:key.' '.cmd
     exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
-command! -nargs=+ MapToggle call MapToggle(<f-args>)
+command! -nargs=+ MapToggle call <SID>map_toggle(<f-args>)
 
 " Toggle (+=|-=) value in `opt` list, in current buffer
 " eg: iskeyword, guioptions etc
@@ -693,7 +677,7 @@ function! LetToggle(var, possible)
     return a:var
 endfunction
 
-function! CheckSyncDir()
+function! s:check_sync_dir()
     if strlen($MYSYNC)
         let buff_dir = fnamemodify(expand('%:p:h'), ":p") " with trailing slash
         let dirs = map(split($MYSYNC, ","), {_, fnam -> fnamemodify(fnam, ":p")})
@@ -705,7 +689,7 @@ function! CheckSyncDir()
     endif
 endfunction
 
-function! ToggleQuickfix()
+function! s:toggle_quickfix()
     let ids = getqflist({'winid' : 1})
     if get(ids, "winid", 0) != 0
         cclose
@@ -746,7 +730,7 @@ MapToggle <F10> scrollbind
 MapToggle <F11> ignorecase
 
 " F12 = toggle quickfix
-map <F12> :call ToggleQuickfix()<cr>
+map <F12> :call <SID>toggle_quickfix()<cr>
 
 " \ps = toggle paste
 MapToggle <Leader>ps paste
@@ -755,6 +739,8 @@ set pastetoggle=<Leader>ps
 if &diff
     set list
     set guioptions+=b
+    " enable to prevent auto fold
+    " set diffopt+=context:99999
 else
     " disabled in diff
     " \ac = toggle autochdir
@@ -774,14 +760,14 @@ map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
 map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
 
 """ tags
-function! TagTab(tag)
+function! s:tagtab(tag)
     execute 'tab tjump ' . a:tag
 endfunction
 
 " \Ctrl-] = open tag in new tab
 " alt-] = prompt open tag in new tab
-nnoremap <silent><Leader><C-]> :call TagTab(expand("<cWORD>"))<cr>
-nnoremap <m-]> :tab tjump 
+nnoremap <silent><Leader><C-]> :call <SID>tagtab(expand("<cWORD>"))<cr>
+nnoremap <m-]> :tab tjump
 
 
 " CUSTOM COMMANDS
@@ -802,7 +788,7 @@ command! -nargs=1 Vgrep :execute "silent grep! '^\\s*\".*" .
 " Ngrep = search command wiki
 command! -nargs=1 Ngrep silent grep! "<args>" ~/sync/stuff/commands/*  <bar> cwindow
 
-function! GlobCommandsDir(A,L,P)
+function! s:glob_commands_dir(A,L,P)
     let l:pat = '^' . a:A
     let l:result = []
     for fn in split(globpath('~/sync/stuff/commands', '*'), "\n")
@@ -814,7 +800,7 @@ function! GlobCommandsDir(A,L,P)
     return l:result
 endfunction
 
-function! NopenWindowOrTab(dir, filename, bang)
+function! s:nopen_window_or_tab(dir, filename, bang)
     let cmd = a:bang == "!" ? 'edit' : 'tabedit'
     let path = a:dir . "/" . a:filename
     if a:filename !~ "\.wiki$"
@@ -828,9 +814,10 @@ endfunction
 
 " Open command wiki
 " Nopen = open command wiki
-command! -complete=customlist,GlobCommandsDir -nargs=1 -bang Nopen
-    \ :call NopenWindowOrTab("~/sync/stuff/commands/", "<args>", "<bang>")
+command! -complete=customlist,<SID>glob_commands_dir -nargs=1 -bang Nopen
+    \ :call <SID>nopen_window_or_tab("~/sync/stuff/commands/", "<args>", "<bang>")
 
+" \no = Nopen current filetype
 nnoremap <leader>no :execute ':Nopen ' . &filetype<cr>
 
 " alt-N = switch to tab
@@ -1088,9 +1075,11 @@ let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_lazy_update = 200
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth = 40
 let g:ctrlp_mruf_max = &history
 let g:ctrlp_match_current_file = 0
-let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_clear_cache_on_exit = 1     " always clear cache, better than stale cache
+let g:ctrlp_switch_buffer = ''          " don't jump to buffer if already open
 
 " alt-p = ctrlp
 let g:ctrlp_map = '<m-p>'

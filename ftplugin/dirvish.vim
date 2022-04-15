@@ -13,11 +13,15 @@ nmap <buffer> md :!mkdir %/
 " rd = rmdir (dirvish)
 nmap <buffer> rd :execute '!rmdir ' . expand("<cfile>")<cr>
 
+" helpers for cp / mv
+command! -buffer -nargs=1 -complete=file Cp :!cp "<cfile>"<space><args>
+command! -buffer -nargs=1 -complete=file Mv :!mv "<cfile>"<space><args>
+
 " cp = copy file under cursor (dirvish)
-nmap <buffer> cp :!cp "<cfile>"<space>
+nmap <buffer> cp :Cp<space>
 
 " mv = move file under cursor (dirvish)
-nmap <buffer> mv :!mv "<cfile>"<space>
+nmap <buffer> mv :Mv<space>
 
 " cw = rename file
 nmap <buffer> cw :call file#prompt_rename(expand("<cfile>"))<cr>
@@ -43,30 +47,26 @@ nmap <buffer> <C-T> t
 nnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<cr>
 xnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<cr>
 
+" open file under cursor (no split)
 nmap <buffer><nowait><silent> <cr> :<C-U>call dirvish#open("edit", 0)<cr>:echo(expand('%'))<cr>
 
+" \P = CtrlP (dirvish)
 nnoremap <buffer> <Leader>P :execute 'CtrlP ' . expand('%:p')<cr>
 
+" r-click = preview
+nmap <RightMouse> p
+
+" h = up dir (dirvish) [like vifm]
 nmap <buffer> <silent> h <Plug>(dirvish_up)
+
+" l = open (dirvish) [like vifm]
 nmap <buffer> <silent> l :<C-U>call dirvish#open("edit", 0)<cr>:echo(expand('%'))<cr>
 
 " copypath
-" \cd = copy directory/path (and "f)
-" \cf = copy fullpath (and "f)
-" \cv = copy filename only (and "f)
-" \cs = copy stem (and "f)
-if has('win32')
-    " prefer with windows path backslash
-    nmap <buffer> <Leader>cd :let @+=substitute(expand("%"), "/", "\\", "g")<bar>let @f=@+<cr>
-    nmap <buffer> <Leader>cf :let @+=substitute(expand("<cfile>"), "/", "\\", "g")<bar>let @f=@+<cr>
-    nmap <buffer> <Leader>cv :let @+=substitute(fnamemodify(expand("<cfile>"), ":t"), "/", "\\", "g")<bar>let @f=@+<cr>
-    nmap <buffer> <Leader>cs :let @+=substitute(fnamemodify(expand("<cfile>"), ":t:r"), "/", "\\", "g")<bar>let @f=@+<cr>
-elseif has('unix')
-    nmap <buffer> <Leader>cd :let @+=expand("%:~")<bar>let @f=@+<cr>                              " directory
-    nmap <buffer> <Leader>cf :let @+=expand("<cfile>:~")<bar>let @f=@+<cr>                        " fullpath
-    nmap <buffer> <Leader>cv :let @+=fnamemodify(expand("<cfile>"), ":t")<bar>let @f=@+<cr>       " filename only
-    nmap <buffer> <Leader>cs :let @+=fnamemodify(expand("<cfile>"), ":t:r")<bar>let @f=@+<cr>     " stem only
-endif
+nmap <silent> <Leader>cd :call file#clip(file#ex_dir(), 1)<cr>         " directory
+nmap <silent> <Leader>cf :call file#clip(file#ex_full(), 1)<cr>        " full path
+nmap <silent> <Leader>cv :call file#clip(file#ex_filename(), 1)<cr>    " filename only
+nmap <silent> <Leader>cs :call file#clip(file#ex_stem(), 1)<cr>        " stem only
 
 " override for grep buffer
 nmap <buffer> <Leader>gD :call RunGrep('', expand('%'))<cr>

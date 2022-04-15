@@ -11,10 +11,16 @@ function! file#slashpath(path)
     return substitute(a:path, "/", "\\", "g")
 endfunction
 
-" TODO:
-"  function myexpand 
-"   mac/wind -> %:p  ,  linux -> %:~
-"   dirvish  -> ...
+" for dirvish copypaths,
+" use <cfile> instead of %
+function s:d_expand(pattern) 
+    if &filetype == 'dirvish'
+        let toexp = substitute(a:pattern, "%", "<cfile>", "")
+    else
+        let toexp = a:pattern
+    endif
+    return expand(toexp)
+endfunction
 
 " platform specific file expands
 " fixing slashs on windows
@@ -33,38 +39,61 @@ endfunction
 function! file#ex_full()
     " fullpath from current filename
     if has('mac')
-        return expand("%:p")
+        return s:d_expand("%:p")
     elseif has('win32')
-        return file#slashpath(expand("%:p"))
+        return file#slashpath(s:d_expand("%:p"))
     else 
-        return expand("%:~")
+        return s:d_expand("%:~")
     endif
 endfunction
 
 function! file#ex_filename()
     " filename from current filename
     if has('win32')
-        return file#slashpath(expand("%:t"))
+        return file#slashpath(s:d_expand("%:t"))
     else 
-        return expand("%:t")
+        return s:d_expand("%:t")
     endif
 endfunction
 
 function! file#ex_stem()
     " file stem from current filename
     if has('win32')
-        return file#slashpath(expand("%:t:r"))
+        return file#slashpath(s:d_expand("%:t:r"))
     else 
-        return expand("%:t:r")
+        return s:d_expand("%:t:r")
     endif
 endfunction
 
-function! file#clip(content, showmsg)
-    " copy content to clibpboard
+function! file#clip(path, showmsg)
+    " copy `path` to clibpboard
     " also put in "f register
-    let @+ = a:content
-    let @f = a:content
+
+    " some shells don't have clipboard, so 
+    "   set g:clip to an external command
+    let clip = get(g:, "clip", "")
+    if clip != ""
+        call system(clip, expand("%:p:h"))
+    else
+        let @+ = a:path
+    endif
+
+    let @f = a:path
     if a:showmsg != 0
         echo "copied"
     endif
 endfunction
+
+function! file#from_qf(line)
+    " parse filename from quickfix line
+    "  supporting:
+    "  grep: path/to/filename.ext|3| 10:matched text
+    "
+    let pos = match(a:line, '|\d\+|')
+    if pos != -1
+        return strpart(a:line, 0, pos)
+    endif
+
+    return ""
+endfunction
+

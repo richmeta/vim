@@ -97,6 +97,9 @@ snippet supervisor
 	modules => [I]
 }).
 
+-define(WORKER(M), CHILD(M, worker)).
+-define(SUPERVISOR(M), CHILD(M, supervisor)).
+
 %% API
 -export([start_link/0]).
 
@@ -117,12 +120,16 @@ start_link() ->
 %%%===================================================================
 
 init([]) ->
+    Children = [
+        ?SUPERVISOR(mod_sup),
+        ?WORKER(mod)
+    ],
 	SupFlags = #{
 		strategy =>  one_for_one,
 		intensity => 1,
 		period => 5
 	},
-	{ok, {SupFlags, []}}.
+	{ok, {SupFlags, Children}}.
 endsnippet
 
 snippet ct
@@ -248,17 +255,17 @@ handle_call({a, Data}, _From, State) ->
 	Reply = ok,
 	{reply, Reply, State};
 handle_call(Request, _From, _State) ->
-	throw({unhandled_call, Request}).
+	error({unhandled_call, Request}).
 
 handle_cast({b, _Data}, State) ->
 	{noreply, State};
 handle_cast(Msg, _State) ->
-	throw({unhandled_cast, Msg}).
+	error({unhandled_cast, Msg}).
 
 handle_info({c, _Data}, State) ->
 	{noreply, State};
 handle_info(Info, _State) ->
-	throw({unhandled_info, Info}).
+	error({unhandled_info, Info}).
 
 handle_continue({d, _Data}, State) ->
 	{noreply, State}.
