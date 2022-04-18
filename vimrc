@@ -986,6 +986,7 @@ let g:ale_linters = {
     \   'c': ['gcc'],
     \   'go': ['gobuild'],
     \   'erlang': ['syntaxerl'],
+    \   'cpp': ['cppcheck']
     \ }
 
 let g:ale_fixers = {

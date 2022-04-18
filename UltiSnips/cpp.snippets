@@ -176,4 +176,20 @@ BOOST_AUTO_TEST_CASE(${4:TestCaseName})
 BOOST_AUTO_TEST_SUITE_END()
 
 endsnippet
+
+# CATCH2
+snippet req
+REQUIRE( ${1} );$0
+endsnippet
+
+snippet section
+SECTION( "${1}" )$0
+endsnippet
+
+snippet tc
+TEST_CASE( "${1}", "${2}" )$0
+endsnippet
+
+
+
 # vim:ft=snippets:
