@@ -86,7 +86,6 @@ Plug 'kana/vim-textobj-indent'
 " iv = select value (in k/v pair)
 Plug 'vimtaku/vim-textobj-keyvalue'
 
-
 " Toggle words/expressions
 Plug 'AndrewRadev/switch.vim'
 
@@ -575,6 +574,7 @@ function! RunGrep(expr, dir)
     " expr - cword/cWORD or prompt if empty
     " dir - use this dir, # prompt, or cwd if empty
     let expr = a:expr
+    let flags = ''
     if len(expr) == 0
         let expr = input('grep: ')
         if len(expr) == 0
@@ -582,8 +582,12 @@ function! RunGrep(expr, dir)
         else
             let expr = "'" . expr . "'"
         end
-    elseif expr ==? '<cword>'
+    elseif expr ==# '<cword>'
         let expr = expand(expr)
+    elseif expr ==# '<cWORD>'
+        " search with word bounardary
+        let expr = expand('<cword>')
+        let flags = '-w'
     end
  
     let dir = a:dir
@@ -591,7 +595,7 @@ function! RunGrep(expr, dir)
         let dir = input('grep(dir): ')
     end
 
-    let cmd = 'silent grep! ' . expr
+    let cmd = 'silent grep! ' . flags . ' ' . expr
     if len(dir) > 0
         let cmd .= ' ' . dir
     end
@@ -616,11 +620,14 @@ nnoremap <Leader>gD :call RunGrep('', expand('%:p:h'))<cr>
 nnoremap <Leader>gw :call RunGrep('<cword>', '')<cr>
 
 " \gW = grep current WORD
-nnoremap <Leader>gw :call RunGrep('<cWORD>', '')<cr>
+nnoremap <Leader>gW :call RunGrep('<cWORD>', '')<cr>
 
 
 " FUNCTION BASED MAPS
 " ===================
+
+" toggle on/off settings
+command! -nargs=+ MapToggle call toggle#add(<f-args>)
 
 " sudo write
 if has('unix')
@@ -633,50 +640,6 @@ elseif has('win32')
     command! -bar -nargs=0 WR silent! | exec "write" | exec "write !attrib -r %" | silent! edit!
 endif
 
-" Map key to toggle opt (normal/insert)
-function! s:map_toggle(key, opt)
-    let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<cr>"
-    exec 'nnoremap '.a:key.' '.cmd
-    exec 'inoremap '.a:key." \<C-O>".cmd
-endfunction
-command! -nargs=+ MapToggle call <SID>map_toggle(<f-args>)
-
-" Toggle (+=|-=) value in `opt` list, in current buffer
-" eg: iskeyword, guioptions etc
-function! ToggleOptionList(opt, value)
-    let values = split(eval('&'.a:opt), ",")
-    let present = index(values, a:value) != -1
-    let op = (present) ? '-=' : '+='
-    exec 'setlocal ' . a:opt . op . a:value
-endfunction
-
-" prompt for the character to add/remove from opt
-function! ToggleOptionListPrompt(opt)
-    let c = getchar()
-    if c =~ '^\d\+$'
-        let c = nr2char(c)
-    endif
-    if match(c, '\e') != 0
-        call ToggleOptionList(a:opt, c)
-    endif
-endfunction
-
-" Toggle possible values for var
-function! LetToggle(var, possible)
-    let idx = 0
-    let length = len(a:possible)
-    while idx < length
-        if a:possible[idx] == a:var
-            let next = (idx == length-1) ? 0 : idx + 1
-            return a:possible[next]
-        endif
-        let idx += 1
-    endwhile
-
-    " var not in `possible`
-    return a:var
-endfunction
-
 function! s:check_sync_dir()
     if strlen($MYSYNC)
         let buff_dir = fnamemodify(expand('%:p:h'), ":p") " with trailing slash
@@ -686,15 +649,6 @@ function! s:check_sync_dir()
                 setlocal noswapfile
             endif
         endfor
-    endif
-endfunction
-
-function! s:toggle_quickfix()
-    let ids = getqflist({'winid' : 1})
-    if get(ids, "winid", 0) != 0
-        cclose
-    else
-        botright copen
     endif
 endfunction
 
@@ -730,7 +684,7 @@ MapToggle <F10> scrollbind
 MapToggle <F11> ignorecase
 
 " F12 = toggle quickfix
-map <F12> :call <SID>toggle_quickfix()<cr>
+map <F12> :call toggle#quickfix()<cr>
 
 " \ps = toggle paste
 MapToggle <Leader>ps paste
@@ -754,10 +708,10 @@ MapToggle <Leader>cc cursorcolumn
 MapToggle <Leader>sr splitright
 
 " \kd = toggle '.' in `iskeyword`
-map <Leader>kd :call ToggleOptionList('iskeyword', '.')<cr>
+map <Leader>kd :call toggle#option_list('iskeyword', '.')<cr>
 
 " \kp = prompt for char to toggle in `iskeyword`
-map <Leader>kp :call ToggleOptionListPrompt('iskeyword')<cr>
+map <Leader>kp :call toggle#option_list('iskeyword')<cr>
 
 """ tags
 function! s:tagtab(tag)

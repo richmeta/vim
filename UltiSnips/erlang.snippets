@@ -28,8 +28,16 @@ snippet exall
 -compile(export_all).
 endsnippet
 
-snippet exp "export" b
+snippet "(:?-)?exp" "export (exp or -exp)" br
 -export([${VISUAL}${0}]).
+endsnippet
+
+snippet "(:?-)?beh" "Behaviour" br
+-behaviour(${0}).
+endsnippet
+
+snippet "(:?-)?def" "Define" br
+-define(${1:macro}, ${2:body}).
 endsnippet
 
 snippet doc "doc tag" b
@@ -49,10 +57,6 @@ snippet mod "Module Directive" b
 -module(`!p snip.rv = snip.basename or "module"`).
 endsnippet
 
-snippet beh "Behaviour" b
--behaviour(${0}).
-endsnippet
-
 snippet || "List Comprehension"
 [${1:X} || ${2:X} <- ${3:List}${4:, gen}]
 endsnippet
@@ -61,26 +65,22 @@ snippet gen "Generator Expression"
 ${1:X} <- ${2:List}${3:, gen}
 endsnippet
 
-snippet def
-	-define(${1:macro}, ${2:body}).
-endsnippet
-
 snippet fun
-	fun (${1:Parameters}) ->
-		${2:body}
-	end
+fun (${1:Parameters}) ->
+	${2:body}
+end
 endsnippet
 
 snippet try
-	try
-		${1:${VISUAL}}
-	catch
-		${2:_:_} -> ${0:got_some_exception}
-	end
+try
+	${1:${VISUAL}}
+catch
+	${2:_:_} -> ${0:got_some_exception}
+end
 endsnippet
 
 snippet todo
-	%% TODO: ${0}
+%% TODO: ${0}
 endsnippet
 
 snippet supervisor
@@ -120,10 +120,10 @@ start_link() ->
 %%%===================================================================
 
 init([]) ->
-    Children = [
-        ?SUPERVISOR(mod_sup),
-        ?WORKER(mod)
-    ],
+	Children = [
+		?SUPERVISOR(mod_sup),
+		?WORKER(mod)
+	],
 	SupFlags = #{
 		strategy =>  one_for_one,
 		intensity => 1,
@@ -195,17 +195,23 @@ stop(Pid) ->
 %%%===================================================================
 
 gen_foreach_test_() ->
-	{foreach, fun start/0, fun stop/1, [
-		fun run_thing1/1,
-		run_thing2/1
-	]}.
+	{
+		foreach,
+		fun start/0,
+		fun stop/1,
+		[
+			fun run_thing1/1,
+			fun run_thing2/1
+		]
+	}.
 
 gen_setup_test_() ->
-	{setup,
-		fun start/0, 
+	{
+		setup,
+		fun start/0,
 		fun stop/1,
 		fun run_thing1/1
-	]}.
+	}.
 
 normal_test() ->
 	?assert(true).
@@ -283,6 +289,9 @@ code_change(_OldVsn, State, _Extra) ->
 %%%===================================================================
 endsnippet
 
+##
+## gen_server bits
+##
 snippet cast
 gen_server:cast(?SERVER, ${0}),
 endsnippet
@@ -311,43 +320,43 @@ handle_continue(${1}, ${2}State) ->
 	${0}{noreply, State};
 endsnippet
 
-# TODO: pal
-#   name:Var Var 
-#   use . at end to put . not ,
-#   leading: Var1 
 
 global !p
 import re
 
 # Var = ~p
 reg_format = re.compile(r'\b([\w:]+)\b,?')
-reg_prefix = re.compile(r'(.*:)(.*)')
+reg_start = re.compile(r'\s*(.*)\|(.*)')
+
+def create_erlformat(snip, erlcode, newline=False):
+	spec = snip.context['spec']
+	(fmt, varnames) = erlformat(spec, newline)
+	ret = f'{erlcode}("{fmt}", {varnames})'
+	snip.expand_anon(ret)
 
 def erlformat(spec, newline=False):
-	# A, B, C to
-	# A = ~p, B = ~p, C = ~p
+	# A B C -> (fmt, vs)
+	#   fmt ==> A = ~p, B = ~p, C = ~p
+	#   vs  ==> [A, B, C]
 	if not spec:
 		return ""
 
-	# also allow prefix
-	# eg: debug info: A, B, C
-	m = reg_prefix.match(spec)
+	# allow prefix eg: debug info|A, B, C
+	start = ""
+	m = reg_start.match(spec)
 	if m is not None:
-		ret = m.group(1)
+		start = m.group(1) + ": "
 		spec = m.group(2)
-	else:
-		ret = ""
 
-	for m in reg_format.finditer(spec):
-		ret += f"{m.group(1)} = ~p, "
+	# TODO: remove prefix:var from var
+	varnames = [m.group(0) for m in reg_format.finditer(spec)]
+	fmt = ", ".join([ f'{v} = ~p' for v in varnames ])
+	vs = f'[{", ".join(varnames)}]'
 
-	# without trailing comma
-	ret = ret[:-2]
 	if newline:
-		ret += "~n"
+		fmt += "~n"
 
-	return ret
-
+	return (start + fmt, vs)
 
 def quote_words(spec):
 	if not spec:
@@ -356,17 +365,33 @@ def quote_words(spec):
 	words = spec.split(",")
 	return ", ".join([f'"{word.strip()}"' for word in words])
 
+# expand aliased snippet. usage: 
+# post_jump "px.snippets.expand(snip)"
+# snippet
+# name$1
+def expand(snip, jump_pos=1):
+    if snip.tabstop != jump_pos:
+        return
+
+    vim.eval('feedkeys("\<C-R>=UltiSnips#ExpandSnippet()\<CR>")')
 endglobal
 
-
-snippet pal
-%% $1
-ct:pal("${0}`!p snip.rv = erlformat(t[1])`", [$1]),
+context "{'spec': ''}"
+post_jump "create_erlformat(snip, 'ct:pal')"
+snippet "pal\s*(.+$)" "ct:pal helper" r
+`!p snip.context['spec'] = match.group(1)`
 endsnippet
 
-snippet iof
-%% $1
-io:format("${0}`!p snip.rv = erlformat(t[1], True)`", [$1]),
+context "{'spec': ''}"
+post_jump "create_erlformat(snip, 'io:format', True)"
+snippet "iof\s*(.+$)" "io:format helper" r
+`!p snip.context['spec'] = match.group(1)`
+endsnippet
+
+context "{'spec': ''}"
+post_jump "create_erlformat(snip, '?debugFmt')"
+snippet "debugFmt\s*(.+$)" "eunit ?debugFmt helper" r
+`!p snip.context['spec'] = match.group(1)`
 endsnippet
 
 snippet rfdbg
@@ -374,12 +399,12 @@ snippet rfdbg
 rfdbg:log(?MODULE, ?FUNCTION_NAME, [${0}`!p snip.rv = quote_words(t[1])`], [$1]),
 endsnippet
 
-snippet palv
+snippet palv "visual selection to pal"
 ct:pal("${VISUAL} = ~p", [${VISUAL}]),
 endsnippet
 
-snippet palx
-ct:pal("${0}", []),
+snippet palx "normal ct:pal without fancy expansion"
+ct:pal("${1}", [${2}]),
 endsnippet
 
 snippet escript "add escript shbang" b
@@ -401,8 +426,6 @@ snippet uuid
 if not snip.c:
 	snip.rv = str(uuid4())`">>,
 endsnippet
-
-# TODO snippet for "normal ct:pal"
 
 
 # vim:ft=snippets:
