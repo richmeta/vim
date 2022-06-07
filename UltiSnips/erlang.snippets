@@ -274,7 +274,7 @@ handle_info(Info, _State) ->
 	error({unhandled_info, Info}).
 
 handle_continue({d, _Data}, State) ->
-	{noreply, State}.
+	{noreply, State};
 handle_continue(Continue, _State) ->
 	error({unhandled_continue, Continue}).
 
@@ -425,6 +425,18 @@ snippet uuid
 <<"`!p from uuid import uuid4
 if not snip.c:
 	snip.rv = str(uuid4())`">>,
+endsnippet
+
+snippet int "integer" w
+integer()
+endsnippet
+
+snippet nni "non_neg_integer" w
+non_neg_integer()
+endsnippet
+
+snippet pi "pos_integer" w
+pos_integer()
 endsnippet
 
 

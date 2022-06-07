@@ -1035,6 +1035,9 @@ let g:ctrlp_mruf_max = &history
 let g:ctrlp_match_current_file = 0
 let g:ctrlp_clear_cache_on_exit = 1     " always clear cache, better than stale cache
 let g:ctrlp_switch_buffer = ''          " don't jump to buffer if already open
+let g:ctrlp_custom_ignore = {
+    \ 'file': '\vvifm\.rename',
+\ }
 
 " alt-p = ctrlp
 let g:ctrlp_map = '<m-p>'
