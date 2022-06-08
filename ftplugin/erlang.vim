@@ -5,6 +5,8 @@ setlocal commentstring=%%%s
 " 2 - string to binary
 " 3 - underscore Variable
 " 4 - remove underscore Variable
+" 5 - {atom, Var} to Var
+
 "
 " notes:  \@<! is positive lookbehind,
 "         so #3 or 4 only matches when not preceded with quotes
@@ -22,6 +24,11 @@ let b:switch_custom_definitions =
     \       '"\@<!\<_\(\u\w*\)\>': '\1',
     \       '=>': ':=',
     \       ':=': '=>',
+    \       '{\s*\l\+,\s*\(\u(\u\|\l)*\)\s*}': '\1',
+    \       'list_to_binary': 'binary_to_list',
+    \       'binary_to_list': 'list_to_binary',
+    \       'int_to_binary': 'binary_to_int',
+    \       'binary_to_int': 'int_to_binary',
     \   }
     \ ]
 

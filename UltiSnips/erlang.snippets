@@ -184,7 +184,7 @@ snippet eunit
 %%%===================================================================
 
 start() ->
-	{ok, Pid} = project:start_link(),
+	{ok, Pid} = some_module:start_link(),
 	Pid.
 
 stop(Pid) ->
@@ -327,12 +327,38 @@ import re
 # Var = ~p
 reg_format = re.compile(r'\b([\w:]+)\b,?')
 reg_start = re.compile(r'\s*(.*)\|(.*)')
+reg_trailing = re.compile(r'([,;])\s*$')
+
+# Replace vars
+special_vars = {
+	# use M F for mod:func
+	'M': '?MODULE', 
+    'F': '?FUNCTION_NAME' 
+}
+
+format_vars = {
+	# use M F for mod:func
+	'M': '~s:',
+    'F': '~s '
+}
+
+
+def update_special(varnames):
+	return [ special_vars.get(v, v) for v in varnames ]
 
 def create_erlformat(snip, erlcode, newline=False):
 	spec = snip.context['spec']
+	ht = reg_trailing.search(spec)
+	# support trailing comma/semi
+	trailing = ht.group(1) if ht else ''
 	(fmt, varnames) = erlformat(spec, newline)
-	ret = f'{erlcode}("{fmt}", {varnames})'
+	ret = f'{erlcode}("{fmt}", {varnames}){trailing}'
 	snip.expand_anon(ret)
+
+def varformat(name):
+	if name in format_vars:
+		return format_vars[name]
+	return f'{name} = ~p, '
 
 def erlformat(spec, newline=False):
 	# A B C -> (fmt, vs)
@@ -349,8 +375,11 @@ def erlformat(spec, newline=False):
 		spec = m.group(2)
 
 	# TODO: remove prefix:var from var
-	varnames = [m.group(0) for m in reg_format.finditer(spec)]
-	fmt = ", ".join([ f'{v} = ~p' for v in varnames ])
+	varnames = [m.group(1) for m in reg_format.finditer(spec)]
+	fmt = "".join([ varformat(v) for v in varnames ])
+	if fmt.endswith(", "):
+		fmt = fmt[:-2]
+	varnames = update_special(varnames)
 	vs = f'[{", ".join(varnames)}]'
 
 	if newline:
@@ -403,9 +432,6 @@ snippet palv "visual selection to pal"
 ct:pal("${VISUAL} = ~p", [${VISUAL}]),
 endsnippet
 
-snippet palx "normal ct:pal without fancy expansion"
-ct:pal("${1}", [${2}]),
-endsnippet
 
 snippet escript "add escript shbang" b
 #!/usr/bin/env escript -c
@@ -439,5 +465,9 @@ snippet pi "pos_integer" w
 pos_integer()
 endsnippet
 
+priority 10
+snippet palx "normal ct:pal without fancy expansion"
+ct:pal("${1}", [${2}]),
+endsnippet
 
 # vim:ft=snippets:

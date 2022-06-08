@@ -50,7 +50,7 @@ xnoremap <buffer> <silent> t :call dirvish#open('tabedit', 0)<cr>
 " open file under cursor (no split)
 nmap <buffer><nowait><silent> <cr> :<C-U>call dirvish#open("edit", 0)<cr>:echo(expand('%'))<cr>
 
-" \P = CtrlP (dirvish)
+" \Pb = CtrlP (dirvish dir)
 nnoremap <buffer> <Leader>P :execute 'CtrlP ' . expand('%:p')<cr>
 
 " r-click = preview

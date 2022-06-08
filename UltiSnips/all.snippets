@@ -16,19 +16,19 @@ def get_config(key=None):
 
 endglobal
 
-snippet uuid
+snippet uuid "new uuid" w
 `!p from uuid import uuid4
 if not snip.c:
 	snip.rv = str(uuid4())`
 endsnippet
 
-snippet now "now dd/mm/yyyy hh24:mi:ss" b
+snippet now "now dd/mm/yyyy hh24:mi:ss" w
 `!p from datetime import datetime
 if not snip.c:
 	snip.rv = datetime.now().strftime("%d/%m/%Y %H:%M:%S")`
 endsnippet
 
-snippet date "todays date" b
+snippet date "todays date" w
 `!p from datetime import datetime
 if not snip.c:
 	snip.rv = datetime.now().strftime("%d/%m/%Y")`
@@ -40,25 +40,25 @@ if not snip.c:
 	snip.rv = datetime.now().isoformat()`
 endsnippet
 
-snippet time "now time" b
+snippet time "now time" w
 `!p from datetime import datetime
 if not snip.c:
 	snip.rv = datetime.now().strftime("%H:%M:%S")`
 endsnippet
 
-snippet isonow "now isoformat" b
+snippet isonow "now isoformat" w
 `!p from datetime import datetime, timezone
 if not snip.c:
 	snip.rv = datetime.now(timezone.utc).replace(microsecond=0).isoformat()`
 endsnippet
 
-snippet email "personal email" b
+snippet email "personal email" w
 `!p
 if not snip.c:
 	snip.rv = get_config("email")`
 endsnippet
 
-snippet wemail "work email" b
+snippet wemail "work email" w
 `!p
 if not snip.c:
 	snip.rv = get_config("work_email")`

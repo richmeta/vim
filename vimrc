@@ -16,8 +16,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
 Plug 'thinca/vim-localrc'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
 Plug 'dense-analysis/ale'
 Plug 'andymass/vim-matchup'
 Plug 'davidhalter/jedi-vim'
@@ -30,6 +28,11 @@ Plug 'dyng/ctrlsf.vim'
 if has('python3')
     Plug 'SirVer/ultisnips'
 endif
+
+" ctrlp
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'codewithkristian/ctrlp-branches'
+Plug 'DavidEGx/ctrlp-smarttabs'
 
 " text objects
 Plug 'kana/vim-textobj-user'
@@ -318,6 +321,10 @@ if executable('erlfmtx')
     " \ef = format with erlfmt
     map <Leader>ef :silent %!erlfmtx --print-width 120 - <cr><cr>
     vmap <Leader>ef :!erlfmtx --print-width 120 - <cr><cr>
+elseif executable('erlfmt')
+    " fallback
+    map <Leader>ef :silent %!erlfmt --print-width 120 - <cr><cr>
+    vmap <Leader>ef :!erlfmt --print-width 120 - <cr><cr>
 endif
 
 " shift-F1 - help current word
@@ -721,7 +728,7 @@ endfunction
 " \Ctrl-] = open tag in new tab
 " alt-] = prompt open tag in new tab
 nnoremap <silent><Leader><C-]> :call <SID>tagtab(expand("<cWORD>"))<cr>
-nnoremap <m-]> :tab tjump
+nnoremap <m-]> :tab tjump<space>
 
 
 " CUSTOM COMMANDS
@@ -1026,7 +1033,6 @@ else
 endif
 
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_lazy_update = 200
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
@@ -1039,17 +1045,18 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\vvifm\.rename',
 \ }
 
+let g:ctrlp_smarttabs_modify_tabline = 0
+
+let g:ctrlp_extensions = [
+    \    'branches',
+    \    'smarttabs'
+    \ ]
+
 " alt-p = ctrlp
 let g:ctrlp_map = '<m-p>'
 
 " \p = CtrlP (git root)
 nnoremap <Leader>p :CtrlP<cr>
-
-" \P = CtrlP (buffer dir)
-nnoremap <Leader>P :CtrlPCurFile<cr>
-
-" \D = CtrlP (cwd)
-nnoremap <Leader>D :CtrlPCurWD<cr>
 
 " \f = CtrlPMRU
 nnoremap <Leader>f :CtrlPMRU<cr>
@@ -1057,8 +1064,20 @@ nnoremap <Leader>f :CtrlPMRU<cr>
 " \z = :CtrlPBuffer
 nnoremap <Leader>z :CtrlPBuffer<cr>
 
-" \Ctrl-t = :CtrlPTag
-nnoremap <Leader><c-t> :CtrlPBuffer<cr>
+" \Pb = CtrlP (buffer dir)
+nnoremap <Leader>Pb :CtrlPCurFile<cr>
+
+" \Pd = CtrlP (cwd)
+nnoremap <Leader>Pd :CtrlPCurWD<cr>
+
+" \P] = :CtrlPTag tags
+nnoremap <Leader>Pt :CtrlPBuffer<cr>
+
+" \Pg = :CtrlPBranches
+nnoremap <Leader>Pg :CtrlPBranches<cr>
+
+" \Pt = :CtrlPSmartTabs
+nnoremap <Leader>Pt :CtrlPSmartTabs<cr>
 
 
 
