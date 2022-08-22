@@ -253,7 +253,7 @@ start_link() ->
 %%% gen_server callbacks
 %%%===================================================================
 
--spec init([]) -> state().
+-spec init([]) -> {ok, state(), {continue, term()}}.
 init([]) ->
 	{ok, #{}}.
 
@@ -327,65 +327,90 @@ import re
 # Var = ~p
 reg_format = re.compile(r'\b([\w:]+)\b,?')
 reg_start = re.compile(r'\s*(.*)\|(.*)')
-reg_trailing = re.compile(r'([,;])\s*$')
+reg_trailing = re.compile(r'([,;.])\s*$')
 
 # Replace vars
 special_vars = {
-	# use M F for mod:func
-	'M': '?MODULE', 
-    'F': '?FUNCTION_NAME' 
+    # use M F for mod:func
+    'M': '?MODULE',
+    'F': '?FUNCTION_NAME',
+    'MF': '?MODULE, ?FUNCTION_NAME'
 }
 
 format_vars = {
-	# use M F for mod:func
-	'M': '~s:',
-    'F': '~s '
+    # use M F for mod:func
+    'M': '~s',
+    'F': '~s',
+    'MF': '~s:~s'
 }
 
 
-def update_special(varnames):
-	return [ special_vars.get(v, v) for v in varnames ]
 
 def create_erlformat(snip, erlcode, newline=False):
-	spec = snip.context['spec']
-	ht = reg_trailing.search(spec)
-	# support trailing comma/semi
-	trailing = ht.group(1) if ht else ''
-	(fmt, varnames) = erlformat(spec, newline)
-	ret = f'{erlcode}("{fmt}", {varnames}){trailing}'
-	snip.expand_anon(ret)
+    spec = snip.context['spec']
+    ht = reg_trailing.search(spec)
+    # support trailing comma/semi
+    trailing = ht.group(1) if ht else ''
+    (fmt, varnames) = erlformat(spec, newline)
+    ret = f'{erlcode}("{fmt}", {varnames}){trailing}'
+    snip.expand_anon(ret)
+
 
 def varformat(name):
-	if name in format_vars:
-		return format_vars[name]
-	return f'{name} = ~p, '
+    if name in format_vars:
+        return format_vars[name]
+    prefix_name = name.split(':')
+    if len(prefix_name) != 1:
+        name = prefix_name[0]
+    return f'{name} = ~p'
+
+
+def varname(name):
+    # returns list
+    if name in special_vars:
+        name = special_vars[name]
+    prefix_name = name.split(':')
+    if len(prefix_name) == 1:
+        return prefix_name
+    return [prefix_name[1]]
+
 
 def erlformat(spec, newline=False):
-	# A B C -> (fmt, vs)
-	#   fmt ==> A = ~p, B = ~p, C = ~p
-	#   vs  ==> [A, B, C]
-	if not spec:
-		return ""
+    # A B C -> (fmt, vs)
+    #   fmt ==> A = ~p, B = ~p, C = ~p
+    #   vs  ==> [A, B, C]
+    # a:A b:B c:C -> (fmt, vs) # with prefix
+    #   fmt ==> a = ~p, b = ~p, c = ~p
+    # message here|A B C -> (fmt, vs) # with preamble
+    #   fmt ==> message here: A = ~p, B = ~p, C = ~p
+    # M F -> (fmt, vs)
+    #   fmt ==> ?~s:?~s
+    #   vs  ==> [MODULE, FUNCTION_NAME]
+    if not spec:
+        return ""
 
-	# allow prefix eg: debug info|A, B, C
-	start = ""
-	m = reg_start.match(spec)
-	if m is not None:
-		start = m.group(1) + ": "
-		spec = m.group(2)
+    # allow preamble eg: debug info|A, B, C
+    start = ""
+    m = reg_start.match(spec)
+    if m is not None:
+        start = m.group(1) + ": "
+        spec = m.group(2)
 
-	# TODO: remove prefix:var from var
-	varnames = [m.group(1) for m in reg_format.finditer(spec)]
-	fmt = "".join([ varformat(v) for v in varnames ])
-	if fmt.endswith(", "):
-		fmt = fmt[:-2]
-	varnames = update_special(varnames)
-	vs = f'[{", ".join(varnames)}]'
+    varnames = []
+    fmts = []
+    for m in reg_format.finditer(spec):
+        vname = varname(m.group(1))
+        varnames.extend(vname)
+        fmt = varformat(m.group(1))
+        fmts.append(fmt)
 
-	if newline:
-		fmt += "~n"
+    vs = f'[{", ".join(varnames)}]'
+    fmt = ", ".join([v for v in fmts])
 
-	return (start + fmt, vs)
+    if newline:
+        fmt += "~n"
+
+    return (start + fmt, vs)
 
 def quote_words(spec):
 	if not spec:

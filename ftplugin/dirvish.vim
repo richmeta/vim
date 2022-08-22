@@ -18,10 +18,10 @@ command! -buffer -nargs=1 -complete=file Cp :!cp "<cfile>"<space><args>
 command! -buffer -nargs=1 -complete=file Mv :!mv "<cfile>"<space><args>
 
 " cp = copy file under cursor (dirvish)
-nmap <buffer> cp :Cp<space>
+nmap <buffer> cp :Cp<space>%/
 
 " mv = move file under cursor (dirvish)
-nmap <buffer> mv :Mv<space>
+nmap <buffer> mv :Mv<space>%/
 
 " cw = rename file
 nmap <buffer> cw :call file#prompt_rename(expand("<cfile>"))<cr>

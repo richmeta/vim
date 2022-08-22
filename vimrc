@@ -196,6 +196,8 @@ set formatoptions+=j " Delete comment character when joining commented lines
 set tabpagemax=50
 set tagbsearch
 set nofixendofline
+set mouse=a
+set selection=inclusive
 
 if (!(has('mac') && $VIM == '/usr/share/vim'))
     " not supported on apple vim
@@ -368,6 +370,9 @@ nnoremap <Leader>ye "+y$
 " \yy = copy whole line into clipboard
 nnoremap <Leader>yy m`^"+y$``
 
+" alt-v = select whole line excl newline
+nnoremap <m-v> ^vg_
+
 " \yp = copy inner paragraph into clipboard
 nnoremap <Leader>yp "+yip
 
@@ -402,6 +407,9 @@ nnoremap <Leader>rm :!rm -i "%"<cr>
 " \pw = Pwd
 nnoremap <Leader>pw :pwd<cr>
 
+" \pb = print directory of current buffer
+nnoremap <Leader>pb :echo expand('%:h')<cr>
+
 " \wd = change working directory to current buffer
 nnoremap <Leader>wd :execute 'cd ' . expand('%:h')<bar>:pwd<cr>
 
@@ -413,7 +421,7 @@ nnoremap <Leader>ss :wa<cr>
 
 " \us = Unique sort whole file
 nnoremap <Leader>us :%!sort -u<cr>
-vnoremap <Leader>us :'<,'>!sort -u<cr>
+vnoremap <Leader>us :!sort -u<cr>
 
 " \vs = Visual sort
 vnoremap <Leader>vs :sort<cr>
@@ -650,7 +658,7 @@ endif
 function! s:check_sync_dir()
     if strlen($MYSYNC)
         let buff_dir = fnamemodify(expand('%:p:h'), ":p") " with trailing slash
-        let dirs = map(split($MYSYNC, ","), {_, fnam -> fnamemodify(fnam, ":p")})
+        let dirs = map(split($MYSYNC, "[,:]"), {_, fnam -> fnamemodify(fnam, ":p")})
         for d in dirs
             if match(buff_dir, d) > -1
                 setlocal noswapfile
@@ -833,6 +841,8 @@ let g:tagbar_type_elixir = {
 let g:tagbar_type_vimwiki = {
     \ 'ctagstype' : 'wiki',
     \ 'kinds'     : [
+        \ 'h:headings',
+        \ 's:subheadings',
         \ 'd:definition',
     \ ],
     \ 'sort'    : 0,
@@ -1026,7 +1036,8 @@ if has('win32')
 else
     if executable('fd')
         " eg: fd "" '<full directory path>' -tf --color=never --glob
-        let g:ctrlp_user_command = 'fd "" %s -tf -c never '
+        " prevent ctrlp indexing home
+        let g:ctrlp_user_command = '[[ $PWD == $HOME ]] && echo DISALLOWED || fd "" %s -tf -c never '
     else
         let g:ctrlp_user_command = 'find %s -type f'
     endif
@@ -1085,8 +1096,8 @@ nnoremap <Leader>Pt :CtrlPSmartTabs<cr>
 " -------
 " note: 'g:vimwiki_list' set in local.vim
 
-if exists("$MYSYNC")
-    let g:vimwiki_list = [{'path': "$MYSYNC/stuff/commands", 'name': 'Commands'}]
+if isdirectory(expand("~/sync"))
+    let g:vimwiki_list = [{'path': "~/sync/stuff/commands", 'name': 'Commands'}]
 endif
 
 " prevent link shortening
