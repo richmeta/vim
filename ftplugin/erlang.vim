@@ -36,8 +36,8 @@ let b:switch_custom_definitions =
 " \kd = toggle ':' in iskeyword
 map <buffer> <Leader>kd :call ToggleOptionList('iskeyword', ':')<cr>
 
-" \kc = search for handle_cast/call/info under cursor
-nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_[castlinfo]\{4}\s*(.*' . expand("<cword>")<cr>
+" \kc = search for handle_cast/call/info/continue under cursor
+nnoremap <buffer> <Leader>kc :keepjumps execute '/handle_[castlinfot]\{4}\s*(.*' . expand("<cword>")<cr>
 
 " Ctrl \] = goto tag (overrides global for vim_erlang_tags)
 nnoremap <buffer> <Leader><C-]> :call vim_erlang_tags#VimErlangTagsSelect(1)<cr><c-]><C-w>T
@@ -47,4 +47,8 @@ nnoremap <buffer> <Leader>dp :%g/ct:pal\(\)/d<cr>
 
 " \cp = copy module/function under cursor
 nmap <Leader>cp :let @+=expand("%:t:r") . ":" . expand("<cword>")<cr>
+
+" \cr = copy redbug:start for module/function under cursor
+" eg: redbug:start("carshare_server_handler_worker:do_poll -> return", [{time, 300000}]).
+nmap silent <Leader>cr :let @+= 'redbug:start("' . expand("%:t:r") . ":" . expand("<cword>") . ' -> return", [{time, 300000}]).'<cr>
 

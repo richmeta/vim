@@ -32,7 +32,6 @@ endif
 " ctrlp
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'codewithkristian/ctrlp-branches'
-Plug 'DavidEGx/ctrlp-smarttabs'
 
 " text objects
 Plug 'kana/vim-textobj-user'
@@ -433,7 +432,7 @@ nnoremap <Leader>vrc :exec 'tabedit ' . resolve($MYVIMRC)<cr>
 nnoremap <Leader>vso :so $MYVIMRC<cr>:echo "sourced $MYVIMRC"<cr>
 
 " \sb = shebang for bash
-nnoremap <Leader>sb :normal 1GO<ESC>:.!which env<cr>I#!<ESC>A bash<ESC>
+nnoremap <Leader>sb :normal 1GO<esc>I#!/usr/bin/env bash<cr><esc>
 
 " ReadUrl = download + edit the url
 if executable('curl')
@@ -1039,7 +1038,7 @@ else
         " prevent ctrlp indexing home
         let g:ctrlp_user_command = '[[ $PWD == $HOME ]] && echo DISALLOWED || fd "" %s -tf -c never '
     else
-        let g:ctrlp_user_command = 'find %s -type f'
+        let g:ctrlp_user_command = '[[ $PWD == $HOME ]] && echo DISALLOWED || find %s -type f'
     endif
 endif
 
@@ -1059,8 +1058,7 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_smarttabs_modify_tabline = 0
 
 let g:ctrlp_extensions = [
-    \    'branches',
-    \    'smarttabs'
+    \    'branches'
     \ ]
 
 " alt-p = ctrlp
@@ -1075,20 +1073,17 @@ nnoremap <Leader>f :CtrlPMRU<cr>
 " \z = :CtrlPBuffer
 nnoremap <Leader>z :CtrlPBuffer<cr>
 
-" \Pb = CtrlP (buffer dir)
-nnoremap <Leader>Pb :CtrlPCurFile<cr>
+" \Pd = CtrlP (buffer dir)
+nnoremap <Leader>Pd :CtrlPCurFile<cr>
 
-" \Pd = CtrlP (cwd)
-nnoremap <Leader>Pd :CtrlPCurWD<cr>
+" \Pw = CtrlP (cwd)
+nnoremap <Leader>Pw :CtrlPCurWD<cr>
 
 " \P] = :CtrlPTag tags
 nnoremap <Leader>Pt :CtrlPBuffer<cr>
 
-" \Pg = :CtrlPBranches
-nnoremap <Leader>Pg :CtrlPBranches<cr>
-
-" \Pt = :CtrlPSmartTabs
-nnoremap <Leader>Pt :CtrlPSmartTabs<cr>
+" \Pb = :CtrlPBranches
+nnoremap <Leader>Pb :CtrlPBranches<cr>
 
 
 
