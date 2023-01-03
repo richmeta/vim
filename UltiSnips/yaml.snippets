@@ -1,0 +1,18 @@
+
+# initial docker-compose template
+snippet docker-compose
+version: '3.6'
+
+services:
+	rabbit:
+		image: rabbitmq:latest
+		container_name: rabbit
+		environment:
+			RABBITMQ_DEFAULT_VHOST: vhost
+		ports:
+			- 5672:5672
+		volumes:
+			- /host/full/path:/container/path
+
+endsnippet
+

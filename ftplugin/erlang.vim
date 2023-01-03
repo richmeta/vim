@@ -50,5 +50,5 @@ nmap <Leader>cp :let @+=expand("%:t:r") . ":" . expand("<cword>")<cr>
 
 " \cr = copy redbug:start for module/function under cursor
 " eg: redbug:start("carshare_server_handler_worker:do_poll -> return", [{time, 300000}]).
-nmap silent <Leader>cr :let @+= 'redbug:start("' . expand("%:t:r") . ":" . expand("<cword>") . ' -> return", [{time, 300000}]).'<cr>
+nmap <Leader>cr :let @+= 'redbug:start("' . expand("%:t:r") . ":" . expand("<cword>") . ' -> return", [{time, 300000}]).'<cr>
 

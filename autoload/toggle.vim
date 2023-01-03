@@ -28,6 +28,8 @@ function! toggle#option_list_prompt(opt)
     endif
 endfunction
 
+" toggle to the next value from the given list
+" eg :let &selection=toggle#let_from(&selection, ['inclusive', 'exclusive'])
 function! toggle#let_from(var, possible)
     let idx = 0
     let length = len(a:possible)

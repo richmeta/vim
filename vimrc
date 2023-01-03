@@ -318,6 +318,11 @@ if executable('python3')
     vmap <Leader>pf :!python3 -c 'import sys, pprint; pprint.PrettyPrinter(indent=2).pprint(eval(sys.stdin.read()))' - <cr><cr>
 endif
 
+if executable('base64')
+    " \bf = format base64
+    vmap <Leader>bf y:let @"=system('base64 -d', @")<cr>gvP
+endif
+
 if executable('erlfmtx')
     " \ef = format with erlfmt
     map <Leader>ef :silent %!erlfmtx --print-width 120 - <cr><cr>
@@ -536,6 +541,9 @@ imap <C-BS> <C-O>diw
 inoremap <m-p> <C-R><C-R>"
 inoremap <m-P> <C-O>h<C-R><C-R>"
 
+" alt-p (cmd) put from " register
+cnoremap <m-p> <C-R><C-R>"
+
 " Window switching
 
 " ctrl-k = up window
@@ -720,6 +728,9 @@ MapToggle <Leader>cc cursorcolumn
 
 " \sr = toggle splitright
 MapToggle <Leader>sr splitright
+
+" \sl = toggle selection (exclusive/inclusive)
+map <Leader>sl :let &selection=toggle#let_from(&selection, ['inclusive', 'exclusive'])<bar>set selection?<cr>
 
 " \kd = toggle '.' in `iskeyword`
 map <Leader>kd :call toggle#option_list('iskeyword', '.')<cr>

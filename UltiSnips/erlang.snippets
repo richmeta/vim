@@ -23,6 +23,38 @@ snippet cerr
 	{error, Error}${0}
 endsnippet
 
+# for specs
+snippet serr
+{error, any()}
+endsnippet
+
+# operators
+snippet == "equals" i
+=:= 
+endsnippet
+
+snippet != "not equals" i
+=/= 
+endsnippet
+
+# common type conversions
+snippet btl "binary_to_list" i
+binary_to_list(${0})
+endsnippet
+
+snippet ltb "list_to_binary" i
+list_to_binary(${0})
+endsnippet
+
+snippet atb "atom_to_binary" i
+atom_to_binary(${0}, utf8)
+endsnippet
+
+snippet bta "binary_to_atom" i
+binary_to_atom(${0}, utf8)
+endsnippet
+
+# exports
 snippet exall
 -compile(nowarn_export_all).
 -compile(export_all).
@@ -42,6 +74,14 @@ endsnippet
 
 snippet doc "doc tag" b
 %% @doc ${0}
+endsnippet
+
+snippet mn "?module macro" i
+?MODULE
+endsnippet
+
+snippet fn "?function_name macro" i
+?FUNCTION_NAME
 endsnippet
 
 snippet pat "Case:Receive:Try Clause"
@@ -246,8 +286,12 @@ snippet gen_server
 %%% API
 %%%===================================================================
 
+server_opts() ->
+	%% [{debug, [log, trace]}].
+	[].
+
 start_link() ->
-	gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+	gen_server:start_link({local, ?SERVER}, ?MODULE, [], server_opts()).
 
 %%%===================================================================
 %%% gen_server callbacks
@@ -318,6 +362,20 @@ endsnippet
 snippet handle_continue
 handle_continue(${1}, ${2}State) ->
 	${0}{noreply, State};
+endsnippet
+
+snippet application
+-module(${1:`!p snip.rv = snip.basename or "module"`}).
+-behaviour(application).
+
+-export([start/2, stop/1]).
+
+start(_Type, _Args) ->
+	some_supervisor:start_link().
+
+stop(_State) ->
+	ok.
+
 endsnippet
 
 
