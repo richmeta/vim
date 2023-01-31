@@ -806,6 +806,10 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(${0:__name__})
 endsnippet
 
+snippet logger
+logger = logging.getLogger()
+endsnippet
+
 snippet le
 logger.error(${0:${VISUAL:msg}})
 endsnippet

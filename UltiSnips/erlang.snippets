@@ -1,6 +1,9 @@
 # overrides all
 priority 1
 
+snippet iof "io:format"
+io:format(${1}, [${2}])${0}
+endsnippet
 
 snippet ct.hrl "common test lib" b
 -include_lib("common_test/include/ct.hrl").

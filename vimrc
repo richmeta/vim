@@ -126,12 +126,6 @@ noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <Esc>:update<CR>gi
 
-" For CTRL-V to work autoselect must be off.
-" On Unix we have two selections, autoselect can be used.
-if !has("unix")
-  set guioptions-=a
-endif
-
 " Ctrl-A=Select all
 noremap <C-A> gggH<C-O>G
 inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
@@ -191,7 +185,6 @@ set ttyfast
 set complete-=i
 set termguicolors
 set isfname+=32  " allow space in filenames
-set formatoptions+=j " Delete comment character when joining commented lines
 set tabpagemax=50
 set tagbsearch
 set nofixendofline
@@ -250,6 +243,14 @@ if has('autocmd')
         autocmd! BufWritePost vimrc,.vimrc source $MYVIMRC | echom "Reloaded " . $MYVIMRC | redraw
         autocmd! BufWritePost gvimrc,.gvimrc if has('gui_running') | source $MYGVIMRC | echom "Reloaded " . $MYGVIMRC | endif | redraw
     augroup END
+
+    augroup formatopts
+        autocmd!
+        " -ro dont insert comment leader for newlines
+        " +j  Delete comment character when joining commented lines
+        autocmd BufReadPost * set formatoptions-=ro | set formatoptions+=j
+    augroup END
+
 
 endif
 

@@ -12,6 +12,12 @@ else
     endif
 endif
 
+" For CTRL-V to work autoselect must be off.
+" On Unix we have two selections, autoselect can be used.
+if !has("unix")
+  set guioptions-=a
+endif
+
 if !has('linux')
     set columns=150
     set lines=50
@@ -19,8 +25,8 @@ endif
 
 set guicursor=n:blinkon0
 
-" only filename in tab title
-set guitablabel=%t
+" relative filename in tab title
+set guitablabel=%f
 
 if has('GUI_GTK')
     set guioptions-=T
