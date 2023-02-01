@@ -579,7 +579,7 @@ imap <silent> <C-C><C-V> <C-O>:let @f=file#ex_filename()<cr><C-R>f
 imap <silent> <C-C><C-S> <C-O>:let @f=file#ex_stem()<cr><C-R>f
 
 " \cb = copy git branch name
-nnoremap <Leader>cb :let @+=fugitive#head()<bar>let@f=@+<cr>
+nnoremap <Leader>cb :let @+=FugitiveHead()<bar>let@f=@+<cr>
 
 " Ctrl-\ = (terminal) exit insertmode
 tnoremap <C-\> <C-\><C-n>
@@ -926,7 +926,7 @@ let g:lightline = {
     \                  [ 'fileformat', 'filetype', 'ALEenabled' ] ]
     \   },
     \   'component_function': {
-    \       'gitbranch': 'fugitive#head',
+    \       'gitbranch': 'FugitiveHead',
     \       'ALEenabled': 'LightLineALEEnabled',
     \   },
     \ }
