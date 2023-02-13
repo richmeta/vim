@@ -41,3 +41,17 @@ endsnippet
 snippet gt "gettext" w
 <%= gettext("${0:${VISUAL}}") %>
 endsnippet
+
+snippet gitignore
+# rebar 3
+.rebar3
+_build/
+_checkouts/
+conf/temp_generated.*
+conf/local.sys.config
+rebar.config.script
+*.crashdump
+rebar.lock
+endsnippet
+
+# vim:ft=snippets:

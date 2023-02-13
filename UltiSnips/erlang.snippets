@@ -63,6 +63,10 @@ snippet exall
 -compile(export_all).
 endsnippet
 
+snippet nowarn
+-compile(nowarnings_as_errors).
+endsnippet 
+
 snippet "(:?-)?exp" "export (exp or -exp)" br
 -export([${VISUAL}${0}]).
 endsnippet
@@ -554,6 +558,18 @@ endsnippet
 priority 10
 snippet palx "normal ct:pal without fancy expansion"
 ct:pal("${1}", [${2}]),
+endsnippet
+
+snippet gitignore
+# rebar 3
+.rebar3
+_build/
+_checkouts/
+conf/temp_generated.*
+conf/local.sys.config
+rebar.config.script
+*.crashdump
+rebar.lock
 endsnippet
 
 # vim:ft=snippets:
