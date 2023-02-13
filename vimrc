@@ -248,8 +248,8 @@ if has('autocmd')
         autocmd!
         " -ro dont insert comment leader for newlines
         " +j  Delete comment character when joining commented lines
-        autocmd BufReadPost * set formatoptions-=ro | set formatoptions+=j
-    augroup END
+        autocmd BufNewFile,BufReadPost * setlocal formatoptions-=ro | setlocal formatoptions+=j
+    augroup ENblack
 
 
 endif
@@ -730,6 +730,9 @@ MapToggle <Leader>cc cursorcolumn
 " \sr = toggle splitright
 MapToggle <Leader>sr splitright
 
+" \ar = toggle autoread
+MapToggle <Leader>ar autoread
+
 " \sl = toggle selection (exclusive/inclusive)
 map <Leader>sl :let &selection=toggle#let_from(&selection, ['inclusive', 'exclusive'])<bar>set selection?<cr>
 
@@ -955,11 +958,11 @@ let g:ale_enabled = str2nr(&diff)
 " use global flake8
 if executable("flake8")
     let g:ale_python_flake8_executable = 'flake8'
-    let g:ale_python_flake8_options = '--ignore=E501,E731,W391,F403'
+    let g:ale_python_flake8_options = '--ignore=E501,E731,W391,F403,W292'
     let g:ale_python_flake8_use_global = 1
 else
     let g:ale_python_flake8_executable = 'python3'
-    let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403'
+    let g:ale_python_flake8_options = '-m flake8 --ignore=E501,E731,W391,F403,W292'
 endif
 
 let g:ale_linters = {
