@@ -249,7 +249,7 @@ if has('autocmd')
         " -ro dont insert comment leader for newlines
         " +j  Delete comment character when joining commented lines
         autocmd BufNewFile,BufReadPost * setlocal formatoptions-=ro | setlocal formatoptions+=j
-    augroup ENblack
+    augroup END
 
 
 endif
@@ -1012,12 +1012,10 @@ let g:switch_custom_definitions =
 
 " 1 - true/false
 " 2 - enabled/disabled
-if exists('*switch#NormalizedCase')
-    let g:switch_custom_definitions += [
-    \   switch#NormalizedCase(['true', 'false']),
-    \   switch#NormalizedCase(['enabled', 'disabled'])
-    \ ]
-endif
+let g:switch_custom_definitions += [
+\   switch#NormalizedCase(['true', 'false']),
+\   switch#NormalizedCase(['enabled', 'disabled'])
+\ ]
 
 " Jedi
 " -----

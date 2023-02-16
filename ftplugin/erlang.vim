@@ -24,7 +24,6 @@ let b:switch_custom_definitions =
     \       '"\@<!\<_\(\u\w*\)\>': '\1',
     \       '=>': ':=',
     \       ':=': '=>',
-    \       '{\s*\l\+,\s*\(\u(\u\|\l)*\)\s*}': '\1',
     \       'list_to_binary': 'binary_to_list',
     \       'binary_to_list': 'list_to_binary',
     \       'int_to_binary': 'binary_to_int',
@@ -32,6 +31,8 @@ let b:switch_custom_definitions =
     \   }
     \ ]
 
+" not sure if this is effective
+"    \       '{\s*\l\+,\s*\(\u(\u\|\l)*\)\s*}': '\1',
 
 " \kd = toggle ':' in iskeyword
 map <buffer> <Leader>kd :call ToggleOptionList('iskeyword', ':')<cr>
