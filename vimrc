@@ -971,13 +971,15 @@ let g:ale_linters = {
     \   'c': ['gcc'],
     \   'go': ['gobuild'],
     \   'erlang': ['syntaxerl'],
-    \   'cpp': ['cppcheck']
+    \   'cpp': ['cppcheck'],
+    \   'lua': ['selene'],
     \ }
 
 let g:ale_fixers = {
     \   'python': ['black'],
     \   'javascript': ['eslint'],
     \   'erlang': ['erlfmt'],
+    \   'lua': ['stylua']
     \ }
 
 " F5 = toggle ALE
