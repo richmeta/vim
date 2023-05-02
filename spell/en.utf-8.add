@@ -9,3 +9,6 @@ cabattlevalidator
 CAICD
 awardable
 requeuing
+wildcard
+serializable
+lua
