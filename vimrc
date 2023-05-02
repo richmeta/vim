@@ -25,6 +25,7 @@ Plug 'vimwiki/vimwiki'
 Plug 't9md/vim-quickhl'
 Plug 'preservim/vim-markdown'
 Plug 'dyng/ctrlsf.vim'
+Plug 'christoomey/vim-tmux-navigator'
 if has('python3')
     Plug 'SirVer/ultisnips'
 endif
@@ -265,8 +266,11 @@ endif
 " LEADER MAPPINGS
 " ---------------
 
-" \t = new tab
-noremap <Leader>t :tabnew<cr>
+" \tt = new tab
+noremap <Leader>tt :tabnew<cr>
+
+" \td = duplicate tab
+noremap <Leader>td :tab split<cr>
 
 " \T = new scratch
 noremap <Leader>T :tabnew<bar>setlocal buftype=nofile<cr>
@@ -280,11 +284,11 @@ nnoremap <m-h> :call buff#open_relative('h')<cr>
 nnoremap <m-v> :call buff#open_relative('v')<cr>
 nnoremap <m-o> :call buff#open_relative('o')<cr>
 
-" alt-x = tabclose
-noremap <m-x> :tabclose<cr>
+" \tc = tabclose
+noremap <Leader>tc :tabclose<cr>
 
-" \O = only this tab
-noremap <Leader>O :tabonly<cr>
+" \to = only this tab
+noremap <Leader>to :tabonly<cr>
 
 " \o = tabedit file
 nnoremap <Leader>o :tabedit<space>
@@ -294,6 +298,9 @@ nnoremap <Leader>wn :let @/=expand("<cword>")<bar>split<bar>normal n<cr>
 
 " \wN = split window search cword + boundary
 nnoremap <Leader>wN :let @/='\<'.expand("<cword>").'\>'<bar>split<bar>normal n<cr>
+
+" \sw = start search/replace word under cursor
+nnoremap <Leader>sw :%s/<c-r><c-w>/
 
 " \xf = format xml
 if executable('xml_pp')
@@ -553,7 +560,7 @@ nmap <silent> <c-k> :wincmd k<cr>
 " ctrl-k = up window
 nmap <silent> <c-j> :wincmd j<cr>
 
-" ctrl-k = up window
+" ctrl-h = up window
 nmap <silent> <c-h> :wincmd h<cr>
 
 " ctrl-k = up window
