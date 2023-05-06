@@ -555,16 +555,10 @@ cnoremap <m-p> <C-R><C-R>"
 " Window switching
 
 " ctrl-k = up window
-nmap <silent> <c-k> :wincmd k<cr>
-
-" ctrl-k = up window
-nmap <silent> <c-j> :wincmd j<cr>
-
+" ctrl-j = up window
 " ctrl-h = up window
-nmap <silent> <c-h> :wincmd h<cr>
-
 " ctrl-k = up window
-nmap <silent> <c-l> :wincmd l<cr>
+" under tmux-navigator
 
 " copypath
 " \cd = copy directory/path (and "f)
