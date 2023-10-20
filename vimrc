@@ -191,6 +191,7 @@ set tagbsearch
 set nofixendofline
 set mouse=a
 set selection=inclusive
+set splitright
 
 if (!(has('mac') && $VIM == '/usr/share/vim'))
     " not supported on apple vim
@@ -903,6 +904,14 @@ nnoremap <Leader>gP :Git stash pop<cr>
 " \gL = Git stash save
 nnoremap <Leader>gL :Git stash list<cr>
 
+" \ne = new buffer
+nnoremap <Leader>ne :enew<cr>
+
+" \nv = new buffer vertical
+nnoremap <Leader>nv :vnew<cr>
+
+" \ns = new buffer split
+nnoremap <Leader>ns :new<cr>
 
 " Dirvish
 " -------
@@ -914,7 +923,7 @@ nmap <F4> <Plug>(dirvish_up):echo(expand('%'))<cr>
 nmap g<F4> :execute 'Dirvish ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
 
 " <Ctrl-F4> = dirvish git root dir (newtab)
-nmap <silent><C-F4> :execute 'tabedit +Dirvish\ ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
+nmap <silent><leader>g<F4> :execute 'tabedit +Dirvish\ ' . fnamemodify(FugitiveGitDir(), ':h')<cr>
 
 " Shift-<F4> = vsplit + dirvish current dir
 nmap <S-F4> <Plug>(dirvish_vsplit_up)
