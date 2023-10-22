@@ -330,7 +330,7 @@ endif
 if executable('python3')
     " \pf = format black
     map <Leader>pf :%!black -q - <cr><cr>
-    vmap <Leader>pf :!black -q - <cr><cre!
+    vmap <Leader>pf :!black -q - <cr><cr>
 endif
 
 if executable('base64')
