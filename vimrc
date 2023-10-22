@@ -414,12 +414,6 @@ nnoremap <Leader>- o<Esc>80a-<Esc>
 " \= ruler
 nnoremap <Leader>= o<Esc>80a=<Esc>
 
-" \v = new vertical split
-nnoremap <Leader>v :vnew<cr>
-
-" \h = new horizontal split
-nnoremap <Leader>h :new<cr>
-
 " \rm = Remove file + confirm
 nnoremap <Leader>rm :!rm -i "%"<cr>
 
