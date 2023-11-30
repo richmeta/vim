@@ -26,6 +26,7 @@ Plug 't9md/vim-quickhl'
 Plug 'preservim/vim-markdown'
 Plug 'dyng/ctrlsf.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'Vimjas/vim-python-pep8-indent'
 if has('python3')
     Plug 'SirVer/ultisnips'
 endif
