@@ -10,7 +10,6 @@ call plug#begin(s:vim_home_dir . '/bundle')
 Plug 'godlygeek/tabular'
 Plug 'preservim/tagbar'
 Plug 'vim-scripts/CmdlineComplete'
-Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'itchyny/lightline.vim'
@@ -27,6 +26,8 @@ Plug 'preservim/vim-markdown'
 Plug 'dyng/ctrlsf.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 if has('python3')
     Plug 'SirVer/ultisnips'
 endif
@@ -978,7 +979,7 @@ endif
 
 let g:ale_linters = {
     \   'javascript': ['eslint'],
-    \   'python': ['flake8'],
+    \   'python': ['mypy', 'flake8'],
     \   'c': ['gcc'],
     \   'go': ['gobuild'],
     \   'cpp': ['cppcheck'],
@@ -1165,27 +1166,6 @@ nmap <Leader>kq :QuickhlManualAdd<space>
 nmap <m-n> <Plug>(quickhl-manual-go-to-next)
 nmap <m-N> <Plug>(quickhl-manual-go-to-prev)
 
-
-" Sandwich
-" --------
-
-" override default mappings
-let g:operator_sandwich_no_default_key_mappings = 1
-
-" Sa[motion] = add
-silent! nmap <unique> Sa <Plug>(sandwich-add)
-silent! xmap <unique> Sa <Plug>(sandwich-add)
-silent! omap <unique> Sa <Plug>(sandwich-add)
-
-" Sd[motion] = delete
-silent! nmap <unique> Sd <Plug>(sandwich-delete)
-silent! xmap <unique> Sd <Plug>(sandwich-delete)
-silent! nmap <unique> Sdb <Plug>(sandwich-delete-auto)
-
-" Sr[motion] = replace
-silent! nmap <unique> Sr <Plug>(sandwich-replace)
-silent! xmap <unique> Sr <Plug>(sandwich-replace)
-silent! nmap <unique> Srb <Plug>(sandwich-replace-auto)
 
 
 " ===========
