@@ -981,7 +981,6 @@ let g:ale_linters = {
     \   'python': ['flake8'],
     \   'c': ['gcc'],
     \   'go': ['gobuild'],
-    \   'erlang': ['syntaxerl'],
     \   'cpp': ['cppcheck'],
     \   'lua': ['selene'],
     \ }
@@ -989,7 +988,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
     \   'python': ['black'],
     \   'javascript': ['eslint'],
-    \   'erlang': ['erlfmt'],
     \   'lua': ['stylua']
     \ }
 
